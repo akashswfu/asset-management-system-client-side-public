@@ -11,6 +11,7 @@ import ReactDatePicker from "react-datepicker";
 
 const EmploySignUp = () => {
   const role = "employ";
+  const myHr = "noHr";
   const [startDate, setStartDate] = useState(new Date());
   const [error, setError] = useState("");
   const [success, setSuccess] = useState("");
@@ -26,13 +27,15 @@ const EmploySignUp = () => {
   } = useForm();
 
   const onSubmit = async (data) => {
-    const { name, email, password } = data;
+    const { name, email, password, photo } = data;
 
     const user = {
       name,
       email,
       startDate,
       role,
+      myHr,
+      photo,
     };
     console.log(user);
 
@@ -56,6 +59,7 @@ const EmploySignUp = () => {
       setUser({
         ...result?.user,
         displayName: name,
+        photoURL: photo,
         email: email,
       });
 
@@ -96,6 +100,25 @@ const EmploySignUp = () => {
                 />
               </div>
               {errors.name && (
+                <span className="text-red-500 text-sm mt-2">
+                  This field is required
+                </span>
+              )}
+            </div>
+            <div>
+              <label className="label">
+                <span className="label-text">Photo URL</span>
+              </label>
+              <div className="flex rounded-md border-2 border-gray-300  items-center">
+                <input
+                  className=" py-3 rounded-md px-3 w-full outline-2   "
+                  type="text"
+                  name="photo"
+                  placeholder="Enter Your Photo URL"
+                  {...register("photo", { required: true })}
+                />
+              </div>
+              {errors.photo && (
                 <span className="text-red-500 text-sm mt-2">
                   This field is required
                 </span>

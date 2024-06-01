@@ -29,7 +29,7 @@ const SignUp = () => {
   } = useForm();
 
   const onSubmit = async (data) => {
-    const { name, companyName, companyLogo, email, password } = data;
+    const { name, companyName, photo, companyLogo, email, password } = data;
 
     const user = {
       name,
@@ -39,6 +39,7 @@ const SignUp = () => {
       startDate,
       pack,
       role,
+      photo,
     };
     console.log(user);
 
@@ -63,6 +64,7 @@ const SignUp = () => {
         ...result?.user,
         displayName: name,
         email: email,
+        photoURL: photo,
       });
 
       const { data } = await axios.post(`http://localhost:5000/users`, user);
@@ -145,6 +147,25 @@ const SignUp = () => {
                 />
               </div>
               {errors.companyLogo && (
+                <span className="text-red-500 text-sm mt-2">
+                  This field is required
+                </span>
+              )}
+            </div>
+            <div>
+              <label className="label">
+                <span className="label-text">Photo URL</span>
+              </label>
+              <div className="flex rounded-md border-2 border-gray-300  items-center">
+                <input
+                  className=" py-3 rounded-md px-3 w-full outline-2   "
+                  type="text"
+                  name="photo"
+                  placeholder="Enter Your Photo URL"
+                  {...register("photo", { required: true })}
+                />
+              </div>
+              {errors.photo && (
                 <span className="text-red-500 text-sm mt-2">
                   This field is required
                 </span>
