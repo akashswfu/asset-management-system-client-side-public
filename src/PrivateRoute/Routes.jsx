@@ -12,6 +12,7 @@ import MyEmployList from "../Pages/Hr/MyEmployList/MyEmployList";
 import MyAssetsRequest from "../Pages/Employ/MyAssets/MyAssetsRequest";
 import MyTeam from "../Pages/Employ/MyTeam/MyTeam";
 import RequestAnAssets from "../Pages/Employ/RequestAnAssets/RequestAnAssets";
+import UpdateSingleAssetItem from "../Pages/Hr/AssetList/UpdateSingleAssetItem";
 
 const router = createBrowserRouter([
   {
@@ -55,6 +56,12 @@ const router = createBrowserRouter([
       {
         path: "/MyEmployList",
         element: <MyEmployList></MyEmployList>,
+      },
+      {
+        path: "/updateAsset/:id",
+        element: <UpdateSingleAssetItem></UpdateSingleAssetItem>,
+        loader: ({ params }) =>
+          fetch(`http://localhost:5000/asset/${params.id}`),
       },
 
       // employ routes

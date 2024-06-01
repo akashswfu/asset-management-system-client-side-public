@@ -30,47 +30,50 @@ const SignUp = () => {
 
   const onSubmit = async (data) => {
     const { name, companyName, companyLogo, email, password } = data;
-    console.log(data, startDate, pack, role);
 
-    // if (password.length < 6) {
-    //   toast.warning("Password must be 6 or more characters long ");
+    const user = {
+      name,
+      companyName,
+      companyLogo,
+      email,
+      startDate,
+      pack,
+      role,
+    };
+    console.log(user);
 
-    //   return;
-    // } else if (!/^(?=.*[a-z])(?=.*[A-Z]).+$/.test(password)) {
-    //   toast.warning("Password must have a lowercase and Uppercase character ");
+    if (password.length < 6) {
+      toast.warning("Password must be 6 or more characters long ");
 
-    //   return;
-    // }
+      return;
+    } else if (!/^(?=.*[a-z])(?=.*[A-Z]).+$/.test(password)) {
+      toast.warning("Password must have a lowercase and Uppercase character ");
 
-    // setSuccess("");
-    // setError("");
-    // try {
-    //   const result = await createUser(email, password);
-    //   toast.success("Registration Successfully");
+      return;
+    }
 
-    //   await updateUserProfile(name, photo);
-    //   setUser({
-    //     ...result?.user,
-    //     displayName: name,
-    //     photoURL: photo,
-    //     email: email,
-    //   });
+    setSuccess("");
+    setError("");
+    try {
+      const result = await createUser(email, password);
+      toast.success("Registration Successfully");
 
-    //   const { data } = await axios.post(
-    //     `https://tasty-bites-server-site.vercel.app/jwt`,
-    //     {
-    //       email: result?.user?.email,
-    //     },
-    //     { withCredentials: true }
-    //   );
-    //   toast.success("Login Successfully");
-    //   setLoading(false);
-    //   setTimeout(() => {
-    //     navigate(location?.state ? location.state : "/");
-    //   }, 1000);
-    // } catch (err) {
-    //   toast.warning("User Already Exists! ");
-    // }
+      await updateUserProfile(name);
+      setUser({
+        ...result?.user,
+        displayName: name,
+        email: email,
+      });
+
+      const { data } = await axios.post(`http://localhost:5000/users`, user);
+      toast.success("Login Successfully");
+      setLoading(false);
+      setTimeout(() => {
+        navigate(location?.state ? location.state : "/");
+      }, 1000);
+    } catch (err) {
+      toast.warning("User Already Exists! ");
+    }
   };
 
   return (

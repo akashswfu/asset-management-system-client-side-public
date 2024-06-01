@@ -27,7 +27,14 @@ const EmploySignUp = () => {
 
   const onSubmit = async (data) => {
     const { name, email, password } = data;
-    console.log(data, startDate, role);
+
+    const user = {
+      name,
+      email,
+      startDate,
+      role,
+    };
+    console.log(user);
 
     if (password.length < 6) {
       toast.warning("Password must be 6 or more characters long ");
@@ -45,21 +52,14 @@ const EmploySignUp = () => {
       const result = await createUser(email, password);
       toast.success("Registration Successfully");
 
-      await updateUserProfile(name, photo);
+      await updateUserProfile(name);
       setUser({
         ...result?.user,
         displayName: name,
-        photoURL: photo,
         email: email,
       });
 
-      const { data } = await axios.post(
-        `https://tasty-bites-server-site.vercel.app/jwt`,
-        {
-          email: result?.user?.email,
-        },
-        { withCredentials: true }
-      );
+      const { data } = await axios.post(`http://localhost:5000/users`, user);
       toast.success("Login Successfully");
       setLoading(false);
       setTimeout(() => {
