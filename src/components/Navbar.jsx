@@ -1,23 +1,30 @@
-import { useContext, useState } from "react";
+import { useContext, useEffect, useState } from "react";
 import { Link, NavLink } from "react-router-dom";
 
 // import icons from "../../../public/icons.png";
 // import homeIcons from "/images/h.png";
 import Swal from "sweetalert2";
 import useAuth from "../ReactHooks/useAuth";
+import useAxiosSecure from "../ReactHooks/useAxiosSecure";
 
 const Navbar = () => {
   const { logOut, user } = useAuth();
   const [showTooltip, setShowTooltip] = useState(false);
+  const [loggedUser, setLoggedUser] = useState([]);
 
-  //   const [theme, setTheme] = useState(
-  //     localStorage.getItem("theme") ? localStorage.getItem("theme") : "light"
-  //   );
-  //   useEffect(() => {
-  //     localStorage.setItem("theme", theme);
-  //     const localTheme = localStorage.getItem("theme");
-  //     document.querySelector("html").setAttribute("data-theme", localTheme);
-  //   }, [theme]);
+  const axiosSecure = useAxiosSecure();
+
+  useEffect(() => {
+    const getUser = async () => {
+      const { data } = await axiosSecure(`/user/${user?.email}`);
+      setLoggedUser(data);
+    };
+    getUser();
+  }, [user?.email]);
+
+  console.log(loggedUser);
+
+  console.log(loggedUser.role);
 
   const handleLogout = () => {
     logOut()
@@ -53,7 +60,7 @@ const Navbar = () => {
           </li>
         </div>
       )}
-      {user && (
+      {loggedUser.role === "HR" && (
         <div className="flex gap-3">
           <li className="">
             <NavLink to="/assetList">Asset List</NavLink>
@@ -69,6 +76,19 @@ const Navbar = () => {
           </li>
           <li className="">
             <NavLink to="/addEmploy">Add Employ</NavLink>
+          </li>
+        </div>
+      )}
+      {loggedUser.role === "employ" && (
+        <div className="flex gap-3">
+          <li className="">
+            <NavLink to="/myAssets">My Assets</NavLink>
+          </li>
+          <li className="">
+            <NavLink to="/myTeam">My Team</NavLink>
+          </li>
+          <li className="">
+            <NavLink to="/requestAnAssets">Request for an Assets</NavLink>
           </li>
         </div>
       )}
