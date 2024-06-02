@@ -16,8 +16,6 @@ const useUserInfo = () => {
     queryKey: ["userInfo"],
   });
 
-  console.log(userInfo);
-
   const getData = async () => {
     const { data } = await axiosSecure.get(`/user/${user?.email}`);
     return data;
