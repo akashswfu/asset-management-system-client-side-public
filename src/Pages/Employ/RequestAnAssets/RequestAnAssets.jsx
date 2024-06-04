@@ -3,13 +3,15 @@ import useAxiosSecure from "../../../ReactHooks/useAxiosSecure";
 import useAuth from "../../../ReactHooks/useAuth";
 import { useQuery } from "@tanstack/react-query";
 import useUserInfo from "../../../ReactHooks/useUserInfo";
+import { FaRegSquare } from "react-icons/fa";
+import { toast } from "react-toastify";
 
 const RequestAnAssets = () => {
+  const status = "Pending";
   const [userInfo, isLoading] = useUserInfo();
   const { user } = useAuth();
   const axiosSecure = useAxiosSecure();
   const [requestData, setRequestData] = useState(new Date());
-  console.log(requestData, userInfo);
 
   const { data: myAssets = [], refetch } = useQuery({
     queryFn: () => getData(),
@@ -21,6 +23,49 @@ const RequestAnAssets = () => {
     return data;
   };
 
+  const handleRequest = async (e, assets) => {
+    e.preventDefault();
+    if (userInfo.myHr === "noHr") {
+      return alert("You are not any Hr Please Contact with your Hr");
+    }
+
+    const form = e.target;
+    const additionalNotes = form.additionalNotes.value;
+
+    const { email, name, myHr, photo, role, startDate } = userInfo;
+    const { hrEmail, hrName, productName, productQuantity, type } = assets;
+
+    const assetsReq = {
+      productName,
+      type,
+      email,
+      name,
+      requestData,
+      additionalNotes,
+      status,
+      myHr,
+      photo,
+      role,
+      hrEmail,
+      hrName,
+      productQuantity,
+    };
+
+    console.log(assetsReq);
+
+    try {
+      const { data } = await axiosSecure.post("/assetsReq", assetsReq);
+      alert("Assets Added Successfully");
+      setTimeout(() => {
+        // navigate("/assetList");
+      }, 500);
+
+      console.log(data);
+    } catch (err) {
+      console.log(err);
+    }
+  };
+
   if (myAssets.length === 0) {
     return (
       <div className="text-center text-7xl h-min-[cal(100vh-130px)] text-blue-400 py-10">
@@ -29,25 +74,6 @@ const RequestAnAssets = () => {
     );
   }
 
-  if (isLoading) {
-    return (
-      <div className="text-center text-7xl h-min-[cal(100vh-130px)] text-blue-400 py-10">
-        Loading....
-      </div>
-    );
-  }
-
-  const handleRequest = (e, assets) => {
-    e.preventDefault();
-    if (userInfo.myHr === "noHr") {
-      return alert("You are not any Hr Please Contact with your Hr");
-    }
-    console.log(assets);
-    const form = e.target;
-    const additionalNotes = form.additionalNotes.value;
-    console.log(additionalNotes);
-  };
-
   return (
     <div className="grid grid-cols-1 md:grid-cols-2 justify-center mx-auto gap-10">
       {myAssets.map((assets) => (
@@ -55,6 +81,7 @@ const RequestAnAssets = () => {
           <div className="card-body">
             <h2 className="card-title">{assets.productName}</h2>
             <p>{assets.type}</p>
+            <p>Quantity: {assets.productQuantity}</p>
             <div className=" flex items-center justify-between">
               <div>
                 {assets.productQuantity > 0 ? "Available" : "Out of Stock"}

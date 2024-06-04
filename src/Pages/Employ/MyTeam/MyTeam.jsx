@@ -29,7 +29,6 @@ const MyTeam = () => {
     return data;
   };
 
-  console.log(myHr);
   return (
     <div>
       {myTeam.map((team) => (

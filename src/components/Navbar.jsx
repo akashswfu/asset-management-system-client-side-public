@@ -22,10 +22,6 @@ const Navbar = () => {
     getUser();
   }, [user?.email]);
 
-  console.log(loggedUser);
-
-  console.log(loggedUser.role);
-
   const handleLogout = () => {
     logOut()
       .then(() => {
