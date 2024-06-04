@@ -13,7 +13,7 @@ const MyTeam = () => {
     refetch,
   } = useQuery({
     queryFn: () => getData(),
-    queryKey: ["myTeam"],
+    queryKey: ["myTeam", userInfo?.myHr],
   });
 
   const getData = async () => {

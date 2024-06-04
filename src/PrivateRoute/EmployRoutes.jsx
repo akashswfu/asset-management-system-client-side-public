@@ -5,11 +5,11 @@ import useUserInfo from "../ReactHooks/useUserInfo";
 import useAuth from "../ReactHooks/useAuth";
 
 const EmployRoutes = ({ children }) => {
-  const [userInfo] = useUserInfo();
+  const [userInfo, isLoading] = useUserInfo();
   const { loading } = useAuth();
   const location = useLocation();
 
-  if (loading) {
+  if (isLoading || userInfo.length === 0) {
     return (
       <div className="text-center text-7xl h-min-[cal(100vh-300px)] text-blue-400 py-10">
         Loading....

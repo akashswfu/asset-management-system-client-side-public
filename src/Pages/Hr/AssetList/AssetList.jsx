@@ -17,10 +17,8 @@ const AssetList = () => {
     refetch,
   } = useQuery({
     queryFn: () => getData(),
-    queryKey: ["myAssets"],
+    queryKey: ["myAssets", user?.email],
   });
-
-  console.log(myAssets);
 
   const getData = async () => {
     const { data } = await axiosSecure.get(`/assets/${user?.email}`);
