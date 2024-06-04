@@ -15,9 +15,12 @@ const MyTeam = () => {
     queryFn: () => getData(),
     queryKey: ["myTeam"],
   });
+
   const getData = async () => {
-    const { data } = await axiosSecure.get(`/users/${userInfo?.myHr}`);
-    return data;
+    if (userInfo.myHr !== "noHr") {
+      const { data } = await axiosSecure.get(`/users/${userInfo?.myHr}`);
+      return data;
+    }
   };
 
   const { data: myHr = [] } = useQuery({
