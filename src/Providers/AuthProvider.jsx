@@ -49,13 +49,13 @@ const AuthProvider = ({ children }) => {
 
   const logOut = async () => {
     setLoading(true);
-    const { data } = await axios(
-      `https://tasty-bites-server-site.vercel.app/logout`,
-      {
-        withCredentials: true,
-      }
-    );
-    console.log(data);
+    // const { data } = await axios(
+    //   `https://tasty-bites-server-site.vercel.app/logout`,
+    //   {
+    //     withCredentials: true,
+    //   }
+    // );
+    // console.log(data);
     return signOut(auth);
   };
   const googleLogin = () => {

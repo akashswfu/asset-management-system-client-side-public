@@ -73,6 +73,9 @@ const Navbar = () => {
           <li className="">
             <NavLink to="/addEmploy">Add Employ</NavLink>
           </li>
+          <li className="">
+            <NavLink to="/updateProfile">Profile</NavLink>
+          </li>
         </div>
       )}
       {loggedUser.role === "employ" && (
@@ -85,6 +88,9 @@ const Navbar = () => {
           </li>
           <li className="">
             <NavLink to="/requestAnAssets">Request for an Assets</NavLink>
+          </li>
+          <li className="">
+            <NavLink to="/updateProfile">Profile</NavLink>
           </li>
         </div>
       )}

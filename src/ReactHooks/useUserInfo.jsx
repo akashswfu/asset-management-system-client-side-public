@@ -13,7 +13,7 @@ const useUserInfo = () => {
     refetch,
   } = useQuery({
     queryFn: () => getData(),
-    queryKey: ["userInfo"],
+    queryKey: ["userInfo", user?.email],
   });
 
   const getData = async () => {

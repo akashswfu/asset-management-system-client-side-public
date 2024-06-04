@@ -13,6 +13,10 @@ import MyAssetsRequest from "../Pages/Employ/MyAssets/MyAssetsRequest";
 import MyTeam from "../Pages/Employ/MyTeam/MyTeam";
 import RequestAnAssets from "../Pages/Employ/RequestAnAssets/RequestAnAssets";
 import UpdateSingleAssetItem from "../Pages/Hr/AssetList/UpdateSingleAssetItem";
+import UpdateProfile from "../components/UpdateProfile/UpdateProfile";
+import HrRoutes from "./HrRoutes";
+import EmployRoutes from "./EmployRoutes";
+import PrivateRoute from "./PrivateRoute";
 
 const router = createBrowserRouter([
   {
@@ -36,30 +40,64 @@ const router = createBrowserRouter([
         element: <EmploySignUp></EmploySignUp>,
       },
 
+      //employ hr both
+      {
+        path: "/updateProfile",
+        element: (
+          <PrivateRoute>
+            <UpdateProfile></UpdateProfile>
+          </PrivateRoute>
+        ),
+      },
+
       //hr routes
       {
         path: "/assetList",
-        element: <AssetList></AssetList>,
+        element: (
+          <HrRoutes>
+            <AssetList></AssetList>
+          </HrRoutes>
+        ),
       },
       {
         path: "/addAsset",
-        element: <AddAsset></AddAsset>,
+        element: (
+          <HrRoutes>
+            <AddAsset></AddAsset>
+          </HrRoutes>
+        ),
       },
       {
         path: "/addEmploy",
-        element: <AddEmploy></AddEmploy>,
+        element: (
+          <HrRoutes>
+            <AddEmploy></AddEmploy>
+          </HrRoutes>
+        ),
       },
       {
         path: "/allRequest",
-        element: <AllRequest></AllRequest>,
+        element: (
+          <HrRoutes>
+            <AllRequest></AllRequest>
+          </HrRoutes>
+        ),
       },
       {
         path: "/MyEmployList",
-        element: <MyEmployList></MyEmployList>,
+        element: (
+          <HrRoutes>
+            <MyEmployList></MyEmployList>
+          </HrRoutes>
+        ),
       },
       {
         path: "/updateAsset/:id",
-        element: <UpdateSingleAssetItem></UpdateSingleAssetItem>,
+        element: (
+          <HrRoutes>
+            <UpdateSingleAssetItem></UpdateSingleAssetItem>
+          </HrRoutes>
+        ),
         loader: ({ params }) =>
           fetch(`http://localhost:5000/asset/${params.id}`),
       },
@@ -67,15 +105,27 @@ const router = createBrowserRouter([
       // employ routes
       {
         path: "/myAssets",
-        element: <MyAssetsRequest></MyAssetsRequest>,
+        element: (
+          <EmployRoutes>
+            <MyAssetsRequest></MyAssetsRequest>
+          </EmployRoutes>
+        ),
       },
       {
         path: "/myTeam",
-        element: <MyTeam></MyTeam>,
+        element: (
+          <EmployRoutes>
+            <MyTeam></MyTeam>
+          </EmployRoutes>
+        ),
       },
       {
         path: "requestAnAssets",
-        element: <RequestAnAssets></RequestAnAssets>,
+        element: (
+          <EmployRoutes>
+            <RequestAnAssets></RequestAnAssets>
+          </EmployRoutes>
+        ),
       },
     ],
   },
