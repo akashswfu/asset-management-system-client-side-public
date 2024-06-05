@@ -11,6 +11,7 @@ const useUserInfo = () => {
     data: userInfo = [],
     isLoading,
     refetch,
+    isPending,
   } = useQuery({
     queryFn: () => getData(),
     queryKey: ["userInfo", user?.email],
@@ -21,7 +22,7 @@ const useUserInfo = () => {
     return data;
   };
 
-  return [userInfo, isLoading, refetch];
+  return [userInfo, isLoading, refetch, isPending];
 };
 
 export default useUserInfo;

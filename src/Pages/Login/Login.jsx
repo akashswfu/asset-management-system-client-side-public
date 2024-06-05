@@ -6,18 +6,20 @@ import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import useAuth from "../../ReactHooks/useAuth";
 import axios from "axios";
+import useAxiosSecure from "../../ReactHooks/useAxiosSecure";
 
 const Login = () => {
   const [error, setError] = useState("");
   const { signIn, googleLogin, setLoading } = useAuth();
   const location = useLocation();
   const navigate = useNavigate();
+  const axiosSecure = useAxiosSecure();
 
   const handleGoogleLogin = async () => {
     try {
       const result = await googleLogin();
-      const { data } = await axios.post(
-        `https://tasty-bites-server-site.vercel.app/jwt`,
+      const { data } = await axiosSecure.post(
+        `/jwt`,
         {
           email: result?.user?.email,
         },
@@ -45,13 +47,13 @@ const Login = () => {
 
     try {
       const result = await signIn(email, password);
-      const { data } = await axios.post(
-        `https://tasty-bites-server-site.vercel.app/jwt`,
-        {
-          email: result?.user?.email,
-        },
-        { withCredentials: true }
-      );
+      // const { data } = await axiosSecure.post(
+      //   `/jwt`,
+      //   {
+      //     email: result?.user?.email,
+      //   },
+      //   { withCredentials: true }
+      // );
       console.log(data);
       toast.success("Login Successfully");
       setLoading(false);

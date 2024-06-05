@@ -10,7 +10,7 @@ import useAxiosSecure from "../ReactHooks/useAxiosSecure";
 const Navbar = () => {
   const { logOut, user } = useAuth();
   const [showTooltip, setShowTooltip] = useState(false);
-  const [loggedUser, setLoggedUser] = useState([]);
+  const [loggedUser, setLoggedUser] = useState({});
 
   const axiosSecure = useAxiosSecure();
 
