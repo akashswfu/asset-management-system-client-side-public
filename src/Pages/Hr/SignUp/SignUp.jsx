@@ -13,7 +13,7 @@ import "react-datepicker/dist/react-datepicker.css";
 
 const SignUp = () => {
   const role = "HR";
-  const [pack, setPack] = useState("");
+  const [pack, setPack] = useState(0);
   const [startDate, setStartDate] = useState(new Date());
   const [error, setError] = useState("");
   const [success, setSuccess] = useState("");
@@ -263,9 +263,6 @@ const SignUp = () => {
               </label>
               <div className="flex rounded-md border-2 border-gray-300  items-center">
                 <select
-                  onChange={(e) => {
-                    setPack(e.target.value);
-                  }}
                   value={pack}
                   name="deadline"
                   id="deadline"

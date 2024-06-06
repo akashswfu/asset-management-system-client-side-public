@@ -17,6 +17,8 @@ import UpdateProfile from "../components/UpdateProfile/UpdateProfile";
 import HrRoutes from "./HrRoutes";
 import EmployRoutes from "./EmployRoutes";
 import PrivateRoute from "./PrivateRoute";
+import Subscription from "../Pages/Hr/Subscription/Subscription";
+import Payment from "../Pages/Hr/Payment/Payment";
 
 const router = createBrowserRouter([
   {
@@ -51,6 +53,14 @@ const router = createBrowserRouter([
       },
 
       //hr routes
+      {
+        path: "/subscription",
+        element: <Subscription></Subscription>,
+      },
+      {
+        path: "/payment",
+        element: <Payment></Payment>,
+      },
       {
         path: "/assetList",
         element: (

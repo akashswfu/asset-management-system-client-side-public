@@ -22,6 +22,7 @@ const AuthProvider = ({ children }) => {
   const [user, setUser] = useState(null);
   const [loading, setLoading] = useState(true);
   const axiosPublic = useAxiosPublic();
+  const [packs, setPacks] = useState(0);
 
   const createUser = (email, password) => {
     setLoading(true);
@@ -85,7 +86,8 @@ const AuthProvider = ({ children }) => {
     setLoading,
     loading,
     googleLogin,
-
+    setPacks,
+    packs,
     updateUserProfile,
   };
   return (
