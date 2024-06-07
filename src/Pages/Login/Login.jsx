@@ -54,7 +54,7 @@ const Login = () => {
       //   },
       //   { withCredentials: true }
       // );
-      console.log(data);
+
       toast.success("Login Successfully");
       setLoading(false);
       setTimeout(() => {

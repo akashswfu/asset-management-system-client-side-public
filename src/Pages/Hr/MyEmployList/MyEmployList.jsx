@@ -7,7 +7,7 @@ import { toast } from "react-toastify";
 import { useNavigate } from "react-router-dom";
 
 const MyEmployList = () => {
-  const { user } = useAuth();
+  const { user, hrEmploy, setHrEmploy } = useAuth();
   const axiosSecure = useAxiosSecure();
   const navigate = useNavigate();
 
@@ -35,6 +35,7 @@ const MyEmployList = () => {
 
   const getData = async () => {
     const { data } = await axiosSecure.get(`/users/${user?.email}`);
+    setHrEmploy(data.length);
     return data;
   };
 

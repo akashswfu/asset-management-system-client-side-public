@@ -28,14 +28,14 @@ const Navbar = () => {
         Swal.fire({
           text: "LogOut Success! ",
           toast: true,
-          position: "top-right",
+          position: "center-start",
           showConfirmButton: false,
           timer: 3000,
           customClass: {
             popup: "text-green-500 font-semibold text-center",
           },
         });
-        setTimeout(() => {}, 1000);
+        // setTimeout(() => {}, 1000);
       })
       .catch((error) => {
         console.log(error.message);

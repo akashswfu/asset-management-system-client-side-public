@@ -22,7 +22,9 @@ const AuthProvider = ({ children }) => {
   const [user, setUser] = useState(null);
   const [loading, setLoading] = useState(true);
   const axiosPublic = useAxiosPublic();
+
   const [packs, setPacks] = useState(0);
+  const [hrEmploy, setHrEmploy] = useState(0);
 
   const createUser = (email, password) => {
     setLoading(true);
@@ -89,6 +91,8 @@ const AuthProvider = ({ children }) => {
     setPacks,
     packs,
     updateUserProfile,
+    hrEmploy,
+    setHrEmploy,
   };
   return (
     <AuthContext.Provider value={authInfo}>{children}</AuthContext.Provider>

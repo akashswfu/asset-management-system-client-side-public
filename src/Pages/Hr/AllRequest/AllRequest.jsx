@@ -4,6 +4,7 @@ import useAuth from "../../../ReactHooks/useAuth";
 import { useMutation, useQuery } from "@tanstack/react-query";
 import useAxiosSecure from "../../../ReactHooks/useAxiosSecure";
 import { Toaster } from "react-hot-toast";
+import { ref } from "firebase/database";
 
 const AllRequest = () => {
   const { user } = useAuth();
@@ -43,6 +44,20 @@ const AllRequest = () => {
       </div>
     );
   }
+
+  const handleAction = async (item, sts) => {
+    console.log(sts);
+    item.status = sts;
+    refetch();
+
+    try {
+      await axiosSecure.patch(`/assetsReq/${item?._id}`, item);
+      refetch();
+      alert("Action Updated Successfully");
+    } catch (err) {
+      console.log(err);
+    }
+  };
   return (
     <div className="overflow-x-auto">
       <table className="table table-auto border">
@@ -57,8 +72,7 @@ const AllRequest = () => {
             <th>Request Date</th>
             <th>Additional Note</th>
             <th>Status</th>
-            <th>Approve</th>
-            <th>Reject</th>
+            <th className="text-center">Action</th>
           </tr>
         </thead>
         <tbody className="py-5">
@@ -69,20 +83,43 @@ const AllRequest = () => {
               <td>{item.type}</td>
               <td>{item.email}</td>
               <td>{item.name}</td>
-              <td>{item.additionalNotes}</td>
+
               <td>{item.requestData.slice(0, 10)}</td>
+              <td>{item.additionalNotes}</td>
               <td>{item.status}</td>
+
               <td>
-                {" "}
-                <button className="btn btn-success text-white">
-                  Approve
-                </button>{" "}
-              </td>
-              <td>
-                {" "}
-                <button className="btn btn-error text-white">
-                  Reject
-                </button>{" "}
+                {item.status === "Reject" ? (
+                  <div className="flex justify-center gap-8">
+                    <button disabled className="btn btn-success text-white">
+                      Approve
+                    </button>
+                    <button disabled className="btn btn-error text-white">
+                      Reject
+                    </button>{" "}
+                  </div>
+                ) : (
+                  <div className="flex gap-8">
+                    {item.status === "Approved" ? (
+                      <button disabled className="btn btn-success text-white">
+                        Approve
+                      </button>
+                    ) : (
+                      <button
+                        onClick={() => handleAction(item, "Approved")}
+                        className="btn btn-success text-white"
+                      >
+                        Approve
+                      </button>
+                    )}
+                    <button
+                      onClick={() => handleAction(item, "Reject")}
+                      className="btn btn-error text-white"
+                    >
+                      Reject
+                    </button>{" "}
+                  </div>
+                )}
               </td>
             </tr>
           ))}

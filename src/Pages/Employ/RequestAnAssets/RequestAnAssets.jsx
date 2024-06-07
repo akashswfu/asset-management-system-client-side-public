@@ -132,7 +132,7 @@ const RequestAnAssets = () => {
                                   placeholder="Additional Notes"
                                   name="additionalNotes"
                                   className="input input-bordered w-full"
-                                  defaultValue={assets.productName}
+                                  required
                                 />
                               </label>
                             </div>

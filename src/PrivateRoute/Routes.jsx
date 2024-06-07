@@ -55,11 +55,19 @@ const router = createBrowserRouter([
       //hr routes
       {
         path: "/subscription",
-        element: <Subscription></Subscription>,
+        element: (
+          <HrRoutes>
+            <Subscription></Subscription>
+          </HrRoutes>
+        ),
       },
       {
         path: "/payment",
-        element: <Payment></Payment>,
+        element: (
+          <HrRoutes>
+            <Payment></Payment>
+          </HrRoutes>
+        ),
       },
       {
         path: "/assetList",
@@ -120,6 +128,7 @@ const router = createBrowserRouter([
             <MyAssetsRequest></MyAssetsRequest>
           </EmployRoutes>
         ),
+        loader: () => fetch("http://localhost:5000/assets"),
       },
       {
         path: "/myTeam",

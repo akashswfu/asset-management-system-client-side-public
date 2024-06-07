@@ -57,7 +57,6 @@ const SignUp = () => {
     setError("");
     try {
       const result = await createUser(email, password);
-      toast.success("Registration Successfully");
 
       await updateUserProfile(name);
       setUser({
@@ -68,10 +67,10 @@ const SignUp = () => {
       });
 
       const { data } = await axios.post(`http://localhost:5000/users`, user);
-      toast.success("Login Successfully");
+      toast.success("Registration Successfully");
       setLoading(false);
       setTimeout(() => {
-        navigate(location?.state ? location.state : "/");
+        navigate("/subscription");
       }, 1000);
     } catch (err) {
       toast.warning("User Already Exists! ");
