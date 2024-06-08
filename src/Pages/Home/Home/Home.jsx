@@ -12,7 +12,9 @@ import ExtraSection from "../EmployHome/ExtraSection";
 import PendingRequestByEmploy from "../HrHome/PendingRequestByEmploy";
 import TopRequest from "../HrHome/TopRequest";
 import LimitedStock from "../HrHome/LimitedStock";
-import PieChart from "../HrHome/PieChart";
+
+import PieCharts from "../HrHome/PieCharts";
+import TwoExtraSection from "../HrHome/TwoExtraSection";
 
 const Home = () => {
   const navigate = useNavigate();
@@ -54,10 +56,11 @@ const Home = () => {
       )}
       {userInfo.role === "HR" && (
         <div>
-          {/* <PendingRequestByEmploy></PendingRequestByEmploy>
-         <TopRequest></TopRequest> 
-          <LimitedStock></LimitedStock> */}
-          <PieChart></PieChart>
+          <PendingRequestByEmploy></PendingRequestByEmploy>
+          <TopRequest></TopRequest>
+          <LimitedStock></LimitedStock>
+          <PieCharts></PieCharts>
+          <TwoExtraSection></TwoExtraSection>
         </div>
       )}
     </div>

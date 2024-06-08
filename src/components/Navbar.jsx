@@ -1,5 +1,5 @@
 import { useContext, useEffect, useState } from "react";
-import { Link, NavLink } from "react-router-dom";
+import { Link, NavLink, useNavigate } from "react-router-dom";
 
 // import icons from "../../../public/icons.png";
 // import homeIcons from "/images/h.png";
@@ -12,7 +12,7 @@ const Navbar = () => {
   const { logOut, user, setLoading } = useAuth();
   const [showTooltip, setShowTooltip] = useState(false);
   const [loggedUser, setLoggedUser] = useState({});
-
+  const navigate = useNavigate();
   const axiosSecure = useAxiosSecure();
 
   useEffect(() => {
@@ -45,6 +45,7 @@ const Navbar = () => {
             popup: "text-green-500 font-semibold text-center",
           },
         });
+        navigate("/");
         setLoading(false);
         // setTimeout(() => {}, 1000);
       })
@@ -92,7 +93,7 @@ const Navbar = () => {
       {loggedUser.role === "employ" && (
         <div className="flex gap-3">
           <li className="">
-            <NavLink to="/myAssets">My Assets</NavLink>
+            <NavLink to="/myAssets">My Assets Request</NavLink>
           </li>
           <li className="">
             <NavLink to="/myTeam">My Team</NavLink>
