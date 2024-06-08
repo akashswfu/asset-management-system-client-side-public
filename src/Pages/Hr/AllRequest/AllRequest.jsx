@@ -5,19 +5,11 @@ import { useMutation, useQuery } from "@tanstack/react-query";
 import useAxiosSecure from "../../../ReactHooks/useAxiosSecure";
 import { Toaster } from "react-hot-toast";
 import { ref } from "firebase/database";
+import useAssetsReqByEmploy from "../../../ReactHooks/useAssetsReqByEmploy";
 
 const AllRequest = () => {
-  const { user } = useAuth();
   const axiosSecure = useAxiosSecure();
-
-  const {
-    data: allReq = [],
-    isLoading,
-    refetch,
-  } = useQuery({
-    queryFn: () => getData(),
-    queryKey: ["allReq"],
-  });
+  const [allReq, refetch] = useAssetsReqByEmploy();
 
   // const { mutateAsync } = useMutation({
   //   mutationFn: async ({ newItem, item }) => {
@@ -31,11 +23,6 @@ const AllRequest = () => {
   //     refetch();
   //   },
   // });
-
-  const getData = async () => {
-    const { data } = await axiosSecure.get(`/hrReq/${user?.email}`);
-    return data;
-  };
 
   if (allReq.length === 0) {
     return (

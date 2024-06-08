@@ -6,25 +6,10 @@ import Swal from "sweetalert2";
 import useAuth from "../../../ReactHooks/useAuth";
 import axios from "axios";
 import useAxiosSecure from "../../../ReactHooks/useAxiosSecure";
+import useAssetsList from "../../../ReactHooks/useAssetsList";
 
 const AssetList = () => {
-  const { user } = useAuth();
-  const axiosSecure = useAxiosSecure();
-
-  const {
-    data: myAssets = [],
-    isLoading,
-    refetch,
-  } = useQuery({
-    queryFn: () => getData(),
-    queryKey: ["myAssets", user?.email],
-  });
-
-  const getData = async () => {
-    const { data } = await axiosSecure.get(`/assets/${user?.email}`);
-    return data;
-  };
-
+  const [myAssets, refetch, isLoading] = useAssetsList();
   if (myAssets.length === 0) {
     return (
       <div className="text-center text-7xl h-min-[cal(100vh-130px)] text-blue-400 py-10">

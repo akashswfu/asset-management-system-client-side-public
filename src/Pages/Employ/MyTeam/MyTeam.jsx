@@ -25,7 +25,7 @@ const MyTeam = () => {
 
   const { data: myHr = [] } = useQuery({
     queryFn: () => getHr(),
-    queryKey: ["myHr"],
+    queryKey: ["myHr", userInfo?.myHr],
   });
   const getHr = async () => {
     const { data } = await axiosSecure.get(`/user/${userInfo?.myHr}`);
@@ -50,9 +50,10 @@ const MyTeam = () => {
         className="flex items-center gap-20 justify-center  mx-auto"
         key={myHr._id}
       >
-        <div>
+        {/* <div>
           <img className="w-20 h-20" src={myHr.photo} alt="" />
-        </div>
+        </div> */}
+        <h1>{myHr.photo}</h1>
         <h1>{myHr.name}</h1>
         <h1>{myHr.role}</h1>
       </div>

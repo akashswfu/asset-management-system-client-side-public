@@ -6,9 +6,10 @@ import { Link, NavLink } from "react-router-dom";
 import Swal from "sweetalert2";
 import useAuth from "../ReactHooks/useAuth";
 import useAxiosSecure from "../ReactHooks/useAxiosSecure";
+import { useQuery } from "@tanstack/react-query";
 
 const Navbar = () => {
-  const { logOut, user } = useAuth();
+  const { logOut, user, setLoading } = useAuth();
   const [showTooltip, setShowTooltip] = useState(false);
   const [loggedUser, setLoggedUser] = useState({});
 
@@ -21,6 +22,15 @@ const Navbar = () => {
     };
     getUser();
   }, [user?.email]);
+
+  const { data: myHr = [] } = useQuery({
+    queryFn: () => getHr(),
+    queryKey: ["myHr", loggedUser?.myHr],
+  });
+  const getHr = async () => {
+    const { data } = await axiosSecure.get(`/user/${loggedUser?.myHr}`);
+    return data;
+  };
 
   const handleLogout = () => {
     logOut()
@@ -35,6 +45,7 @@ const Navbar = () => {
             popup: "text-green-500 font-semibold text-center",
           },
         });
+        setLoading(false);
         // setTimeout(() => {}, 1000);
       })
       .catch((error) => {
@@ -153,7 +164,9 @@ const Navbar = () => {
             alt=""
           /> */}
           <span className="hidden text-xl lg:text-3xl font-bold md:flex lg:flex text-transparent bg-gradient-to-r from-sky-500 to-indigo-800 bg-clip-text ">
-            LOGO
+            {loggedUser.role === "HR" && <p>{loggedUser.companyLogo}</p>}
+            {loggedUser.role === "employ" && <p>{myHr.companyLogo}</p>}
+            {loggedUser.length === 0 && <p>No User</p>}
           </span>
         </div>
       </div>

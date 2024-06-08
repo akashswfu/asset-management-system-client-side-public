@@ -8,6 +8,8 @@ import "react-toastify/dist/ReactToastify.css";
 import axios from "axios";
 import useAuth from "../../ReactHooks/useAuth";
 import ReactDatePicker from "react-datepicker";
+import useAxiosSecure from "../../ReactHooks/useAxiosSecure";
+import { FcGoogle } from "react-icons/fc";
 
 const EmploySignUp = () => {
   const role = "employ";
@@ -16,15 +18,49 @@ const EmploySignUp = () => {
   const [error, setError] = useState("");
   const [success, setSuccess] = useState("");
   const [showPassword, setShowPassword] = useState(false);
-  const { createUser, setLoading, updateUserProfile, setUser, user } =
-    useAuth();
+  const {
+    createUser,
+    googleLogin,
+    setLoading,
+    updateUserProfile,
+    setUser,
+    user,
+  } = useAuth();
   const location = useLocation();
   const navigate = useNavigate();
+  const axiosSecure = useAxiosSecure();
   const {
     register,
     handleSubmit,
     formState: { errors },
   } = useForm();
+  const handleGoogleLogin = async () => {
+    try {
+      await googleLogin().then(async (res) => {
+        console.log(res.user);
+        const user = {
+          name: res.user.displayName,
+          email: res.user.email,
+          startDate,
+          role,
+          myHr,
+          photo: res.user.photoURL,
+        };
+        console.log(user);
+        const { data } = await axios
+          .post(`http://localhost:5000/users`, user)
+          .then((res) => {
+            toast.success("Registration Successfully");
+            setLoading(false);
+            setTimeout(() => {
+              navigate(location?.state ? location.state : "/");
+            }, 1000);
+          });
+      });
+    } catch (err) {
+      toast.error("Access Denied");
+    }
+  };
 
   const onSubmit = async (data) => {
     const { name, email, password, photo } = data;
@@ -37,7 +73,6 @@ const EmploySignUp = () => {
       myHr,
       photo,
     };
-    console.log(user);
 
     if (password.length < 6) {
       toast.warning("Password must be 6 or more characters long ");
@@ -196,6 +231,15 @@ const EmploySignUp = () => {
               <button className="btn btn-link">Login Here</button>
             </Link>
           </p>
+          <div className="text-center mt-2  pb-5 flex gap-2 justify-center">
+            <button
+              onClick={handleGoogleLogin}
+              className="btn btn-outline hover:border-0 hover:outline-none bg-gradient-to-r  hover:from-sky-600 hover:to-indigo-700 font-semibold text-sky-600"
+            >
+              <FcGoogle className="text-2xl me-2" />
+              Google Login
+            </button>
+          </div>
         </div>
       </div>
       <ToastContainer />
