@@ -15,6 +15,7 @@ import LimitedStock from "../HrHome/LimitedStock";
 
 import PieCharts from "../HrHome/PieCharts";
 import TwoExtraSection from "../HrHome/TwoExtraSection";
+import { Helmet } from "react-helmet-async";
 
 const Home = () => {
   const navigate = useNavigate();
@@ -37,6 +38,9 @@ const Home = () => {
     <div>
       {!userInfo && (
         <div>
+          <Helmet>
+            <title>Home</title>
+          </Helmet>
           <Banner></Banner>
           <AboutWebsite></AboutWebsite>
           <Package></Package>
@@ -49,6 +53,9 @@ const Home = () => {
       )}
       {userInfo.role === "employ" && userInfo.myHr !== "noHr" && (
         <div>
+          <Helmet>
+            <title>Home || Employ</title>
+          </Helmet>
           <PendingRequest></PendingRequest>
           <MyMonthlyRequest></MyMonthlyRequest>
           <ExtraSection></ExtraSection>
@@ -56,6 +63,9 @@ const Home = () => {
       )}
       {userInfo.role === "HR" && (
         <div>
+          <Helmet>
+            <title>Home || HR </title>
+          </Helmet>
           <PendingRequestByEmploy></PendingRequestByEmploy>
           <TopRequest></TopRequest>
           <LimitedStock></LimitedStock>
