@@ -55,26 +55,26 @@ const SignUp = () => {
 
     setSuccess("");
     setError("");
-    // try {
-    //   const result = await createUser(email, password);
+    try {
+      const result = await createUser(email, password);
 
-    //   await updateUserProfile(name);
-    //   setUser({
-    //     ...result?.user,
-    //     displayName: name,
-    //     email: email,
-    //     photoURL: photo,
-    //   });
+      await updateUserProfile(name);
+      setUser({
+        ...result?.user,
+        displayName: name,
+        email: email,
+        photoURL: photo,
+      });
 
-    //   const { data } = await axios.post(`http://localhost:5000/users`, user);
-    //   toast.success("Registration Successfully");
-    //   setLoading(false);
-    //   setTimeout(() => {
-    //     navigate("/subscription");
-    //   }, 1000);
-    // } catch (err) {
-    //   toast.warning("User Already Exists! ");
-    // }
+      const { data } = await axios.post(`http://localhost:5000/users`, user);
+      toast.success("Registration Successfully");
+      setLoading(false);
+      setTimeout(() => {
+        navigate("/subscription");
+      }, 1000);
+    } catch (err) {
+      toast.warning("User Already Exists! ");
+    }
   };
 
   return (

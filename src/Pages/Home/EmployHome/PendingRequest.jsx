@@ -31,7 +31,7 @@ const PendingRequest = () => {
   return (
     <div>
       <h2 className="text-center text-4xl py-4 text-green-500">
-        My All Pending Request :{getData.length}
+        My All Pending Request : {getData.length}
       </h2>
       {getData.map((data) => (
         <div

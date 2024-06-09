@@ -47,13 +47,15 @@ const MyTeam = () => {
         </div>
       ))}
       <div
-        className="flex items-center gap-20 justify-center  mx-auto"
+        className="flex items-center gap-20 justify-center  mx-auto mb-10"
         key={myHr._id}
       >
         {/* <div>
           <img className="w-20 h-20" src={myHr.photo} alt="" />
         </div> */}
-        <h1>{myHr.photo}</h1>
+        <div>
+          <img className="w-20 h-20 bg-blue-500 " alt="" />
+        </div>
         <h1>{myHr.name}</h1>
         <h1>{myHr.role}</h1>
       </div>

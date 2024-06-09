@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import useAuth from "../../../ReactHooks/useAuth";
 import { useMutation, useQuery } from "@tanstack/react-query";
@@ -9,22 +9,25 @@ import useAssetsReqByEmploy from "../../../ReactHooks/useAssetsReqByEmploy";
 
 const AllRequest = () => {
   const axiosSecure = useAxiosSecure();
-  const [allReq, refetch] = useAssetsReqByEmploy();
+  const [searchText, setSearchText] = useState("");
+  const [search, setSearch] = useState("");
+  const { user } = useAuth();
+  const {
+    data: allReq = [],
+    isLoading,
+    refetch,
+  } = useQuery({
+    queryFn: () => getData(),
+    queryKey: ["allReq", user?.email, search],
+  });
+  const getData = async () => {
+    const { data } = await axiosSecure.get(
+      `/hrReq/${user?.email}?search=${search}`
+    );
+    return data;
+  };
 
-  // const { mutateAsync } = useMutation({
-  //   mutationFn: async ({ newItem, item }) => {
-  //     const { data } = await axiosSecure.patch(`/user/${item._id}`, newItem);
-  //   },
-  //   onSuccess: () => {
-  //     toast.success("Updated Successfully");
-  //     //   setTimeout(() => {
-  //     //     navigate("/");
-  //     //   }, 500);
-  //     refetch();
-  //   },
-  // });
-
-  if (allReq.length === 0) {
+  if (isLoading) {
     return (
       <div className="text-center text-7xl h-min-[cal(100vh-130px)] text-blue-400 py-10">
         Loading....
@@ -45,74 +48,108 @@ const AllRequest = () => {
       console.log(err);
     }
   };
+
+  const handleSearch = (e) => {
+    e.preventDefault();
+    setSearch(searchText);
+  };
+
+  const handleReset = () => {
+    setSearch("");
+    setSearchText("");
+  };
   return (
-    <div className="overflow-x-auto">
-      <table className="table table-auto border">
-        {/* head */}
-        <thead>
-          <tr>
-            <th>No.</th>
-            <th>Product Name</th>
-            <th>Product Type</th>
-            <th>Email of Requester</th>
-            <th>Name of Request</th>
-            <th>Request Date</th>
-            <th>Additional Note</th>
-            <th>Status</th>
-            <th className="text-center">Action</th>
-          </tr>
-        </thead>
-        <tbody className="py-5">
-          {allReq.map((item, idx) => (
-            <tr key={item._id} className="bg-base-200 my-5 py-10">
-              <th>{idx + 1}</th>
-              <td>{item.productName}</td>
-              <td>{item.type}</td>
-              <td>{item.email}</td>
-              <td>{item.name}</td>
+    <div>
+      <div className="flex justify-center items-center gap-5 mb-10">
+        <form onSubmit={handleSearch}>
+          <div className="flex p-1 overflow-hidden border rounded-lg    focus-within:ring focus-within:ring-opacity-40 focus-within:border-blue-400 focus-within:ring-blue-300">
+            <input
+              onChange={(e) => setSearchText(e.target.value)}
+              value={searchText}
+              className="px-6 py-2  text-gray-700 placeholder-gray-500 bg-white outline-none focus:placeholder-transparent"
+              type="text"
+              name="search"
+              placeholder="Enter Requester Name"
+              aria-label="Enter Job Title"
+            />
 
-              <td>{item.requestData.slice(0, 10)}</td>
-              <td>{item.additionalNotes}</td>
-              <td>{item.status}</td>
+            <button className="text-transparent bg-gradient-to-r from-sky-500 to-indigo-500 hover:from-sky-600 hover:to-indigo-700  px-6 font-semibold uppercase text-md  text-white border-0 text-md btn">
+              Search
+            </button>
+          </div>
+        </form>
+        <button onClick={handleReset} className="btn btn-error text-white">
+          Reset
+        </button>
+      </div>
+      <div className="overflow-x-auto">
+        <table className="table table-auto border">
+          {/* head */}
+          <thead>
+            <tr>
+              <th>No.</th>
+              <th>Product Name</th>
+              <th>Product Type</th>
+              <th>Email of Requester</th>
+              <th>Name of Request</th>
+              <th>Request Date</th>
+              <th>Additional Note</th>
+              <th>Status</th>
+              <th className="text-center">Action</th>
+            </tr>
+          </thead>
+          <tbody className="py-5">
+            {allReq.map((item, idx) => (
+              <tr key={item._id} className="bg-base-200 my-5 py-10">
+                <th>{idx + 1}</th>
+                <td>{item.productName}</td>
+                <td>{item.type}</td>
+                <td>{item.email}</td>
+                <td>{item.name}</td>
 
-              <td>
-                {item.status === "Reject" ? (
-                  <div className="flex justify-center gap-8">
-                    <button disabled className="btn btn-success text-white">
-                      Approve
-                    </button>
-                    <button disabled className="btn btn-error text-white">
-                      Reject
-                    </button>{" "}
-                  </div>
-                ) : (
-                  <div className="flex gap-8">
-                    {item.status === "Approved" ? (
+                <td>{item.requestData.slice(0, 10)}</td>
+                <td>{item.additionalNotes}</td>
+                <td>{item.status}</td>
+
+                <td>
+                  {item.status === "Reject" ? (
+                    <div className="flex justify-center gap-8">
                       <button disabled className="btn btn-success text-white">
                         Approve
                       </button>
-                    ) : (
+                      <button disabled className="btn btn-error text-white">
+                        Reject
+                      </button>{" "}
+                    </div>
+                  ) : (
+                    <div className="flex gap-8">
+                      {item.status === "Approved" ? (
+                        <button disabled className="btn btn-success text-white">
+                          Approve
+                        </button>
+                      ) : (
+                        <button
+                          onClick={() => handleAction(item, "Approved")}
+                          className="btn btn-success text-white"
+                        >
+                          Approve
+                        </button>
+                      )}
                       <button
-                        onClick={() => handleAction(item, "Approved")}
-                        className="btn btn-success text-white"
+                        onClick={() => handleAction(item, "Reject")}
+                        className="btn btn-error text-white"
                       >
-                        Approve
-                      </button>
-                    )}
-                    <button
-                      onClick={() => handleAction(item, "Reject")}
-                      className="btn btn-error text-white"
-                    >
-                      Reject
-                    </button>{" "}
-                  </div>
-                )}
-              </td>
-            </tr>
-          ))}
-        </tbody>
-      </table>
-      <Toaster />
+                        Reject
+                      </button>{" "}
+                    </div>
+                  )}
+                </td>
+              </tr>
+            ))}
+          </tbody>
+        </table>
+        <Toaster />
+      </div>
     </div>
   );
 };

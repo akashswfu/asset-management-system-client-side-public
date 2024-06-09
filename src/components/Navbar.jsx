@@ -55,11 +55,11 @@ const Navbar = () => {
   };
   const links = (
     <div className="flex flex-col md:flex-row lg:flex-row md:gap-4 uppercase font-semibold ">
-      <li className="">
-        <NavLink to="/">Home</NavLink>
-      </li>
       {!user && (
         <div className="flex flex-col md:flex-row lg:flex-row md:gap-4 uppercase font-semibold ">
+          <li className="">
+            <NavLink to="/">Home</NavLink>
+          </li>
           <li className="">
             <NavLink to="/signUp">Join as HR</NavLink>
           </li>
@@ -70,6 +70,9 @@ const Navbar = () => {
       )}
       {loggedUser.role === "HR" && (
         <div className="flex gap-3">
+          <li className="">
+            <NavLink to="/">Home</NavLink>
+          </li>
           <li className="">
             <NavLink to="/assetList">Asset List</NavLink>
           </li>
@@ -92,6 +95,9 @@ const Navbar = () => {
       )}
       {loggedUser.role === "employ" && (
         <div className="flex gap-3">
+          <li className="">
+            <NavLink to="/">Home</NavLink>
+          </li>
           <li className="">
             <NavLink to="/myAssets">My Assets Request</NavLink>
           </li>

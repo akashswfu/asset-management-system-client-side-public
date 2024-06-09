@@ -19,7 +19,7 @@ const PendingRequestByEmploy = () => {
     getPendingData();
   }, [userInfo.email]);
 
-  if (getData.length === 0) {
+  if (isLoading) {
     return (
       <div className="text-center text-7xl h-min-[cal(100vh-130px)] text-blue-400 py-10">
         Loading....
@@ -29,7 +29,7 @@ const PendingRequestByEmploy = () => {
   return (
     <div>
       <h2 className="text-center text-4xl pb-10 pt-10 text-green-500">
-        My All Request by This Month
+        All Request of this month
       </h2>
       {getData.slice(0, 5).map((data) => (
         <div

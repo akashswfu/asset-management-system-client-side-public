@@ -156,7 +156,7 @@ const RequestAnAssets = () => {
             id="deadline"
             className=" p-4  rounded-md text-transparent bg-gradient-to-r from-sky-500 to-indigo-500 hover:from-sky-600 hover:to-indigo-700  px-6 font-semibold uppercase text-md  text-white border-0 text-md btn"
           >
-            <option value="">Assets Type</option>
+            <option value="">Availability</option>
             <option value="in">Available</option>
             <option value="out">Out Of Stocks</option>
           </select>
