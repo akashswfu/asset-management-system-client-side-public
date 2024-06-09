@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import useAxiosSecure from "../../../ReactHooks/useAxiosSecure";
 import useAuth from "../../../ReactHooks/useAuth";
 import { useQuery } from "@tanstack/react-query";
@@ -21,16 +21,47 @@ const RequestAnAssets = () => {
   const [assetsStock, setAssetsStock] = useState("");
   const [assetsType, setAssetsType] = useState("");
 
+  const [currentPage, setCurrentPage] = useState(1);
+  const [itemsPerPage, setItemsPerPage] = useState(3);
+  const [count, setCount] = useState(0);
+
   const { data: myAssets = [], refetch } = useQuery({
     queryFn: () => getData(),
-    queryKey: ["myAssets", userInfo?.myHr, assetsStock, assetsType, search],
+    queryKey: [
+      "myAssets",
+      userInfo?.myHr,
+      assetsStock,
+      assetsType,
+      search,
+      currentPage,
+      itemsPerPage,
+    ],
   });
 
   const getData = async () => {
     const { data } = await axiosSecure.get(
-      `/assets/${userInfo?.myHr}?assetsStock=${assetsStock}&assetsType=${assetsType}&search=${search}`
+      `/assets/${userInfo?.myHr}?page=${currentPage}&size=${itemsPerPage}&assetsStock=${assetsStock}&assetsType=${assetsType}&search=${search}`
     );
     return data;
+  };
+
+  useEffect(() => {
+    const getCount = async () => {
+      const { data } = await axiosSecure(
+        `/assetsCount/${userInfo?.myHr}?search=${search}`
+      );
+
+      setCount(data.count);
+    };
+    getCount();
+  }, [search]);
+  console.log(count);
+
+  const numberOfPages = Math.ceil(count / itemsPerPage);
+  const pages = [...Array(numberOfPages).keys()].map((element) => element + 1);
+
+  const handlePaginationButton = (value) => {
+    setCurrentPage(value);
   };
 
   const handleRequest = async (e) => {
@@ -240,6 +271,71 @@ const RequestAnAssets = () => {
             </div>
           </div>
         ))}
+      </div>
+      <div className="flex justify-center mt-12">
+        <button
+          disabled={currentPage === 1}
+          onClick={() => handlePaginationButton(currentPage - 1)}
+          className="px-4 py-2 mx-1 text-gray-700 disabled:text-gray-500 capitalize bg-gradient-to-r bg-gray-200 rounded-md disabled:cursor-not-allowed disabled:hover:bg-gray-200 disabled:hover:text-gray-500 hover:from-sky-600 hover:to-indigo-700  hover:text-white"
+        >
+          <div className="flex items-center -mx-1">
+            <svg
+              xmlns="http://www.w3.org/2000/svg"
+              className="w-6 h-6 mx-1 rtl:-scale-x-100"
+              fill="none"
+              viewBox="0 0 24 24"
+              stroke="currentColor"
+            >
+              <path
+                strokeLinecap="round"
+                strokeLinejoin="round"
+                strokeWidth="2"
+                d="M7 16l-4-4m0 0l4-4m-4 4h18"
+              />
+            </svg>
+
+            <span></span>
+          </div>
+        </button>
+
+        {pages.map((btnNum) => (
+          <button
+            onClick={() => handlePaginationButton(btnNum)}
+            key={btnNum}
+            className={`hidden ${
+              currentPage === btnNum
+                ? "text-transparent text-white bg-gradient-to-r from-sky-500 to-indigo-500 hover:from-sky-600 hover:to-indigo-700"
+                : ""
+            } px-4 py-2 mx-1 transition-colors duration-300 transform  rounded-md sm:inline   hover:text-white`}
+          >
+            {btnNum}
+          </button>
+        ))}
+
+        <button
+          disabled={currentPage === numberOfPages}
+          onClick={() => handlePaginationButton(currentPage + 1)}
+          className="px-4 py-2 mx-1 bg-gradient-to-r  text-gray-700 transition-colors duration-300 transform bg-gray-200 rounded-md hover:from-sky-600 hover:to-indigo-700 disabled:hover:bg-gray-200 disabled:hover:text-gray-500 hover:text-white disabled:cursor-not-allowed disabled:text-gray-500"
+        >
+          <div className="flex items-center -mx-1">
+            <span className=""></span>
+
+            <svg
+              xmlns="http://www.w3.org/2000/svg"
+              className="w-6 h-6 mx-1 rtl:-scale-x-100"
+              fill="none"
+              viewBox="0 0 24 24"
+              stroke="currentColor"
+            >
+              <path
+                strokeLinecap="round"
+                strokeLinejoin="round"
+                strokeWidth="2"
+                d="M17 8l4 4m0 0l-4 4m4-4H3"
+              />
+            </svg>
+          </div>
+        </button>
       </div>
     </div>
   );
