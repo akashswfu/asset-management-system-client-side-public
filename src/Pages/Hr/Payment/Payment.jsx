@@ -11,7 +11,7 @@ const Payment = () => {
   //   };
 
   return (
-    <div>
+    <div className="min-h-[calc(100vh-400px)]">
       <div>
         <Elements stripe={stripePromise}>
           <CheckoutForm></CheckoutForm>

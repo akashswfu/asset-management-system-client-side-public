@@ -7,6 +7,7 @@ import useAuth from "../../../ReactHooks/useAuth";
 import axios from "axios";
 import useAxiosSecure from "../../../ReactHooks/useAxiosSecure";
 import useAssetsList from "../../../ReactHooks/useAssetsList";
+import { Toaster } from "react-hot-toast";
 
 const AssetList = () => {
   const { user, setLoading } = useAuth();
@@ -18,7 +19,7 @@ const AssetList = () => {
   const axiosSecure = useAxiosSecure();
 
   const [currentPage, setCurrentPage] = useState(1);
-  const [itemsPerPage, setItemsPerPage] = useState(3);
+  const [itemsPerPage, setItemsPerPage] = useState(10);
   const [count, setCount] = useState(0);
 
   const {
@@ -89,14 +90,13 @@ const AssetList = () => {
       confirmButtonText: "Yes, delete it!",
     }).then(async (result) => {
       if (result.isConfirmed) {
-        console.log("User want to");
         try {
           const { data } = await axiosSecure.delete(`/asset/${id}`);
           console.log(data);
           if (data.deletedCount > 0) {
             Swal.fire({
               title: "Deleted!",
-              text: "Your Item has been deleted.",
+              text: "Your Asset has been deleted.",
               icon: "success",
             });
             // const remaining = foods.filter((f) => f._id !== id);
@@ -122,7 +122,7 @@ const AssetList = () => {
     setAssetsType("");
   };
   return (
-    <div>
+    <div className="min-h-[calc(100vh-400px)]">
       <div className="flex justify-center items-center gap-5 mb-10">
         <form onSubmit={handleSearch}>
           <div className="flex p-1 overflow-hidden border rounded-lg    focus-within:ring focus-within:ring-opacity-40 focus-within:border-blue-400 focus-within:ring-blue-300">
@@ -136,7 +136,7 @@ const AssetList = () => {
               aria-label="Enter Job Title"
             />
 
-            <button className="text-transparent bg-gradient-to-r from-sky-500 to-indigo-500 hover:from-sky-600 hover:to-indigo-700  px-6 font-semibold uppercase text-md  text-white border-0 text-md btn">
+            <button className="text-transparent bg-gradient-to-r from-pink-600 to-yellow-600 hover:from-pink-700 hover:to-yellow-700  px-6 font-semibold uppercase text-md  text-white border-0 text-md btn">
               Search
             </button>
           </div>
@@ -152,7 +152,7 @@ const AssetList = () => {
             value={assetsType}
             name="deadline"
             id="deadline"
-            className=" p-4  rounded-md text-transparent bg-gradient-to-r from-sky-500 to-indigo-500 hover:from-sky-600 hover:to-indigo-700  px-6 font-semibold uppercase text-md  text-white border-0 text-md btn"
+            className=" p-4  rounded-md text-transparent bg-gradient-to-r from-pink-600 to-yellow-600 hover:from-pink-700 hover:to-yellow-700  px-6 font-semibold uppercase text-md  text-white border-0 text-md btn"
           >
             <option value="">Assets Type</option>
             <option value="Returnable">Returnable</option>
@@ -169,7 +169,7 @@ const AssetList = () => {
             value={assetsStock}
             name="deadline"
             id="deadline"
-            className=" p-4  rounded-md text-transparent bg-gradient-to-r from-sky-500 to-indigo-500 hover:from-sky-600 hover:to-indigo-700  px-6 font-semibold uppercase text-md  text-white border-0 text-md btn"
+            className=" p-4  rounded-md text-transparent bg-gradient-to-r from-pink-600 to-yellow-600 hover:from-pink-700 hover:to-yellow-700  px-6 font-semibold uppercase text-md  text-white border-0 text-md btn"
           >
             <option value="">Availability</option>
             <option value="in">Available</option>
@@ -185,7 +185,7 @@ const AssetList = () => {
             value={sort}
             name="deadline"
             id="deadline"
-            className=" p-4  rounded-md text-transparent bg-gradient-to-r from-sky-500 to-indigo-500 hover:from-sky-600 hover:to-indigo-700  px-6 font-semibold uppercase text-md  text-white border-0 text-md btn"
+            className=" p-4  rounded-md text-transparent bg-gradient-to-r from-pink-600 to-yellow-600 hover:from-pink-700 hover:to-yellow-700  px-6 font-semibold uppercase text-md  text-white border-0 text-md btn"
           >
             <option value="">Sort By Quantity</option>
             <option value="dsc">Maximum Items</option>
@@ -193,11 +193,14 @@ const AssetList = () => {
           </select>
         </div>
 
-        <button onClick={handleReset} className="btn btn-error text-white">
+        <button
+          onClick={handleReset}
+          className="btn bg-red-500 hover:bg-red-600 border-0 text-white"
+        >
           Reset
         </button>
       </div>
-      <div className="overflow-x-auto">
+      <div className="overflow-x-auto min-h-[calc(100vh-500px)]">
         <table className="table table-auto border">
           {/* head */}
           <thead>
@@ -218,15 +221,19 @@ const AssetList = () => {
                 <td>{item.productName}</td>
                 <td>{item.type}</td>
                 <td>{item.productQuantity}</td>
-                <td>{item.startDate}</td>
+                <td>{item.startDate.slice(0, 10)}</td>
                 <td>
                   <Link to={`/updateAsset/${item._id}`}>
-                    <td className="text-blue-600 underline">Update</td>
+                    <button className="btn bg-green-500 border-0 text-white hover:bg-green-600 ">
+                      Update
+                    </button>
                   </Link>
                 </td>
                 <td>
                   <Link onClick={() => handleDelete(item._id)}>
-                    <td className="text-blue-600 underline">Delete</td>
+                    <button className="btn bg-red-500 border-0 text-white hover:bg-red-600 ">
+                      Delete
+                    </button>
                   </Link>
                 </td>
               </tr>
@@ -238,7 +245,7 @@ const AssetList = () => {
         <button
           disabled={currentPage === 1}
           onClick={() => handlePaginationButton(currentPage - 1)}
-          className="px-4 py-2 mx-1 text-gray-700 disabled:text-gray-500 capitalize bg-gradient-to-r bg-gray-200 rounded-md disabled:cursor-not-allowed disabled:hover:bg-gray-200 disabled:hover:text-gray-500 hover:from-sky-600 hover:to-indigo-700  hover:text-white"
+          className="px-4 py-2 mx-1 text-gray-700 disabled:text-gray-500 capitalize bg-gradient-to-r bg-gray-200 rounded-md disabled:cursor-not-allowed disabled:hover:bg-gray-200 disabled:hover:text-gray-500 hover:from-pink-600 hover:to-yellow-700  hover:text-white"
         >
           <div className="flex items-center -mx-1">
             <svg
@@ -266,9 +273,9 @@ const AssetList = () => {
             key={btnNum}
             className={`hidden ${
               currentPage === btnNum
-                ? "text-transparent text-white bg-gradient-to-r from-sky-500 to-indigo-500 hover:from-sky-600 hover:to-indigo-700"
+                ? "text-transparent text-white bg-gradient-to-r from-pink-600 to-yellow-600 hover:from-pink-700 hover:to-yellow-700"
                 : ""
-            } px-4 py-2 mx-1 transition-colors duration-300 transform  rounded-md sm:inline   hover:text-white`}
+            } px-4 py-2 mx-1 transition-colors duration-300 transform  rounded-md sm:inline   `}
           >
             {btnNum}
           </button>
@@ -277,7 +284,7 @@ const AssetList = () => {
         <button
           disabled={currentPage === numberOfPages}
           onClick={() => handlePaginationButton(currentPage + 1)}
-          className="px-4 py-2 mx-1 bg-gradient-to-r  text-gray-700 transition-colors duration-300 transform bg-gray-200 rounded-md hover:from-sky-600 hover:to-indigo-700 disabled:hover:bg-gray-200 disabled:hover:text-gray-500 hover:text-white disabled:cursor-not-allowed disabled:text-gray-500"
+          className="px-4 py-2 mx-1 bg-gradient-to-r  text-gray-700 transition-colors duration-300 transform bg-gray-200 rounded-md hover:from-pink-600 hover:to-yellow-700 disabled:hover:bg-gray-200 disabled:hover:text-gray-500 hover:text-white disabled:cursor-not-allowed disabled:text-gray-500"
         >
           <div className="flex items-center -mx-1">
             <span className=""></span>
@@ -299,6 +306,7 @@ const AssetList = () => {
           </div>
         </button>
       </div>
+      <Toaster />
     </div>
   );
 };

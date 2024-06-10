@@ -4,8 +4,8 @@ import useAuth from "../../../ReactHooks/useAuth";
 import { useQuery } from "@tanstack/react-query";
 import useUserInfo from "../../../ReactHooks/useUserInfo";
 import { FaRegSquare } from "react-icons/fa";
-import { toast } from "react-toastify";
 import { useNavigate } from "react-router-dom";
+import toast, { Toaster } from "react-hot-toast";
 
 const RequestAnAssets = () => {
   const status = "Pending";
@@ -21,7 +21,7 @@ const RequestAnAssets = () => {
   const [assetsStock, setAssetsStock] = useState("");
   const [assetsType, setAssetsType] = useState("");
   const [currentPage, setCurrentPage] = useState(1);
-  const [itemsPerPage, setItemsPerPage] = useState(3);
+  const [itemsPerPage, setItemsPerPage] = useState(6);
   const [count, setCount] = useState(0);
 
   const { data: myAssets = [], refetch } = useQuery({
@@ -67,7 +67,7 @@ const RequestAnAssets = () => {
     e.preventDefault();
 
     if (userInfo.myHr === "noHr") {
-      return alert("You are not any Hr Please Contact with your Hr");
+      return toast.error("You have not any Hr Please Contact with your Hr");
     }
 
     const form = e.target;
@@ -101,14 +101,10 @@ const RequestAnAssets = () => {
     try {
       const { data } = await axiosSecure.post("/assetsReq", assetsReq);
       if (data.insertedId) {
-        alert("Assets Added Successfully");
+        toast.success("Assets Request Successfully");
         await axiosSecure.patch(`/asset/${assetId}`, singleAssets);
         refetch();
       }
-
-      setTimeout(() => {
-        // navigate("/myAssets");
-      }, 500);
 
       console.log(data);
     } catch (err) {
@@ -151,7 +147,7 @@ const RequestAnAssets = () => {
               aria-label="Enter Job Title"
             />
 
-            <button className="text-transparent bg-gradient-to-r from-sky-500 to-indigo-500 hover:from-sky-600 hover:to-indigo-700  px-6 font-semibold uppercase text-md  text-white border-0 text-md btn">
+            <button className="text-transparent bg-gradient-to-r from-pink-600 to-yellow-600 hover:from-pink-700 hover:to-yellow-700  px-6 font-semibold uppercase text-md  text-white border-0 text-md btn">
               Search
             </button>
           </div>
@@ -167,7 +163,7 @@ const RequestAnAssets = () => {
             value={assetsType}
             name="deadline"
             id="deadline"
-            className=" p-4  rounded-md text-transparent bg-gradient-to-r from-sky-500 to-indigo-500 hover:from-sky-600 hover:to-indigo-700  px-6 font-semibold uppercase text-md  text-white border-0 text-md btn"
+            className=" p-4  rounded-md text-transparent bg-gradient-to-r from-pink-600 to-yellow-600 hover:from-pink-700 hover:to-yellow-700  px-6 font-semibold uppercase text-md  text-white border-0 text-md btn"
           >
             <option value="">Assets Type</option>
             <option value="Returnable">Returnable</option>
@@ -184,7 +180,7 @@ const RequestAnAssets = () => {
             value={assetsStock}
             name="deadline"
             id="deadline"
-            className=" p-4  rounded-md text-transparent bg-gradient-to-r from-sky-500 to-indigo-500 hover:from-sky-600 hover:to-indigo-700  px-6 font-semibold uppercase text-md  text-white border-0 text-md btn"
+            className=" p-4  rounded-md text-transparent bg-gradient-to-r from-pink-600 to-yellow-600 hover:from-pink-700 hover:to-yellow-700  px-6 font-semibold uppercase text-md  text-white border-0 text-md btn"
           >
             <option value="">Availability</option>
             <option value="in">Available</option>
@@ -196,24 +192,39 @@ const RequestAnAssets = () => {
           Reset
         </button>
       </div>
-      <div className="grid grid-cols-1 md:grid-cols-2 justify-center mx-auto gap-10">
-        {myAssets.map((assets) => (
-          <div key={assets._id} className="card w-96 bg-base-100 shadow-xl">
-            <div className="card-body">
-              <h2 className="card-title">{assets.productName}</h2>
-              <p>{assets.type}</p>
-              <p>Quantity: {assets.productQuantity}</p>
-              <div className=" flex items-center justify-between">
-                <div>
-                  {assets.productQuantity > 0 ? "Available" : "Out of Stock"}
-                </div>
 
+      <div className="grid grid-cols-1 md:grid-cols-3 justify-items-center pt-10 mx-auto gap-10 min-h-[calc(100vh-500px)]">
+        {myAssets.map((assets) => (
+          <div
+            key={assets._id}
+            className="card w-96 h-80 bg-base-100 shadow-2xl"
+          >
+            <div className="flex flex-col my-auto items-center space-y-5">
+              <h2 className="card-title text-3xl ">{assets.productName}</h2>
+              <p className="text-md font-semibold">
+                {" "}
+                Product Type : {assets.type}
+              </p>
+              <p className="text-lg font-semibold">
+                Quantity : {assets.productQuantity}
+              </p>
+              {assets.productQuantity > 0 ? (
+                <p className="text-xl font-semibold text-green-500">
+                  Available
+                </p>
+              ) : (
+                <p className="text-xl font-semibold text-red-500">
+                  Out of Stock
+                </p>
+              )}
+
+              <div className=" flex items-center justify-between">
                 {assets.productQuantity > 0 ? (
                   <div>
                     <label
                       onClick={() => setSingleAssets(assets)}
                       htmlFor="my_modal_7"
-                      className="btn  btn-outline rounded-md text-transparent bg-gradient-to-r from-sky-500 to-indigo-500 hover:from-sky-600 hover:to-indigo-700 px-8 font-semibold uppercase text-md  text-white border-0 text-md"
+                      className="btn  btn-outline rounded-md text-transparent bg-gradient-to-r from-pink-600 to-yellow-600 hover:from-pink-700 hover:to-yellow-700 px-8 font-semibold uppercase text-md  text-white border-0 text-md"
                     >
                       Requested
                     </label>
@@ -247,7 +258,7 @@ const RequestAnAssets = () => {
                             </div>
 
                             <input
-                              className="btn w-full lg:mt-0 mt-5 text-lg uppercase  text-white text-transparent bg-gradient-to-r from-sky-500 to-indigo-500 hover:from-sky-600 hover:to-indigo-700"
+                              className="btn w-full lg:mt-0 mt-5 text-lg uppercase  text-white text-transparent bg-gradient-to-r from-pink-600 to-yellow-600 hover:from-pink-700 hover:to-yellow-700"
                               type="submit"
                               value="Request"
                             />
@@ -261,8 +272,8 @@ const RequestAnAssets = () => {
                   </div>
                 ) : (
                   <div>
-                    <button disabled className="btn  btn-primary">
-                      Request
+                    <button disabled className="btn  px-9  ">
+                      Requested
                     </button>
                   </div>
                 )}
@@ -275,7 +286,7 @@ const RequestAnAssets = () => {
         <button
           disabled={currentPage === 1}
           onClick={() => handlePaginationButton(currentPage - 1)}
-          className="px-4 py-2 mx-1 text-gray-700 disabled:text-gray-500 capitalize bg-gradient-to-r bg-gray-200 rounded-md disabled:cursor-not-allowed disabled:hover:bg-gray-200 disabled:hover:text-gray-500 hover:from-sky-600 hover:to-indigo-700  hover:text-white"
+          className="px-4 py-2 mx-1 text-gray-700 disabled:text-gray-500 capitalize bg-gradient-to-r bg-gray-200 rounded-md disabled:cursor-not-allowed disabled:hover:bg-gray-200 disabled:hover:text-gray-500 hover:from-pink-600 hover:to-yellow-700  hover:text-white"
         >
           <div className="flex items-center -mx-1">
             <svg
@@ -303,9 +314,9 @@ const RequestAnAssets = () => {
             key={btnNum}
             className={`hidden ${
               currentPage === btnNum
-                ? "text-transparent text-white bg-gradient-to-r from-sky-500 to-indigo-500 hover:from-sky-600 hover:to-indigo-700"
+                ? "text-transparent text-white bg-gradient-to-r from-pink-600 to-yellow-600 hover:from-pink-700 hover:to-yellow-700"
                 : ""
-            } px-4 py-2 mx-1 transition-colors duration-300 transform  rounded-md sm:inline   hover:text-white`}
+            } px-4 py-2 mx-1 transition-colors duration-300 transform  rounded-md sm:inline   `}
           >
             {btnNum}
           </button>
@@ -314,7 +325,7 @@ const RequestAnAssets = () => {
         <button
           disabled={currentPage === numberOfPages}
           onClick={() => handlePaginationButton(currentPage + 1)}
-          className="px-4 py-2 mx-1 bg-gradient-to-r  text-gray-700 transition-colors duration-300 transform bg-gray-200 rounded-md hover:from-sky-600 hover:to-indigo-700 disabled:hover:bg-gray-200 disabled:hover:text-gray-500 hover:text-white disabled:cursor-not-allowed disabled:text-gray-500"
+          className="px-4 py-2 mx-1 bg-gradient-to-r  text-gray-700 transition-colors duration-300 transform bg-gray-200 rounded-md hover:from-pink-600 hover:to-yellow-700 disabled:hover:bg-gray-200 disabled:hover:text-gray-500 hover:text-white disabled:cursor-not-allowed disabled:text-gray-500"
         >
           <div className="flex items-center -mx-1">
             <span className=""></span>
@@ -336,6 +347,7 @@ const RequestAnAssets = () => {
           </div>
         </button>
       </div>
+      <Toaster />
     </div>
   );
 };

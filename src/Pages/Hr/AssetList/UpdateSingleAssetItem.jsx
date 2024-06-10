@@ -1,10 +1,9 @@
 import React, { useState } from "react";
 import ReactDatePicker from "react-datepicker";
-import { Toaster } from "react-hot-toast";
+import toast, { Toaster } from "react-hot-toast";
 import { useLoaderData, useNavigate, useParams } from "react-router-dom";
 import useAuth from "../../../ReactHooks/useAuth";
 import { useMutation } from "@tanstack/react-query";
-import { toast } from "react-toastify";
 import useAxiosSecure from "../../../ReactHooks/useAxiosSecure";
 
 const UpdateSingleAssetItem = () => {
@@ -49,7 +48,9 @@ const UpdateSingleAssetItem = () => {
 
   return (
     <div className="md:p-24 p-5 bg-gray-100 ">
-      <h1 className="text-center pb-12 text-3xl">Update Asset Item</h1>
+      <h1 className="text-center pb-12 uppercase font-bold text-3xl">
+        Update Asset Item
+      </h1>
       <form onSubmit={handleUpdate}>
         {/* foodname and foodImage row  */}
         <div className="w-full  gap-10 justify-center md:mb-6">
@@ -110,9 +111,9 @@ const UpdateSingleAssetItem = () => {
         {/* user email and name  */}
 
         <input
-          className="btn w-full text-lg uppercase mt-16  text-white text-transparent bg-gradient-to-r from-sky-500 to-indigo-500 hover:from-sky-600 hover:to-indigo-700"
+          className="btn w-full text-lg uppercase mt-16  text-white text-transparent bg-gradient-to-r from-pink-600 to-yellow-600 hover:from-pink-700 hover:to-yellow-700"
           type="submit"
-          value="Update Item"
+          value="Update Assets"
         />
       </form>
       <Toaster />

@@ -2,14 +2,11 @@ import React from "react";
 import useAuth from "../../../ReactHooks/useAuth";
 import useAxiosSecure from "../../../ReactHooks/useAxiosSecure";
 import { useMutation, useQuery } from "@tanstack/react-query";
-import { Toaster } from "react-hot-toast";
-import { toast } from "react-toastify";
-import { useNavigate } from "react-router-dom";
+import toast, { Toaster } from "react-hot-toast";
 
 const MyEmployList = () => {
   const { user, hrEmploy, setHrEmploy } = useAuth();
   const axiosSecure = useAxiosSecure();
-  const navigate = useNavigate();
 
   const {
     data: myTeam = [],
@@ -25,10 +22,7 @@ const MyEmployList = () => {
       const { data } = await axiosSecure.patch(`/user/${item._id}`, newItem);
     },
     onSuccess: () => {
-      toast.success("Updated Successfully");
-      //   setTimeout(() => {
-      //     navigate("/");
-      //   }, 500);
+      toast.success("Remove from team Successfully");
       refetch();
     },
   });
@@ -64,8 +58,8 @@ const MyEmployList = () => {
     await mutateAsync({ newItem, item });
   };
   return (
-    <div className="overflow-x-auto">
-      <table className="table table-auto border">
+    <div className="overflow-x-auto min-h-[calc(100vh-450px)]">
+      <table className="table table-auto border mt-10">
         {/* head */}
         <thead>
           <tr>
@@ -86,7 +80,7 @@ const MyEmployList = () => {
                   <img
                     className="w-16 h-16 rounded-lg"
                     src={item.photo}
-                    alt="Avatar Tailwind CSS Component"
+                    alt="NO PHOTO"
                   />
                 </div>
               </td>
@@ -96,7 +90,7 @@ const MyEmployList = () => {
                 {" "}
                 <button
                   onClick={() => handleUpdate(item)}
-                  className="btn btn-primary"
+                  className="btn bg-red-500 hover:bg-red-600 border-0 text-white"
                 >
                   Remove
                 </button>{" "}

@@ -1,7 +1,6 @@
 import axios from "axios";
 import { useState } from "react";
-import { Toaster } from "react-hot-toast";
-import { toast } from "react-toastify";
+import toast, { Toaster } from "react-hot-toast";
 import useAuth from "../../../ReactHooks/useAuth";
 import { useNavigate } from "react-router-dom";
 import ReactDatePicker from "react-datepicker";
@@ -41,9 +40,8 @@ const AddAsset = () => {
         productDetails
       );
       toast.success("Assets Added Successfully");
-      setTimeout(() => {
-        // navigate("/assetList");
-      }, 500);
+
+      navigate("/assetList");
 
       console.log(data);
     } catch (err) {
@@ -52,6 +50,7 @@ const AddAsset = () => {
   };
   return (
     <div className="md:p-24 p-5 bg-gray-100 ">
+      <h1 className="text-center text-4xl font-bold pb-12">Add a new Assets</h1>
       <form onSubmit={handleAddFood}>
         {/* foodname and foodImage row  */}
         <div className="w-full  gap-10 justify-center md:mb-6">
@@ -114,9 +113,9 @@ const AddAsset = () => {
         {/* user email and name  */}
 
         <input
-          className="btn w-full text-lg uppercase mt-16  text-white text-transparent bg-gradient-to-r from-sky-500 to-indigo-500 hover:from-sky-600 hover:to-indigo-700"
+          className="btn w-full text-lg uppercase mt-16  text-white text-transparent bg-gradient-to-r from-pink-600 to-yellow-600 hover:from-pink-700 hover:to-yellow-700"
           type="submit"
-          value="Add Item"
+          value="Add Assets"
         />
       </form>
       <Toaster />

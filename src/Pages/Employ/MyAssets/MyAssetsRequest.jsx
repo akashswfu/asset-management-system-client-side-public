@@ -6,7 +6,7 @@ import { Link, useLoaderData } from "react-router-dom";
 import Swal from "sweetalert2";
 import { toast } from "react-toastify";
 import ReactPDF, { PDFViewer } from "@react-pdf/renderer";
-import MyDocument from "./MyDocument";
+
 import {
   Page,
   Text,
@@ -16,6 +16,7 @@ import {
   pdf,
 } from "@react-pdf/renderer";
 import { saveAs } from "file-saver";
+import { Toaster } from "react-hot-toast";
 
 const MyAssetsRequest = () => {
   const { user, setLoading } = useAuth();
@@ -28,11 +29,10 @@ const MyAssetsRequest = () => {
   const [assetsType, setAssetsType] = useState("");
 
   const [currentPage, setCurrentPage] = useState(1);
-  const [itemsPerPage, setItemsPerPage] = useState(5);
+  const [itemsPerPage, setItemsPerPage] = useState(10);
   const [count, setCount] = useState(0);
 
   const [printItem, setPrintItem] = useState({});
-  console.log(printItem);
 
   const {
     data: myReq = [],
@@ -133,6 +133,7 @@ const MyAssetsRequest = () => {
   };
   const handleReturn = async (item, sts) => {
     item.status = sts;
+    refetch();
 
     const itemAssets = assetsList.filter((ass) => ass._id === item.assetId);
     console.log(itemAssets[0]);
@@ -141,16 +142,15 @@ const MyAssetsRequest = () => {
       await axiosSecure
         .patch(`/assetsReq/${item?._id}`, item)
         .then(async (res) => {
-          refetch();
           if (res.data.modifiedCount > 0) {
             await axiosSecure
               .patch(`/assets/${item.assetId}`, itemAssets[0])
               .then((res) => {
                 if (res.data.modifiedCount > 0) {
-                  alert("Data Updated");
+                  refetch();
+                  toast.success("Assets Returned!");
                 }
               });
-            refetch();
           }
         });
     } catch (err) {
@@ -221,7 +221,7 @@ const MyAssetsRequest = () => {
               aria-label="Enter Job Title"
             />
 
-            <button className="text-transparent bg-gradient-to-r from-sky-500 to-indigo-500 hover:from-sky-600 hover:to-indigo-700  px-6 font-semibold uppercase text-md  text-white border-0 text-md btn">
+            <button className="text-transparent bg-gradient-to-r from-pink-600 to-yellow-600 hover:from-pink-700 hover:to-yellow-700  px-6 font-semibold uppercase text-md  text-white border-0 text-md btn">
               Search
             </button>
           </div>
@@ -237,7 +237,7 @@ const MyAssetsRequest = () => {
             value={sort}
             name="deadline"
             id="deadline"
-            className=" p-4  rounded-md text-transparent bg-gradient-to-r from-sky-500 to-indigo-500 hover:from-sky-600 hover:to-indigo-700  px-6 font-semibold uppercase text-md  text-white border-0 text-md btn"
+            className=" p-4  rounded-md text-transparent bg-gradient-to-r from-pink-600 to-yellow-600 hover:from-pink-700 hover:to-yellow-700  px-6 font-semibold uppercase text-md  text-white border-0 text-md btn"
           >
             <option value="">Click To Filter</option>
             <option value="Pending">Pending</option>
@@ -254,7 +254,7 @@ const MyAssetsRequest = () => {
             value={assetsType}
             name="deadline"
             id="deadline"
-            className=" p-4  rounded-md text-transparent bg-gradient-to-r from-sky-500 to-indigo-500 hover:from-sky-600 hover:to-indigo-700  px-6 font-semibold uppercase text-md  text-white border-0 text-md btn"
+            className=" p-4  rounded-md text-transparent bg-gradient-to-r from-pink-600 to-yellow-600 hover:from-pink-700 hover:to-yellow-700  px-6 font-semibold uppercase text-md  text-white border-0 text-md btn"
           >
             <option value="">Assets Type</option>
             <option value="Returnable">Returnable</option>
@@ -266,7 +266,7 @@ const MyAssetsRequest = () => {
           Reset
         </button>
       </div>
-      <div className="overflow-x-auto">
+      <div className="overflow-x-auto min-h-[calc(100vh-550px)]">
         <table className="table table-auto border">
           {/* head */}
           <thead>
@@ -286,13 +286,13 @@ const MyAssetsRequest = () => {
                 <td>{item.productName}</td>
                 <td>{item.type}</td>
                 <td>{item.requestData.slice(0, 10)}</td>
-                <td>{item.status}</td>
+                <td className="text-center">{item.status}</td>
 
                 {item.status === "Pending" && (
                   <td className="flex items-center gap-2 justify-center">
                     <p
                       onClick={() => handleCancel(item)}
-                      className="bg-red-500 rounded-md text-white px-2 py-1 cursor-pointer "
+                      className="bg-red-500 rounded-md text-white px-3 py-2 cursor-pointer "
                     >
                       Cancel
                     </p>
@@ -311,7 +311,7 @@ const MyAssetsRequest = () => {
                       onClick={() => {
                         handleReturn(item, "Return");
                       }}
-                      className="bg-red-500 rounded-md text-white px-2 py-1 cursor-pointer"
+                      className="bg-red-500 rounded-md text-white px-3 py-2 cursor-pointer"
                     >
                       Return
                     </button>
@@ -322,7 +322,7 @@ const MyAssetsRequest = () => {
                   <td className="flex items-center gap-2 justify-center">
                     <button
                       disabled
-                      className="bg-gray-300 rounded-md  px-2 py-1 disabled "
+                      className="bg-gray-300 rounded-md  px-3 py-2 disabled "
                     >
                       Returned
                     </button>
@@ -334,7 +334,7 @@ const MyAssetsRequest = () => {
                     <td className="flex items-center gap-2 justify-center">
                       <p
                         onClick={() => handlePrint(item)}
-                        className="bg-red-700 rounded-md text-white px-2 py-1 cursor-pointer"
+                        className="bg-green-600 hover:bg-green-700 rounded-md text-white px-3 py-2 cursor-pointer"
                       >
                         Print
                       </p>
@@ -349,18 +349,6 @@ const MyAssetsRequest = () => {
                     </p>
                   </td>
                 )}
-
-                {/* <td>{item.startDate}</td> */}
-                {/* <td>
-                <Link to={`/updateAsset/${item._id}`}>
-                  <td className="text-blue-600 underline">Update</td>
-                </Link>
-              </td>
-              <td>
-                <Link onClick={() => handleDelete(item._id)}>
-                  <td className="text-blue-600 underline">Delete</td>
-                </Link>
-              </td> */}
               </tr>
             ))}
           </tbody>
@@ -370,7 +358,7 @@ const MyAssetsRequest = () => {
         <button
           disabled={currentPage === 1}
           onClick={() => handlePaginationButton(currentPage - 1)}
-          className="px-4 py-2 mx-1 text-gray-700 disabled:text-gray-500 capitalize bg-gradient-to-r bg-gray-200 rounded-md disabled:cursor-not-allowed disabled:hover:bg-gray-200 disabled:hover:text-gray-500 hover:from-sky-600 hover:to-indigo-700  hover:text-white"
+          className="px-4 py-2 mx-1 text-gray-700 disabled:text-gray-500 capitalize bg-gradient-to-r bg-gray-200 rounded-md disabled:cursor-not-allowed disabled:hover:bg-gray-200 disabled:hover:text-gray-500 hover:from-pink-600 hover:to-yellow-700  hover:text-white"
         >
           <div className="flex items-center -mx-1">
             <svg
@@ -398,9 +386,9 @@ const MyAssetsRequest = () => {
             key={btnNum}
             className={`hidden ${
               currentPage === btnNum
-                ? "text-transparent text-white bg-gradient-to-r from-sky-500 to-indigo-500 hover:from-sky-600 hover:to-indigo-700"
+                ? "text-transparent text-white bg-gradient-to-r from-pink-600 to-yellow-600 hover:from-pink-700 hover:to-yellow-700"
                 : ""
-            } px-4 py-2 mx-1 transition-colors duration-300 transform  rounded-md sm:inline   hover:text-white`}
+            } px-4 py-2 mx-1 transition-colors duration-300 transform  rounded-md sm:inline   `}
           >
             {btnNum}
           </button>
@@ -409,7 +397,7 @@ const MyAssetsRequest = () => {
         <button
           disabled={currentPage === numberOfPages}
           onClick={() => handlePaginationButton(currentPage + 1)}
-          className="px-4 py-2 mx-1 bg-gradient-to-r  text-gray-700 transition-colors duration-300 transform bg-gray-200 rounded-md hover:from-sky-600 hover:to-indigo-700 disabled:hover:bg-gray-200 disabled:hover:text-gray-500 hover:text-white disabled:cursor-not-allowed disabled:text-gray-500"
+          className="px-4 py-2 mx-1 bg-gradient-to-r  text-gray-700 transition-colors duration-300 transform bg-gray-200 rounded-md hover:from-pink-600 hover:to-yellow-700 disabled:hover:bg-gray-200 disabled:hover:text-gray-500 hover:text-white disabled:cursor-not-allowed disabled:text-gray-500"
         >
           <div className="flex items-center -mx-1">
             <span className=""></span>
@@ -431,6 +419,7 @@ const MyAssetsRequest = () => {
           </div>
         </button>
       </div>
+      <Toaster />
     </div>
   );
 };

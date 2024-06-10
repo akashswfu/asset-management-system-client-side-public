@@ -1,17 +1,10 @@
 import useAssetsReqByEmploy from "../../../ReactHooks/useAssetsReqByEmploy";
 import { PieChart, Pie, Cell, Legend } from "recharts";
+import LoadingSpinner from "../../../components/LoadingSpinner/LoadingSpinner";
 const COLORS = ["#0088FE", "#FF8042"];
 
 const PieCharts = () => {
-  const [allReq] = useAssetsReqByEmploy();
-
-  if (allReq.length === 0) {
-    return (
-      <div className="text-center text-7xl h-min-[cal(100vh-130px)] text-blue-400 py-10">
-        Loading....
-      </div>
-    );
-  }
+  const [allReq, isLoading] = useAssetsReqByEmploy();
 
   const returnable = allReq.filter((item) => item.type === "Returnable").length;
   console.log(returnable);
@@ -63,9 +56,11 @@ const PieCharts = () => {
 
   return (
     <div>
-      <h2 className="text-4xl text-center font-bold my-8 text-transparent bg-gradient-to-r from-pink-600 to-yellow-600 bg-clip-text uppercase mt-20">
-        Percent of Returnable Items and Non-Returnable Items
-      </h2>
+      {allReq.length > 0 && (
+        <h2 className="text-4xl text-center font-bold my-8 text-transparent bg-gradient-to-r from-pink-600 to-yellow-600 bg-clip-text uppercase mt-20">
+          Percent of Returnable Items and Non-Returnable Items
+        </h2>
+      )}
 
       <div className="flex justify-center w-full">
         <PieChart width={1000} height={400}>
@@ -86,7 +81,7 @@ const PieCharts = () => {
               />
             ))}
           </Pie>
-          <Legend></Legend>
+          {allReq.length > 0 && <Legend></Legend>}
         </PieChart>
       </div>
     </div>

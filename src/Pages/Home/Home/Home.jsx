@@ -22,20 +22,12 @@ const Home = () => {
   const { loading, user, currentUser } = useAuth();
   const [userInfo, isLoading] = useUserInfo();
 
-  if (loading || isLoading) {
-    return (
-      <div className="text-center text-7xl h-min-[cal(100vh-300px)] text-blue-400 py-10">
-        Loading....
-      </div>
-    );
-  }
-
   if (currentUser?.role === "HR" && currentUser?.pack < 1) {
     navigate("/subscription");
   }
 
   return (
-    <div>
+    <div className="min-h-[calc(100vh-450px)]">
       {!userInfo && (
         <div>
           <Helmet>
@@ -70,7 +62,7 @@ const Home = () => {
           <TopRequest></TopRequest>
           <LimitedStock></LimitedStock>
           <PieCharts></PieCharts>
-          <TwoExtraSection></TwoExtraSection>
+          {userInfo.pack > 0 && <TwoExtraSection></TwoExtraSection>}
         </div>
       )}
     </div>

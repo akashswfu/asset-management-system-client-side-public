@@ -1,25 +1,35 @@
 import React from "react";
 import useAssetsReqByEmploy from "../../../ReactHooks/useAssetsReqByEmploy";
 import useAssetsList from "../../../ReactHooks/useAssetsList";
+import useAuth from "../../../ReactHooks/useAuth";
 
 const LimitedStock = () => {
   const [myAssets, isLoading] = useAssetsList();
+  const { user, loading, setLoading } = useAuth();
 
-  if (myAssets.length === 0) {
-    return (
-      <div className="text-center text-7xl h-min-[cal(100vh-130px)] text-blue-400 py-10">
-        Loading....
-      </div>
-    );
+  if (loading) {
+    setLoading(true);
+  } else {
+    setLoading(false);
   }
+
+  // if (isLoading || loading) {
+  //   return (
+  //     <div className="text-center text-7xl h-min-[cal(100vh-130px)] text-blue-400 py-10">
+  //       Loading....
+  //     </div>
+  //   );
+  // }
 
   const limitedItems = myAssets.filter((item) => item.productQuantity < 10);
 
   return (
     <div>
-      <h2 className="text-4xl text-center font-bold my-8 text-transparent bg-gradient-to-r from-pink-600 to-yellow-600 bg-clip-text pb-5 uppercase mt-20">
-        Limited Stock Items
-      </h2>
+      {myAssets.length > 0 && (
+        <h2 className="text-4xl text-center font-bold my-8 text-transparent bg-gradient-to-r from-pink-600 to-yellow-600 bg-clip-text pb-5 uppercase mt-20">
+          Limited Stock Items
+        </h2>
+      )}
       {limitedItems.map((data) => (
         <div
           className="flex items-center gap-20 justify-center w-4/5 mx-auto mb-6"

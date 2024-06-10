@@ -11,7 +11,7 @@ const Subscription = () => {
   };
 
   return (
-    <div>
+    <div className="min-h-[calc(100vh-400px)]">
       <h4 className="text-3xl text-center font-semibold justify-center items-center gap-10">
         Choose Your Plan First
       </h4>

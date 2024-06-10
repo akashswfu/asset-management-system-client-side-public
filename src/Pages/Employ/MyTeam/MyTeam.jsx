@@ -3,7 +3,7 @@ import useAxiosSecure from "../../../ReactHooks/useAxiosSecure";
 import useUserInfo from "../../../ReactHooks/useUserInfo";
 import { useQuery } from "@tanstack/react-query";
 import App from "../../../App";
-import MyDocument from "./MyDocument";
+
 import { pdf } from "@react-pdf/renderer";
 import { saveAs } from "file-saver";
 
@@ -13,10 +13,6 @@ const MyTeam = () => {
   const [accept, setAccept] = useState("Accept");
   const acc = "Accepted";
   const rej = "Rejected";
-
-  const handleAccept = () => {
-    setAccept("Reject");
-  };
 
   const {
     data: myTeam = [],
@@ -52,25 +48,26 @@ const MyTeam = () => {
   };
 
   return (
-    <div>
+    <div className="min-h-[calc(100vh-450px)]">
       <div>
         {myTeam.map((team) => (
           <div
-            className="flex items-center gap-20 justify-center  mx-auto mb-10"
+            className="flex items-center gap-20 w-full justify-evenly  mx-auto mb-10"
             key={team._id}
           >
-            <div>
-              <img className="w-20 h-20" src={team.photo} alt="" />
+            <div className="bg-base-200 shadow-2xl w-[600px] py-5 flex justify-around rounded-md items-center gap-20">
+              <div>
+                <img
+                  className="w-32 h-32 rounded-md"
+                  src={team.photo}
+                  alt="No Photo"
+                />
+              </div>
+              <h1 className="text-2xl font-semibold">{team.name}</h1>
+              <h1 className="font-bold text-green-500 text-xl uppercase">
+                {team.role}
+              </h1>
             </div>
-            <h1>{team.name}</h1>
-            <h1>{team.role}</h1>
-            <button
-              onClick={() => handleDownload(team)}
-              
-              className="btn btn-primary"
-            >
-              print
-            </button>
           </div>
         ))}
 

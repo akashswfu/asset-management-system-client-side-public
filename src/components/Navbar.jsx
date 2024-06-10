@@ -119,7 +119,7 @@ const Navbar = () => {
   };
 
   return (
-    <div className="navbar  dark:bg-purple-700 bg-[#aba7b3] py-4 px-4 md:mb-10">
+    <div className="navbar  dark:bg-purple-700 bg-gray-200 py-4 px-4 md:mb-10">
       <div className="navbar-start">
         <div className="dropdown">
           <div

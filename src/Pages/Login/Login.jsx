@@ -48,19 +48,10 @@ const Login = () => {
 
     try {
       const result = await signIn(email, password);
-      // const { data } = await axiosSecure.post(
-      //   `/jwt`,
-      //   {
-      //     email: result?.user?.email,
-      //   },
-      //   { withCredentials: true }
-      // );
 
       toast.success("Login Successfully");
       setLoading(false);
-      setTimeout(() => {
-        navigate(location?.state ? location.state : "/");
-      }, 1000);
+      navigate(location?.state ? location.state : "/");
     } catch (err) {
       toast.error("Email or Password does not match");
     }

@@ -2,6 +2,7 @@ import React, { useEffect, useState } from "react";
 import useAxiosSecure from "../../../ReactHooks/useAxiosSecure";
 import useUserInfo from "../../../ReactHooks/useUserInfo";
 import useAuth from "../../../ReactHooks/useAuth";
+import LoadingSpinner from "../../../components/LoadingSpinner/LoadingSpinner";
 
 const PendingRequestByEmploy = () => {
   const axiosSecure = useAxiosSecure();
@@ -20,17 +21,15 @@ const PendingRequestByEmploy = () => {
   }, [userInfo.email]);
 
   if (isLoading) {
-    return (
-      <div className="text-center text-7xl h-min-[cal(100vh-130px)] text-blue-400 py-10">
-        Loading....
-      </div>
-    );
+    return <LoadingSpinner></LoadingSpinner>;
   }
   return (
     <div>
-      <h2 className="text-4xl text-center font-bold my-8 text-transparent bg-gradient-to-r from-pink-600 to-yellow-600 bg-clip-text pb-5 uppercase">
-        Pending Request
-      </h2>
+      {getData.length > 0 && (
+        <h2 className="text-4xl text-center font-bold my-8 text-transparent bg-gradient-to-r from-pink-600 to-yellow-600 bg-clip-text pb-5 uppercase">
+          Pending Request
+        </h2>
+      )}
       {getData.slice(0, 5).map((data) => (
         <div
           className="flex items-center gap-20 justify-center w-4/5 mx-auto mb-6"

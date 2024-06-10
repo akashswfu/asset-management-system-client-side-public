@@ -11,6 +11,7 @@ const useAssetsList = () => {
     data: myAssets = [],
     isLoading,
     refetch,
+    isPending,
   } = useQuery({
     queryFn: () => getData(),
     queryKey: ["myAssets", user?.email],
@@ -20,7 +21,7 @@ const useAssetsList = () => {
     const { data } = await axiosSecure.get(`/assets/${user?.email}`);
     return data;
   };
-  return [myAssets, refetch, isLoading];
+  return [myAssets, refetch, isLoading, isPending];
 };
 
 export default useAssetsList;

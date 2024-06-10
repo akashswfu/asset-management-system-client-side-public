@@ -1,15 +1,12 @@
 import React from "react";
 import useAssetsReqByEmploy from "../../../ReactHooks/useAssetsReqByEmploy";
+import LoadingSpinner from "../../../components/LoadingSpinner/LoadingSpinner";
 
 const TopRequest = () => {
   const [allReq, refetch, isLoading] = useAssetsReqByEmploy();
 
   if (isLoading) {
-    return (
-      <div className="text-center text-7xl h-min-[cal(100vh-130px)] text-blue-400 py-10">
-        Loading....
-      </div>
-    );
+    return <LoadingSpinner></LoadingSpinner>;
   }
   const productStatsMap = {};
 
@@ -35,9 +32,11 @@ const TopRequest = () => {
 
   return (
     <div className="mt-5">
-      <h2 className="text-4xl text-center font-bold my-8 text-transparent bg-gradient-to-r from-pink-600 to-yellow-600 bg-clip-text pb-5 uppercase mt-20">
-        Top most requested items
-      </h2>
+      {allReq.length > 0 && (
+        <h2 className="text-4xl text-center font-bold my-8 text-transparent bg-gradient-to-r from-pink-600 to-yellow-600 bg-clip-text pb-5 uppercase mt-20">
+          Top most requested items
+        </h2>
+      )}
       {productsWithStats.slice(0, 4).map((data) => (
         <div
           className="flex items-center gap-20 justify-center w-4/5 mx-auto mb-6"

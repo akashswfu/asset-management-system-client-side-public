@@ -3,7 +3,7 @@ import { useNavigate } from "react-router-dom";
 import useAuth from "../../../ReactHooks/useAuth";
 import { useMutation, useQuery } from "@tanstack/react-query";
 import useAxiosSecure from "../../../ReactHooks/useAxiosSecure";
-import { Toaster } from "react-hot-toast";
+import toast, { Toaster } from "react-hot-toast";
 import { ref } from "firebase/database";
 import useAssetsReqByEmploy from "../../../ReactHooks/useAssetsReqByEmploy";
 
@@ -71,7 +71,7 @@ const AllRequest = () => {
     try {
       await axiosSecure.patch(`/assetsReq/${item?._id}`, item);
       refetch();
-      alert("Action Updated Successfully");
+      toast.success("Action Updated Successfully");
     } catch (err) {
       console.log(err);
     }
@@ -101,7 +101,7 @@ const AllRequest = () => {
               aria-label="Enter Job Title"
             />
 
-            <button className="text-transparent bg-gradient-to-r from-sky-500 to-indigo-500 hover:from-sky-600 hover:to-indigo-700  px-6 font-semibold uppercase text-md  text-white border-0 text-md btn">
+            <button className="text-transparent bg-gradient-to-r from-pink-600 to-yellow-600 hover:from-pink-700 hover:to-yellow-700  px-6 font-semibold uppercase text-md  text-white border-0 text-md btn">
               Search
             </button>
           </div>
@@ -110,7 +110,7 @@ const AllRequest = () => {
           Reset
         </button>
       </div>
-      <div className="overflow-x-auto">
+      <div className="overflow-x-auto min-h-[calc(100vh-550px)]">
         <table className="table table-auto border">
           {/* head */}
           <thead>
@@ -128,7 +128,7 @@ const AllRequest = () => {
           </thead>
           <tbody className="py-5">
             {allReq.map((item, idx) => (
-              <tr key={item._id} className="bg-base-200 my-5 py-10">
+              <tr key={item._id} className="bg-base-100 my-5 py-10">
                 <th>{idx + 1}</th>
                 <td>{item.productName}</td>
                 <td>{item.type}</td>
@@ -182,7 +182,7 @@ const AllRequest = () => {
         <button
           disabled={currentPage === 1}
           onClick={() => handlePaginationButton(currentPage - 1)}
-          className="px-4 py-2 mx-1 text-gray-700 disabled:text-gray-500 capitalize bg-gradient-to-r bg-gray-200 rounded-md disabled:cursor-not-allowed disabled:hover:bg-gray-200 disabled:hover:text-gray-500 hover:from-sky-600 hover:to-indigo-700  hover:text-white"
+          className="px-4 py-2 mx-1 text-gray-700 disabled:text-gray-500 capitalize bg-gradient-to-r bg-gray-200 rounded-md disabled:cursor-not-allowed disabled:hover:bg-gray-200 disabled:hover:text-gray-500 hover:from-pink-600 hover:to-yellow-700  hover:text-white"
         >
           <div className="flex items-center -mx-1">
             <svg
@@ -210,9 +210,9 @@ const AllRequest = () => {
             key={btnNum}
             className={`hidden ${
               currentPage === btnNum
-                ? "text-transparent text-white bg-gradient-to-r from-sky-500 to-indigo-500 hover:from-sky-600 hover:to-indigo-700"
+                ? "text-transparent text-white bg-gradient-to-r from-pink-600 to-yellow-600 hover:from-pink-700 hover:to-yellow-700"
                 : ""
-            } px-4 py-2 mx-1 transition-colors duration-300 transform  rounded-md sm:inline   hover:text-white`}
+            } px-4 py-2 mx-1 transition-colors duration-300 transform  rounded-md sm:inline   `}
           >
             {btnNum}
           </button>
@@ -221,7 +221,7 @@ const AllRequest = () => {
         <button
           disabled={currentPage === numberOfPages}
           onClick={() => handlePaginationButton(currentPage + 1)}
-          className="px-4 py-2 mx-1 bg-gradient-to-r  text-gray-700 transition-colors duration-300 transform bg-gray-200 rounded-md hover:from-sky-600 hover:to-indigo-700 disabled:hover:bg-gray-200 disabled:hover:text-gray-500 hover:text-white disabled:cursor-not-allowed disabled:text-gray-500"
+          className="px-4 py-2 mx-1 bg-gradient-to-r  text-gray-700 transition-colors duration-300 transform bg-gray-200 rounded-md hover:from-pink-600 hover:to-yellow-700 disabled:hover:bg-gray-200 disabled:hover:text-gray-500 hover:text-white disabled:cursor-not-allowed disabled:text-gray-500"
         >
           <div className="flex items-center -mx-1">
             <span className=""></span>
@@ -243,6 +243,7 @@ const AllRequest = () => {
           </div>
         </button>
       </div>
+      <Toaster />
     </div>
   );
 };

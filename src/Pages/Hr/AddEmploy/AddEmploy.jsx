@@ -2,8 +2,7 @@ import React, { useState } from "react";
 import useAuth from "../../../ReactHooks/useAuth";
 import useAxiosSecure from "../../../ReactHooks/useAxiosSecure";
 import { useMutation, useQuery } from "@tanstack/react-query";
-import { toast } from "react-toastify";
-import { Toaster } from "react-hot-toast";
+import toast, { Toaster } from "react-hot-toast";
 import { useNavigate } from "react-router-dom";
 import useUserInfo from "../../../ReactHooks/useUserInfo";
 
@@ -29,11 +28,8 @@ const AddEmploy = () => {
       const { data } = await axiosSecure.patch(`/users/${item._id}`, newItem);
     },
     onSuccess: () => {
-      toast.success("Updated Successfully");
+      toast.success("Add to my team Successfully");
       setEmployCount(employCount + 1);
-      //   setTimeout(() => {
-      //     navigate("/");
-      //   }, 500);
       refetch();
     },
   });
@@ -79,16 +75,19 @@ const AddEmploy = () => {
   return (
     <div>
       <div className="flex justify-center items-center gap-5 mb-16">
-        <h1 className="text-3xl font-semibold text-center ">
-          Employees : <span className="text-green-500">{employCount}</span> ,
-          Current Package :{" "}
-          <span className="text-green-500">{userInfo.pack}</span> employees
+        <h1 className="text-3xl font-semibold text-center uppercase">
+          Employees : <span className="text-green-500">{employCount}</span> ||
+          Package Limit :{" "}
+          <span className="text-green-500">{userInfo.pack}</span> employees ||
         </h1>
-        <button onClick={handleIncrease} className="btn btn-primary">
+        <button
+          onClick={handleIncrease}
+          className="btn bg-green-500 hover:bg-green-600 text-white text-lg  border-0"
+        >
           Increase
         </button>
       </div>
-      <div className="overflow-x-auto">
+      <div className="overflow-x-auto min-h-[calc(100vh-450px)]">
         <table className="table table-auto border">
           {/* head */}
           <thead>
@@ -102,7 +101,7 @@ const AddEmploy = () => {
           </thead>
           <tbody className="py-5">
             {employ.map((item, idx) => (
-              <tr key={item._id} className="bg-base-200 my-5 py-10">
+              <tr key={item._id} className=" my-5 py-10">
                 <th>{idx + 1}</th>
                 <td>
                   {" "}
@@ -110,7 +109,7 @@ const AddEmploy = () => {
                     <img
                       className="w-16 h-16 rounded-lg"
                       src={item.photo}
-                      alt="Avatar Tailwind CSS Component"
+                      alt="NO PHOTO"
                     />
                   </div>
                 </td>
@@ -120,7 +119,7 @@ const AddEmploy = () => {
                   {" "}
                   <button
                     onClick={() => handleUpdate(item)}
-                    className="btn btn-primary"
+                    className="btn bg-green-500 hover:bg-green-600 text-white text-lg  border-0"
                   >
                     Add
                   </button>{" "}
