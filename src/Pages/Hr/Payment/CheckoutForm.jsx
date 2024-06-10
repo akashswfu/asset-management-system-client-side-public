@@ -5,6 +5,7 @@ import { AuthContext } from "../../../Providers/AuthProvider";
 import useAuth from "../../../ReactHooks/useAuth";
 import useUserInfo from "../../../ReactHooks/useUserInfo";
 import { useNavigate } from "react-router-dom";
+import toast, { Toaster } from "react-hot-toast";
 
 const CheckoutForm = () => {
   const [error, setError] = useState("");
@@ -76,7 +77,9 @@ const CheckoutForm = () => {
         try {
           userInfo;
           await axiosSecure.patch(`/userHr/${userInfo?._id}`, userInfo);
-          alert("Payment Success now you can add employees in your team");
+          toast.success(
+            "Payment Success now you can add employees in your team"
+          );
 
           setTimeout(() => {
             navigate("/");
@@ -84,55 +87,44 @@ const CheckoutForm = () => {
         } catch (err) {
           console.log(err);
         }
-
-        // const payment = {
-        //   email: user?.email,
-        //   price: totalPrice,
-        //   transactionId: paymentIntent.id,
-        //   data: new Date(),
-        //   cartIds: cart.map((item) => item._id),
-        //   menuItemIds: cart.map((item) => item.menuId),
-        //   status: "pending",
-        // };
-        // const res = await axiosSecure.post("/payments", payment);
-        // refetch();
-        // if (res.data?.paymentResult?.insertedId) {
-        //   alert("Payment Success");
-        // }
-        // navigate("/dashboard/paymentHistory");
       }
     }
   };
   return (
-    <form onSubmit={handleSubmit}>
-      <CardElement
-        options={{
-          style: {
-            base: {
-              fontSize: "16px",
-              color: "#424770",
-              "::placeholder": {
-                color: "#aab7c4",
+    <div>
+      <form onSubmit={handleSubmit}>
+        <CardElement
+          options={{
+            style: {
+              base: {
+                fontSize: "16px",
+                color: "#424770",
+                "::placeholder": {
+                  color: "#aab7c4",
+                },
+              },
+              invalid: {
+                color: "#9e2146",
               },
             },
-            invalid: {
-              color: "#9e2146",
-            },
-          },
-        }}
-      />
-      <button
-        className="btn btn-sm btn-primary my-4"
-        type="submit"
-        disabled={!stripe || !clientSecret}
-      >
-        Pay
-      </button>
-      <p className="text-red-500">{error}</p>
-      {transactionId && (
-        <p className="text-center text-green-500 py-10">{transactionId}</p>
-      )}
-    </form>
+          }}
+        />
+        <div className="text-center">
+          <button
+            className="text-transparent bg-gradient-to-r from-pink-600 to-yellow-600 hover:from-pink-700 hover:to-yellow-700 my-10 px-10 text-xl font-semibold uppercase text-md  text-white border-0 text-md btn "
+            type="submit"
+            disabled={!stripe || !clientSecret}
+          >
+            Pay
+          </button>
+        </div>
+        <p className="text-red-500">{error}</p>
+        {transactionId && (
+          <p className="text-center text-green-500 py-10">{transactionId}</p>
+        )}
+      </form>
+      <Toaster />
+    </div>
   );
 };
 

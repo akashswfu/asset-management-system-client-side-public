@@ -17,7 +17,9 @@ const AddAsset = () => {
     e.preventDefault();
 
     if (userInfo.pack === 0 || currentUser.pack === 0) {
-      return alert("You have no plan sorry to say you cannot add products");
+      return toast.success(
+        "You have no plan sorry to say you cannot add products"
+      );
     }
     const form = e.target;
 
