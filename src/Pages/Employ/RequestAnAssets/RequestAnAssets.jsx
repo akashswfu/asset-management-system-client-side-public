@@ -20,7 +20,6 @@ const RequestAnAssets = () => {
   const [sort, setSort] = useState("");
   const [assetsStock, setAssetsStock] = useState("");
   const [assetsType, setAssetsType] = useState("");
-
   const [currentPage, setCurrentPage] = useState(1);
   const [itemsPerPage, setItemsPerPage] = useState(3);
   const [count, setCount] = useState(0);

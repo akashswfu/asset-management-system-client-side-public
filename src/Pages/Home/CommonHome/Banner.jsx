@@ -31,23 +31,25 @@ const Banner = () => {
       }}
       navigation
       pagination={{ clickable: true }}
-      scrollbar={{ draggable: true }}
     >
       <SwiperSlide className="mb-3  relative bg-white">
         <img
           data-aos="zoom-in"
           data-aos-duration="1000"
           data
-          className="w-full md:h-[450px] lg:h-[650px] rounded-3xl opacity-50 border-0 bg-green-200 "
+          src="https://i.postimg.cc/4Nbnfjv4/pexels-fauxels-3183183.jpg"
+          className="w-full md:h-[400px] lg:h-[550px] rounded-xl  border-0  "
           alt=""
         />
         <div className="absolute hidden md:flex flex-col justify-center items-center w-full h-full space-y-5 top-0">
-          <p className="text-6xl font-bold text-transparent bg-gradient-to-r from-rose-500 text-center  to-rose-900 bg-clip-text">
-            Welcome to <br />
-            Assets Management System
-          </p>
+          <div className="text-6xl font-bold text-transparent bg-gradient-to-r text-center from-rose-600 to-rose-500 bg-clip-text">
+            <p> Welcome to </p>
+            <p className="mt-3"> Assets Management System</p>
+          </div>
           <Link to="/signUp">
-            <button className="btn btn-info text-xl px-7">JOIN AS A HR</button>
+            <button className="btn text-white  bg-gradient-to-r text-center from-pink-600 to-yellow-600 hover:from-pink-700 hover:to-yellow-700  text-xl px-7 mt-10">
+              JOIN AS A HR
+            </button>
           </Link>
         </div>
       </SwiperSlide>
@@ -56,17 +58,18 @@ const Banner = () => {
           data-aos="zoom-in"
           data-aos-duration="1000"
           data
-          className="w-full md:h-[450px] lg:h-[650px] rounded-3xl opacity-50 bg-blue-200 border-0"
-          //   src="https://i.postimg.cc/ZqYwW5w8/pexels-wolfgang-weiser-18705291.jpg"
+          className="w-full md:h-[400px] lg:h-[550px] rounded-xl   border-0"
+          src="https://i.postimg.cc/4ypyhSr5/pexels-alxs-919734.jpg"
           alt=""
         />
-        <div className="absolute hidden md:flex flex-col justify-center items-center w-full h-full space-y-5 top-0">
-          <p className="text-6xl font-bold text-transparent bg-gradient-to-r from-rose-500 text-center  to-rose-900 bg-clip-text">
-            Welcome to <br />
-            Assets Management System
-          </p>
+        <div className="absolute  hidden md:flex flex-col justify-center items-center w-full h-full space-y-5 top-0">
+          <div className="text-6xl font-bold text-transparent bg-gradient-to-r text-center from-green-600 to-green-500 bg-clip-text">
+            <p> Welcome to </p>
+            <p className="mt-3"> Assets Management System</p>
+          </div>
           <Link to="/employSignUp">
-            <button className="btn btn-info text-xl px-7">
+            <button className="btn text-white  bg-gradient-to-r text-center from-pink-600 to-yellow-600 hover:from-pink-700 hover:to-yellow-700  text-xl px-7 mt-10">
+              {" "}
               JOIN AS A EMPLOY
             </button>
           </Link>

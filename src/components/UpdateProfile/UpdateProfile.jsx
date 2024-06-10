@@ -3,10 +3,14 @@ import { AuthContext } from "../../Providers/AuthProvider";
 import { useForm } from "react-hook-form";
 import profile from "/images/user.png";
 import Swal from "sweetalert2";
+import useAxiosSecure from "../../ReactHooks/useAxiosSecure";
+import useUserInfo from "../../ReactHooks/useUserInfo";
+import toast, { Toaster } from "react-hot-toast";
 
 const UpdateProfile = () => {
-  const { updateUserProfile, user, setLoading, setUser } =
-    useContext(AuthContext);
+  const { updateUserProfile, user, setUser } = useContext(AuthContext);
+  const axiosSecure = useAxiosSecure();
+  const [userInfo] = useUserInfo();
 
   const {
     register,
@@ -18,31 +22,24 @@ const UpdateProfile = () => {
     const { name, photo } = data;
 
     updateUserProfile(name, photo)
-      .then(() => {
-        setUser({ displayName: name, photoURL: photo, email: user.email });
-        Swal.fire({
-          text: "Update info Successfully",
-          toast: true,
-          position: "top-right",
-          showConfirmButton: false,
-          timer: 3000,
-          customClass: {
-            popup: "text-green-500 font-semibold text-center",
-          },
-        });
+      .then(async () => {
+        setUser({ displayName: name, photoURL: photo, email: user?.email });
+        userInfo.name = name;
+        try {
+          await axiosSecure
+            .patch(`/userName/${user?.email}`, userInfo)
+            .then((res) => {
+              if (res.data.modifiedCount > 0) {
+                toast.success("Info Update Successfully");
+              }
+            });
+        } catch (error) {
+          console.log(error);
+        }
       })
       .catch((error) => {
         console.log(error.message);
-        Swal.fire({
-          text: "Something Wrong!",
-          toast: true,
-          position: "top-right",
-          showConfirmButton: false,
-          timer: 3000,
-          customClass: {
-            popup: "text-red-500 font-semibold text-center",
-          },
-        });
+        toast.error("Something Wrong!");
       });
   };
 
@@ -64,10 +61,10 @@ const UpdateProfile = () => {
           data-aos-delay="500"
           className="w-1/2 flex flex-col items-center justify-center space-y-4"
         >
-          {isValidPhotoUrl(user.photoURL) ? (
+          {isValidPhotoUrl(user?.photoURL) ? (
             <img
               className="md:w-52 md:h-52 w-40 h-40 border-2 border-green-500 rounded-full"
-              src={user.photoURL}
+              src={user?.photoURL}
               alt="No image"
             />
           ) : (
@@ -78,8 +75,8 @@ const UpdateProfile = () => {
             />
           )}
 
-          <h1 className="text-2xl font-semibold"> {user.displayName} </h1>
-          <p className="font-semibold">{user.email}</p>
+          <h1 className="text-2xl font-semibold"> {user?.displayName} </h1>
+          <p className="font-semibold">{user?.email}</p>
         </div>
 
         <div
@@ -100,7 +97,7 @@ const UpdateProfile = () => {
                 <input
                   type="text"
                   placeholder="name"
-                  defaultValue={user.displayName}
+                  defaultValue={user?.displayName}
                   name="name"
                   className="input input-bordered"
                   {...register("name", { required: true })}
@@ -118,7 +115,7 @@ const UpdateProfile = () => {
                 <input
                   type="text"
                   placeholder="Photo URL"
-                  defaultValue={user.email}
+                  defaultValue={user?.email}
                   name="photo"
                   className="input input-bordered"
                   readOnly
@@ -126,7 +123,7 @@ const UpdateProfile = () => {
               </div>
 
               <div className="form-control mt-6">
-                <button className="text-center uppercase w-full bg-green-600  hover:bg-green-700 py-3 rounded-md text-lg font-semibold text-white cursor-pointer ">
+                <button className="text-center uppercase w-full bg-gradient-to-r from-pink-500 to-yellow-500 hover:from-pink-600 hover:to-yellow-600   py-3 rounded-md text-lg font-semibold text-white cursor-pointer ">
                   Update Info
                 </button>
               </div>
@@ -134,6 +131,7 @@ const UpdateProfile = () => {
           </div>
         </div>
       </div>
+      <Toaster />
     </div>
   );
 };

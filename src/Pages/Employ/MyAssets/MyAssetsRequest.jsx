@@ -5,6 +5,17 @@ import { useQuery } from "@tanstack/react-query";
 import { Link, useLoaderData } from "react-router-dom";
 import Swal from "sweetalert2";
 import { toast } from "react-toastify";
+import ReactPDF, { PDFViewer } from "@react-pdf/renderer";
+import MyDocument from "./MyDocument";
+import {
+  Page,
+  Text,
+  View,
+  Document,
+  StyleSheet,
+  pdf,
+} from "@react-pdf/renderer";
+import { saveAs } from "file-saver";
 
 const MyAssetsRequest = () => {
   const { user, setLoading } = useAuth();
@@ -19,6 +30,9 @@ const MyAssetsRequest = () => {
   const [currentPage, setCurrentPage] = useState(1);
   const [itemsPerPage, setItemsPerPage] = useState(5);
   const [count, setCount] = useState(0);
+
+  const [printItem, setPrintItem] = useState({});
+  console.log(printItem);
 
   const {
     data: myReq = [],
@@ -143,7 +157,7 @@ const MyAssetsRequest = () => {
       console.log(err);
     }
   };
-  console.log(search);
+
   const handleSearch = (e) => {
     e.preventDefault();
     setSearch(searchText);
@@ -155,6 +169,43 @@ const MyAssetsRequest = () => {
     setSort("");
     setAssetsType("");
   };
+  const styles = StyleSheet.create({
+    page: {
+      flexDirection: "row",
+      backgroundColor: "#E4E4E4",
+    },
+    section: {
+      margin: 10,
+      padding: 10,
+      flexGrow: 1,
+    },
+  });
+
+  // Create Document Component
+  const MyDocument = () => (
+    <Document>
+      <Page size="A4" style={styles.page}>
+        <View style={styles.section}>
+          <Text>{printItem.productName}</Text>
+          <Text>{printItem.type}</Text>
+        </View>
+        <View style={styles.section}>
+          <Text>Section #2</Text>
+        </View>
+      </Page>
+    </Document>
+  );
+
+  const handlePrint = async (item) => {
+    setPrintItem(item);
+    console.log(item);
+    const doc = <MyDocument />;
+    const asPdf = pdf();
+    asPdf.updateContainer(doc);
+    const blob = await asPdf.toBlob();
+    saveAs(blob, "example.pdf");
+  };
+
   return (
     <div>
       <div className="flex justify-center items-center gap-5 mb-10">
@@ -250,7 +301,10 @@ const MyAssetsRequest = () => {
 
                 {item.status === "Approved" && item.type === "Returnable" && (
                   <td className="flex items-center gap-2 justify-center">
-                    <p className="bg-red-500 rounded-md text-white px-2 py-1">
+                    <p
+                      onClick={() => handlePrint(item)}
+                      className="bg-red-500 cursor-pointer rounded-md text-white px-2 py-1"
+                    >
                       Print
                     </p>
                     <button
@@ -266,14 +320,11 @@ const MyAssetsRequest = () => {
 
                 {item.status === "Return" && item.type === "Returnable" && (
                   <td className="flex items-center gap-2 justify-center">
-                    <p className="bg-red-500 rounded-md text-white px-2 py-1">
-                      Print
-                    </p>
                     <button
                       disabled
                       className="bg-gray-300 rounded-md  px-2 py-1 disabled "
                     >
-                      Return
+                      Returned
                     </button>
                   </td>
                 )}
@@ -281,7 +332,10 @@ const MyAssetsRequest = () => {
                 {item.status === "Approved" &&
                   item.type === "Non-returnable" && (
                     <td className="flex items-center gap-2 justify-center">
-                      <p className="bg-red-500 rounded-md text-white px-2 py-1">
+                      <p
+                        onClick={() => handlePrint(item)}
+                        className="bg-red-700 rounded-md text-white px-2 py-1 cursor-pointer"
+                      >
                         Print
                       </p>
                     </td>

@@ -19,11 +19,13 @@ import EmployRoutes from "./EmployRoutes";
 import PrivateRoute from "./PrivateRoute";
 import Subscription from "../Pages/Hr/Subscription/Subscription";
 import Payment from "../Pages/Hr/Payment/Payment";
+import ErrorPage from "../components/ErrorPage/ErrorPage";
 
 const router = createBrowserRouter([
   {
     path: "/",
     element: <Root></Root>,
+    errorElement: <ErrorPage></ErrorPage>,
     children: [
       {
         path: "/",
@@ -45,11 +47,7 @@ const router = createBrowserRouter([
       //employ hr both
       {
         path: "/updateProfile",
-        element: (
-          <PrivateRoute>
-            <UpdateProfile></UpdateProfile>
-          </PrivateRoute>
-        ),
+        element: <UpdateProfile></UpdateProfile>,
       },
 
       //hr routes

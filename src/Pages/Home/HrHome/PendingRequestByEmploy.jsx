@@ -28,19 +28,24 @@ const PendingRequestByEmploy = () => {
   }
   return (
     <div>
-      <h2 className="text-center text-4xl pb-10 pt-10 text-green-500">
-        All Request of this month
+      <h2 className="text-4xl text-center font-bold my-8 text-transparent bg-gradient-to-r from-pink-600 to-yellow-600 bg-clip-text pb-5 uppercase">
+        Pending Request
       </h2>
       {getData.slice(0, 5).map((data) => (
         <div
-          className="flex items-center gap-20 justify-center  mx-auto mb-10"
+          className="flex items-center gap-20 justify-center w-4/5 mx-auto mb-6"
           key={data._id}
         >
-          <h1> {data.productName} </h1>
+          <div className="flex items-center shadow-2xl rounded-xl justify-around bg-gray-200 py-10 px-20 w-full gap-10">
+            <h1 className="text-2xl font-semibold uppercase">
+              {" "}
+              {data.productName}{" "}
+            </h1>
 
-          <h1>{data.email}</h1>
-          <h1>{data.type}</h1>
-          <h1>{data.status}</h1>
+            <h1 className="text-xl font-semibold">{data.email}</h1>
+            <h1 className="text-lg">{data.type}</h1>
+            <h1 className="text-blue-500 uppercase font-bold">{data.status}</h1>
+          </div>
         </div>
       ))}
     </div>

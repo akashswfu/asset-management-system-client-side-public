@@ -2,11 +2,11 @@ import { useState } from "react";
 import { Link, useLocation, useNavigate } from "react-router-dom";
 import { useForm } from "react-hook-form";
 import { FcGoogle } from "react-icons/fc";
-import { ToastContainer, toast } from "react-toastify";
-import "react-toastify/dist/ReactToastify.css";
+
 import useAuth from "../../ReactHooks/useAuth";
 import axios from "axios";
 import useAxiosSecure from "../../ReactHooks/useAxiosSecure";
+import toast, { Toaster } from "react-hot-toast";
 
 const Login = () => {
   const [error, setError] = useState("");
@@ -26,6 +26,7 @@ const Login = () => {
         { withCredentials: true }
       );
       console.log(data);
+
       toast.success("Login Successfully");
       setLoading(false);
       setTimeout(() => {
@@ -70,7 +71,7 @@ const Login = () => {
       <div className="hero-content w-full flex-col mt-8">
         <div className="card shrink-0 w-full max-w-md  shadow-2xl bg-base-100 ">
           <div className="text-center ">
-            <h1 className="text-4xl font-bold my-8 text-transparent bg-gradient-to-r from-sky-500 to-indigo-800 bg-clip-text">
+            <h1 className="text-4xl font-bold my-8 text-transparent bg-gradient-to-r from-pink-600 to-yellow-600 bg-clip-text">
               Login now!
             </h1>
           </div>
@@ -111,7 +112,7 @@ const Login = () => {
             </div>
             {error && <p className="text-sm text-red-500">{error}</p>}
             <div className="form-control mt-6">
-              <button className="btn  uppercase   text-transparent bg-gradient-to-r from-sky-500 to-indigo-500 hover:from-sky-600 hover:to-indigo-700 font-semibold text-white">
+              <button className="btn  uppercase   text-transparent bg-gradient-to-r  from-pink-600 to-yellow-600 hover:from-pink-700 hover:to-yellow-700 font-semibold text-white">
                 Login
               </button>
             </div>
@@ -129,7 +130,7 @@ const Login = () => {
           <div className="text-center mt-2  pb-5 flex gap-2 justify-center">
             <button
               onClick={handleGoogleLogin}
-              className="btn btn-outline hover:border-0 hover:outline-none bg-gradient-to-r  hover:from-sky-600 hover:to-indigo-700 font-semibold text-sky-600"
+              className="btn btn-outline hover:border-0 hover:outline-none bg-gradient-to-r   hover:from-pink-700 hover:to-yellow-700 font-semibold text-pink-700"
             >
               <FcGoogle className="text-2xl me-2" />
               Google Login
@@ -138,7 +139,7 @@ const Login = () => {
         </div>
       </div>
       <div className="w-ful"></div>
-      <ToastContainer />
+      <Toaster />
     </div>
   );
 };

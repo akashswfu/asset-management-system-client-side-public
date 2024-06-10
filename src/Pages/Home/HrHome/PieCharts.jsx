@@ -63,7 +63,7 @@ const PieCharts = () => {
 
   return (
     <div>
-      <h2 className="text-center uppercase text-4xl pb-10 pt-10 text-green-500">
+      <h2 className="text-4xl text-center font-bold my-8 text-transparent bg-gradient-to-r from-pink-600 to-yellow-600 bg-clip-text uppercase mt-20">
         Percent of Returnable Items and Non-Returnable Items
       </h2>
 

@@ -10,6 +10,7 @@ import {
   pdf,
 } from "@react-pdf/renderer";
 import { saveAs } from "file-saver";
+import useAuth from "../../../ReactHooks/useAuth";
 
 // Create styles
 const styles = StyleSheet.create({
@@ -28,36 +29,21 @@ const styles = StyleSheet.create({
 });
 
 // Create Document Component
-const MyDocument = () => (
+const MyDocument = () => {
+  const { user, isLoading, loading } = useAuth();
+  if (loading) {
+    return <p>Loading.....</p>;
+  }
   <Document>
     <Page size="A4" style={styles.page}>
       <View style={styles.section}>
-        <Text style={styles.text}>Akash</Text>
+        <Text style={styles.text}>{user.email}</Text>
       </View>
       <View style={styles.section}>
-        <Text>Section #2</Text>
+        <Text>dgga</Text>
       </View>
     </Page>
-  </Document>
-);
-
-// Main App Component
-const App = () => {
-  const documentRef = useRef(null);
-
-  const handleDownload = async () => {
-    const doc = <MyDocument />;
-    const asPdf = pdf();
-    asPdf.updateContainer(doc);
-    const blob = await asPdf.toBlob();
-    saveAs(blob, "example.pdf");
-  };
-
-  return (
-    <div>
-      <button onClick={handleDownload}>Download PDF</button>
-    </div>
-  );
+  </Document>;
 };
 
-export default App;
+export default MyDocument;

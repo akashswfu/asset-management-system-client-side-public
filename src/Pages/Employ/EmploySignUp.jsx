@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useContext, useState } from "react";
 import { Link } from "react-router-dom";
 import { useForm } from "react-hook-form";
 import { useLocation, useNavigate } from "react-router-dom";
@@ -10,22 +10,18 @@ import useAuth from "../../ReactHooks/useAuth";
 import ReactDatePicker from "react-datepicker";
 import useAxiosSecure from "../../ReactHooks/useAxiosSecure";
 import { FcGoogle } from "react-icons/fc";
+import { AuthContext } from "../../Providers/AuthProvider";
 
 const EmploySignUp = () => {
   const role = "employ";
   const myHr = "noHr";
+  const { currentUser, setCurrentUser } = useContext(AuthContext);
   const [startDate, setStartDate] = useState(new Date());
   const [error, setError] = useState("");
   const [success, setSuccess] = useState("");
   const [showPassword, setShowPassword] = useState(false);
-  const {
-    createUser,
-    googleLogin,
-    setLoading,
-    updateUserProfile,
-    setUser,
-    user,
-  } = useAuth();
+  const { createUser, googleLogin, setLoading, updateUserProfile, setUser } =
+    useAuth();
   const location = useLocation();
   const navigate = useNavigate();
   const axiosSecure = useAxiosSecure();
@@ -46,7 +42,7 @@ const EmploySignUp = () => {
           myHr,
           photo: res.user.photoURL,
         };
-        console.log(user);
+        setCurrentUser(user);
         const { data } = await axios
           .post(`http://localhost:5000/users`, user)
           .then((res) => {
@@ -88,6 +84,7 @@ const EmploySignUp = () => {
     setError("");
     try {
       const result = await createUser(email, password);
+      setCurrentUser(user);
       toast.success("Registration Successfully");
 
       await updateUserProfile(name);
@@ -114,7 +111,7 @@ const EmploySignUp = () => {
       <div className="hero-content w-full  flex-col">
         <div className="text-center"></div>
         <div className="card shrink-0 w-full max-w-md shadow-2xl bg-base-100">
-          <h1 className="text-3xl text-transparent bg-gradient-to-r from-sky-500 to-indigo-800 bg-clip-text font-bold text-center mt-8">
+          <h1 className="text-3xl text-transparent bg-gradient-to-r  from-pink-600 to-yellow-600 bg-clip-text font-bold text-center mt-8">
             SignUp as a Employ
           </h1>
           <form
@@ -220,7 +217,7 @@ const EmploySignUp = () => {
               </div>
             </div>
             <div className="form-control mt-6">
-              <button className="btn  uppercase  text-white text-transparent bg-gradient-to-r from-sky-500 to-indigo-500 hover:from-sky-600 hover:to-indigo-700 font-semibold ">
+              <button className="btn  uppercase  text-white text-transparent bg-gradient-to-r from-pink-600 to-yellow-600 hover:from-pink-700 hover:to-yellow-700 font-semibold ">
                 SignUp
               </button>
             </div>
@@ -234,7 +231,7 @@ const EmploySignUp = () => {
           <div className="text-center mt-2  pb-5 flex gap-2 justify-center">
             <button
               onClick={handleGoogleLogin}
-              className="btn btn-outline hover:border-0 hover:outline-none bg-gradient-to-r  hover:from-sky-600 hover:to-indigo-700 font-semibold text-sky-600"
+              className="btn btn-outline hover:border-0 hover:outline-none bg-gradient-to-r   hover:from-pink-700 hover:to-yellow-700 font-semibold text-pink-600"
             >
               <FcGoogle className="text-2xl me-2" />
               Google Login

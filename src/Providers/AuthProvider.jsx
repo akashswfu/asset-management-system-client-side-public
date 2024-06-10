@@ -22,6 +22,7 @@ const AuthProvider = ({ children }) => {
   const [user, setUser] = useState(null);
   const [loading, setLoading] = useState(true);
   const axiosPublic = useAxiosPublic();
+  const [currentUser, setCurrentUser] = useState([]);
 
   const [packs, setPacks] = useState(0);
   const [hrEmploy, setHrEmploy] = useState(0);
@@ -65,7 +66,6 @@ const AuthProvider = ({ children }) => {
 
   const logOut = async () => {
     setLoading(true);
-
     return signOut(auth);
   };
   const googleLogin = () => {
@@ -87,6 +87,8 @@ const AuthProvider = ({ children }) => {
     updateUserProfile,
     hrEmploy,
     setHrEmploy,
+    setCurrentUser,
+    currentUser,
   };
   return (
     <AuthContext.Provider value={authInfo}>{children}</AuthContext.Provider>

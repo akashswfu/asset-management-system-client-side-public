@@ -1,15 +1,17 @@
-import { useState } from "react";
+import { useContext, useState } from "react";
 import { Link } from "react-router-dom";
 import { useForm } from "react-hook-form";
 import { useLocation, useNavigate } from "react-router-dom";
 import { FaEye, FaEyeSlash } from "react-icons/fa";
-import { ToastContainer, toast } from "react-toastify";
+
 import "react-toastify/dist/ReactToastify.css";
 import axios from "axios";
 
 import useAuth from "../../../ReactHooks/useAuth";
 import ReactDatePicker from "react-datepicker";
 import "react-datepicker/dist/react-datepicker.css";
+import toast, { Toaster } from "react-hot-toast";
+import { AuthContext } from "../../../Providers/AuthProvider";
 
 const SignUp = () => {
   const role = "HR";
@@ -27,6 +29,7 @@ const SignUp = () => {
     handleSubmit,
     formState: { errors },
   } = useForm();
+  const { currentUser, setCurrentUser } = useContext(AuthContext);
 
   const onSubmit = async (data) => {
     const { name, companyName, photo, companyLogo, email, password } = data;
@@ -44,11 +47,11 @@ const SignUp = () => {
     console.log(user);
 
     if (password.length < 6) {
-      toast.warning("Password must be 6 or more characters long ");
+      toast.error("Password must be 6 or more characters long ");
 
       return;
     } else if (!/^(?=.*[a-z])(?=.*[A-Z]).+$/.test(password)) {
-      toast.warning("Password must have a lowercase and Uppercase character ");
+      toast.error("Password must have a lowercase and Uppercase character ");
 
       return;
     }
@@ -57,6 +60,7 @@ const SignUp = () => {
     setError("");
     try {
       const result = await createUser(email, password);
+      setCurrentUser(user);
 
       await updateUserProfile(name);
       setUser({
@@ -69,11 +73,9 @@ const SignUp = () => {
       const { data } = await axios.post(`http://localhost:5000/users`, user);
       toast.success("Registration Successfully");
       setLoading(false);
-      setTimeout(() => {
-        navigate("/subscription");
-      }, 1000);
+      navigate("/subscription");
     } catch (err) {
-      toast.warning("User Already Exists! ");
+      toast.error("User Already Exists!");
     }
   };
 
@@ -82,7 +84,7 @@ const SignUp = () => {
       <div className="hero-content w-full  flex-col">
         <div className="text-center"></div>
         <div className="card shrink-0 w-full max-w-md shadow-2xl bg-base-100">
-          <h1 className="text-3xl text-transparent bg-gradient-to-r from-sky-500 to-indigo-800 bg-clip-text font-bold text-center mt-8">
+          <h1 className="text-3xl text-transparent bg-gradient-to-r  from-pink-600 to-yellow-600 bg-clip-text font-bold text-center mt-8">
             SignUp as a HR
           </h1>
           <form
@@ -275,7 +277,7 @@ const SignUp = () => {
             </div>
 
             <div className="form-control mt-6">
-              <button className="btn  uppercase  text-white text-transparent bg-gradient-to-r from-sky-500 to-indigo-500 hover:from-sky-600 hover:to-indigo-700 font-semibold ">
+              <button className="btn  uppercase  text-white text-transparent bg-gradient-to-r from-pink-600 to-yellow-600 hover:from-pink-700 hover:to-yellow-700 font-semibold ">
                 Signup
               </button>
             </div>
@@ -288,7 +290,7 @@ const SignUp = () => {
           </p>
         </div>
       </div>
-      <ToastContainer />
+      <Toaster />
     </div>
   );
 };

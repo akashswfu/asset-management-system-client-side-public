@@ -1,11 +1,22 @@
-import React from "react";
+import React, { useRef, useState } from "react";
 import useAxiosSecure from "../../../ReactHooks/useAxiosSecure";
 import useUserInfo from "../../../ReactHooks/useUserInfo";
 import { useQuery } from "@tanstack/react-query";
+import App from "../../../App";
+import MyDocument from "./MyDocument";
+import { pdf } from "@react-pdf/renderer";
+import { saveAs } from "file-saver";
 
 const MyTeam = () => {
   const axiosSecure = useAxiosSecure();
   const [userInfo] = useUserInfo();
+  const [accept, setAccept] = useState("Accept");
+  const acc = "Accepted";
+  const rej = "Rejected";
+
+  const handleAccept = () => {
+    setAccept("Reject");
+  };
 
   const {
     data: myTeam = [],
@@ -31,33 +42,48 @@ const MyTeam = () => {
     const { data } = await axiosSecure.get(`/user/${userInfo?.myHr}`);
     return data;
   };
+  const documentRef = useRef(null);
+  const handleDownload = async (team) => {
+    const doc = <MyDocument />;
+    const asPdf = pdf();
+    asPdf.updateContainer(doc);
+    const blob = await asPdf.toBlob();
+    saveAs(blob, "example.pdf");
+  };
 
   return (
     <div>
-      {myTeam.map((team) => (
-        <div
+      <div>
+        {myTeam.map((team) => (
+          <div
+            className="flex items-center gap-20 justify-center  mx-auto mb-10"
+            key={team._id}
+          >
+            <div>
+              <img className="w-20 h-20" src={team.photo} alt="" />
+            </div>
+            <h1>{team.name}</h1>
+            <h1>{team.role}</h1>
+            <button
+              onClick={() => handleDownload(team)}
+              
+              className="btn btn-primary"
+            >
+              print
+            </button>
+          </div>
+        ))}
+
+        {/* <div
           className="flex items-center gap-20 justify-center  mx-auto mb-10"
-          key={team._id}
+          key={myHr._id}
         >
           <div>
-            <img className="w-20 h-20" src={team.photo} alt="" />
+            <img className="w-20 h-20 bg-blue-500 " alt="" />
           </div>
-          <h1>{team.name}</h1>
-          <h1>{team.role}</h1>
-        </div>
-      ))}
-      <div
-        className="flex items-center gap-20 justify-center  mx-auto mb-10"
-        key={myHr._id}
-      >
-        {/* <div>
-          <img className="w-20 h-20" src={myHr.photo} alt="" />
+          <h1>{myHr.name}</h1>
+          <h1>{myHr.role}</h1>
         </div> */}
-        <div>
-          <img className="w-20 h-20 bg-blue-500 " alt="" />
-        </div>
-        <h1>{myHr.name}</h1>
-        <h1>{myHr.role}</h1>
       </div>
     </div>
   );

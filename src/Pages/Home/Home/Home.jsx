@@ -19,7 +19,7 @@ import { Helmet } from "react-helmet-async";
 
 const Home = () => {
   const navigate = useNavigate();
-  const { loading, user } = useAuth();
+  const { loading, user, currentUser } = useAuth();
   const [userInfo, isLoading] = useUserInfo();
 
   if (loading || isLoading) {
@@ -30,7 +30,7 @@ const Home = () => {
     );
   }
 
-  if (userInfo?.role === "HR" && userInfo?.pack < 1) {
+  if (currentUser?.role === "HR" && currentUser?.pack < 1) {
     navigate("/subscription");
   }
 
@@ -42,8 +42,8 @@ const Home = () => {
             <title>Home</title>
           </Helmet>
           <Banner></Banner>
-          <AboutWebsite></AboutWebsite>
           <Package></Package>
+          <AboutWebsite></AboutWebsite>
         </div>
       )}
       {userInfo.role === "employ" && userInfo.myHr === "noHr" && (

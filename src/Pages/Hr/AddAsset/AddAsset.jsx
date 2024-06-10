@@ -5,15 +5,21 @@ import { toast } from "react-toastify";
 import useAuth from "../../../ReactHooks/useAuth";
 import { useNavigate } from "react-router-dom";
 import ReactDatePicker from "react-datepicker";
+import useUserInfo from "../../../ReactHooks/useUserInfo";
 
 const AddAsset = () => {
-  const { user } = useAuth();
+  const { user, currentUser } = useAuth();
   const [type, setType] = useState("");
   const navigate = useNavigate();
   const [startDate, setStartDate] = useState(new Date());
+  const [userInfo] = useUserInfo();
 
   const handleAddFood = async (e) => {
     e.preventDefault();
+
+    if (userInfo.pack === 0 || currentUser.pack === 0) {
+      return alert("You have no plan sorry to say you cannot add products");
+    }
     const form = e.target;
 
     const productName = form.productName.value;
