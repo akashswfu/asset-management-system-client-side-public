@@ -7,7 +7,7 @@ const PieCharts = () => {
   const [allReq, isLoading] = useAssetsReqByEmploy();
 
   const returnable = allReq.filter((item) => item.type === "Returnable").length;
-  console.log(returnable);
+
   const nonReturnable = allReq.filter(
     (item) => item.type === "Non-returnable"
   ).length;
@@ -49,7 +49,6 @@ const PieCharts = () => {
     );
   };
 
-  console.log(chartData);
   const pieChartData = chartData.map((data) => {
     return { name: data.name, value: data.quantity };
   });

@@ -119,8 +119,6 @@ const Navbar = () => {
     );
   };
 
-  console.log(currentUser, userInfo);
-
   return (
     <div className="navbar  dark:bg-purple-700 bg-gray-200 py-4 px-4 md:mb-10">
       <div className="navbar-start">
@@ -159,21 +157,32 @@ const Navbar = () => {
             {loggedUser.role === "employ" && <p>{myHr.companyLogo}</p>}
             {loggedUser.length === 0 && <p>No User</p>}
           </span> */}
-          {currentUser.length > 0 && currentUser.role === "HR" && (
+          {currentUser && currentUser?.role === "HR" && !userInfo && (
             <img
               className="w-14 h-14 bg-green-500 rounded-full border-none"
               src={currentUser.companyLogo}
               alt="No Logo"
             />
           )}
-          {userInfo.length > 0 && userInfo.role === "HR" && (
+          {userInfo && userInfo?.role === "HR" && (
             <img
-              className="w-14 h-14 bg-green-500 rounded-full border-none"
+              className="w-14 h-14 bg-red-500 rounded-full border-none"
               src={userInfo.companyLogo}
               alt="No Logo"
             />
           )}
           {!user && (
+            <img
+              className="w-14 h-14 bg-red-500 rounded-full border-none"
+              src={icons}
+              alt=""
+            />
+          )}
+
+          {((user && userInfo.role === "employ" && userInfo.myHr === "noHr") ||
+            (user &&
+              currentUser.role === "employ" &&
+              currentUser.myHr === "noHr")) && (
             <img
               className="w-14 h-14 bg-green-500 rounded-full border-none"
               src={icons}

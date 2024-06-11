@@ -81,9 +81,7 @@ const CheckoutForm = () => {
             "Payment Success now you can add employees in your team"
           );
 
-          setTimeout(() => {
-            navigate("/");
-          }, 500);
+          navigate("/");
         } catch (err) {
           console.log(err);
         }

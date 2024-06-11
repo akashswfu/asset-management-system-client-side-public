@@ -32,7 +32,7 @@ const Banner = () => {
       navigation
       pagination={{ clickable: true }}
     >
-      <SwiperSlide className="mb-3  relative bg-white">
+      <SwiperSlide className="mb-3  relative ">
         <img
           data-aos="zoom-in"
           data-aos-duration="1000"
@@ -53,7 +53,7 @@ const Banner = () => {
           </Link>
         </div>
       </SwiperSlide>
-      <SwiperSlide className="mb-3  relative bg-white">
+      <SwiperSlide className="mb-3  relative ">
         <img
           data-aos="zoom-in"
           data-aos-duration="1000"
