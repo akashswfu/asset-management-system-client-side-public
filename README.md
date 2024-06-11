@@ -1,18 +1,6 @@
-# npm package name which i have used for this project.
+HR email : akash99@gmail.com
 
-- React Hook Form
-
-- React simple Typewriter
-
-- React Awesome reveal
-
-- Framer-motion
-
-- React Hook from,
-
-- Tanstack query
-
-- Use Axios Custom Hook
+HR password: Akash925
 
 # Assets Management System : https://asset-management-system-auth.web.app/
 

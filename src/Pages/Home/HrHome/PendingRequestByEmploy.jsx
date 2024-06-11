@@ -3,12 +3,14 @@ import useAxiosSecure from "../../../ReactHooks/useAxiosSecure";
 import useUserInfo from "../../../ReactHooks/useUserInfo";
 import useAuth from "../../../ReactHooks/useAuth";
 import LoadingSpinner from "../../../components/LoadingSpinner/LoadingSpinner";
+import useAssetsList from "../../../ReactHooks/useAssetsList";
 
 const PendingRequestByEmploy = () => {
   const axiosSecure = useAxiosSecure();
   const [userInfo, isLoading] = useUserInfo();
   const { user, loading } = useAuth();
   const [getData, setGetData] = useState([]);
+  const [myAssets] = useAssetsList();
 
   useEffect(() => {
     const getPendingData = async () => {
@@ -25,7 +27,7 @@ const PendingRequestByEmploy = () => {
   }
   return (
     <div>
-      {getData.length === 0 && (
+      {myAssets.length === 0 && (
         <div className="flex flex-col justify-center items-center">
           <p className="text-center text-4xl font-semibold text-red-500 py-16 uppercase">
             You have no data for showing first add some products and add team

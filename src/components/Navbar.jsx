@@ -119,6 +119,8 @@ const Navbar = () => {
     );
   };
 
+  console.log(currentUser, userInfo);
+
   return (
     <div className="navbar  dark:bg-purple-700 bg-gray-200 py-4 px-4 md:mb-10">
       <div className="navbar-start">
@@ -150,17 +152,34 @@ const Navbar = () => {
             {links}
           </ul>
         </div>
+
         <div className="hidden md:flex items-center gap-3">
           {/* <span className="hidden text-xl lg:text-3xl font-bold md:flex lg:flex text-transparent bg-gradient-to-r from-sky-500 to-indigo-800 bg-clip-text ">
             {loggedUser.role === "HR" && <p>{loggedUser.companyLogo}</p>}
             {loggedUser.role === "employ" && <p>{myHr.companyLogo}</p>}
             {loggedUser.length === 0 && <p>No User</p>}
           </span> */}
-          <img
-            className="w-14 h-14 bg-green-500 rounded-full border-none"
-            src={icons}
-            alt=""
-          />
+          {currentUser.length > 0 && currentUser.role === "HR" && (
+            <img
+              className="w-14 h-14 bg-green-500 rounded-full border-none"
+              src={currentUser.companyLogo}
+              alt="No Logo"
+            />
+          )}
+          {userInfo.length > 0 && userInfo.role === "HR" && (
+            <img
+              className="w-14 h-14 bg-green-500 rounded-full border-none"
+              src={userInfo.companyLogo}
+              alt="No Logo"
+            />
+          )}
+          {!user && (
+            <img
+              className="w-14 h-14 bg-green-500 rounded-full border-none"
+              src={icons}
+              alt=""
+            />
+          )}
         </div>
       </div>
       <div className="navbar-center hidden  lg:flex">
