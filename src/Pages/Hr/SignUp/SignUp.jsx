@@ -71,7 +71,10 @@ const SignUp = () => {
         photoURL: photo,
       });
 
-      const { data } = await axios.post(`http://localhost:5000/users`, user);
+      const { data } = await axios.post(
+        `https://asset-management-system-server-side.vercel.app/users`,
+        user
+      );
       toast.success("Registration Successfully");
       setLoading(false);
       navigate("/subscription");

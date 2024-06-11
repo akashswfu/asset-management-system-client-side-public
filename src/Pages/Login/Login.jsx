@@ -7,6 +7,7 @@ import useAuth from "../../ReactHooks/useAuth";
 import axios from "axios";
 import useAxiosSecure from "../../ReactHooks/useAxiosSecure";
 import toast, { Toaster } from "react-hot-toast";
+import { Helmet } from "react-helmet-async";
 
 const Login = () => {
   const [error, setError] = useState("");
@@ -59,6 +60,9 @@ const Login = () => {
 
   return (
     <div data-aos="fade-right" data-aos-duration="1000">
+      <Helmet>
+        <title>Login</title>
+      </Helmet>
       <div className="hero-content w-full flex-col mt-8">
         <div className="card shrink-0 w-full max-w-md  shadow-2xl bg-base-100 ">
           <div className="text-center ">

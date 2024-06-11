@@ -17,7 +17,7 @@ const UpdateSingleAssetItem = () => {
   const { mutateAsync } = useMutation({
     mutationFn: async (updateProduct) => {
       const { data } = await axiosSecure.put(
-        `http://localhost:5000/asset/${asset._id}`,
+        `https://asset-management-system-server-side.vercel.app/asset/${asset._id}`,
         updateProduct
       );
     },

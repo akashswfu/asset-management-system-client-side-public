@@ -25,6 +25,13 @@ const PendingRequestByEmploy = () => {
   }
   return (
     <div>
+      {getData.length === 0 && (
+        <div className="flex flex-col justify-center items-center">
+          <p className="text-center text-4xl font-semibold text-red-500 py-16 uppercase">
+            You have no data for showing first add some products and add team
+          </p>
+        </div>
+      )}
       {getData.length > 0 && (
         <h2 className="md:text-4xl text-2xl text-center font-bold my-8 text-transparent bg-gradient-to-r from-pink-600 to-yellow-600 bg-clip-text pb-5 uppercase">
           Pending Request

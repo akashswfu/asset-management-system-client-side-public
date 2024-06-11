@@ -61,7 +61,6 @@ const PieCharts = () => {
           Percent of Returnable Items and Non-Returnable Items
         </h2>
       )}
-
       <div className="flex md:justify-center  w-full">
         <PieChart width={1000} height={400}>
           <Pie
@@ -81,8 +80,17 @@ const PieCharts = () => {
               />
             ))}
           </Pie>
+
           {/* {allReq.length > 0 && <Legend className=""></Legend>} */}
         </PieChart>
+      </div>
+
+      <div className="flex justify-center mb-10 md:mb-0">
+        {" "}
+        <div className="flex gap-4 font-bold text-xl">
+          <p className="text-[#0088FE]">Returnable</p>
+          <p className="text-[#FF8042]">Non-returnable</p>
+        </div>
       </div>
     </div>
   );

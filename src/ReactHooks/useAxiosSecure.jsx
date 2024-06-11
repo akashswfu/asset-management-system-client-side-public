@@ -3,7 +3,7 @@ import { useNavigate } from "react-router-dom";
 import useAuth from "./useAuth";
 
 const axiosSecure = axios.create({
-  baseURL: "http://localhost:5000",
+  baseURL: "https://asset-management-system-server-side.vercel.app",
 });
 
 const useAxiosSecure = () => {
@@ -11,7 +11,6 @@ const useAxiosSecure = () => {
   const { logOut } = useAuth();
   //req interceptor to add every secure
   axiosSecure.interceptors.request.use(function (config) {
-    
     const token = localStorage.getItem("access-token");
     // console.log("req stop by interceptor", token);
     config.headers.authorization = `Bearer ${token}`;

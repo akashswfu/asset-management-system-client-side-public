@@ -50,6 +50,13 @@ const MyTeam = () => {
 
   return (
     <div className="min-h-[calc(100vh-450px)]">
+      {/* {myTeam.length === 0 && (
+        <div className="flex flex-col justify-center items-center">
+          <p className="text-center text-4xl font-semibold text-red-500 py-16 uppercase">
+            You have no HR
+          </p>
+        </div>
+      )} */}
       <Helmet>
         <title>Employ || My Team</title>
       </Helmet>

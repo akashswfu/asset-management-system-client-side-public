@@ -7,7 +7,7 @@ import { data } from "autoprefixer";
 const PendingRequest = () => {
   const axiosSecure = useAxiosSecure();
   const [userInfo, isLoading] = useUserInfo();
-  const { user, loading } = useAuth();
+  const { user, loading, currentUser } = useAuth();
   const [getData, setGetData] = useState([]);
 
   useEffect(() => {

@@ -45,7 +45,10 @@ const EmploySignUp = () => {
         };
         setCurrentUser(user);
         const { data } = await axios
-          .post(`http://localhost:5000/users`, user)
+          .post(
+            `https://asset-management-system-server-side.vercel.app/users`,
+            user
+          )
           .then((res) => {
             toast.success("Registration Successfully");
             setLoading(false);
@@ -96,7 +99,10 @@ const EmploySignUp = () => {
         email: email,
       });
 
-      const { data } = await axios.post(`http://localhost:5000/users`, user);
+      const { data } = await axios.post(
+        `https://asset-management-system-server-side.vercel.app/users`,
+        user
+      );
       toast.success("Login Successfully");
       setLoading(false);
       setTimeout(() => {

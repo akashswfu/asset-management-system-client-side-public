@@ -20,6 +20,7 @@ import PrivateRoute from "./PrivateRoute";
 import Subscription from "../Pages/Hr/Subscription/Subscription";
 import Payment from "../Pages/Hr/Payment/Payment";
 import ErrorPage from "../components/ErrorPage/ErrorPage";
+import HrHomeRoutes from "./HrHomeRoutes";
 
 const router = createBrowserRouter([
   {
@@ -71,7 +72,9 @@ const router = createBrowserRouter([
         path: "/assetList",
         element: (
           <HrRoutes>
-            <AssetList></AssetList>
+            <HrHomeRoutes>
+              <AssetList></AssetList>
+            </HrHomeRoutes>
           </HrRoutes>
         ),
       },
@@ -79,7 +82,9 @@ const router = createBrowserRouter([
         path: "/addAsset",
         element: (
           <HrRoutes>
-            <AddAsset></AddAsset>
+            <HrHomeRoutes>
+              <AddAsset></AddAsset>
+            </HrHomeRoutes>
           </HrRoutes>
         ),
       },
@@ -87,7 +92,10 @@ const router = createBrowserRouter([
         path: "/addEmploy",
         element: (
           <HrRoutes>
-            <AddEmploy></AddEmploy>
+            <HrHomeRoutes>
+              {" "}
+              <AddEmploy></AddEmploy>
+            </HrHomeRoutes>
           </HrRoutes>
         ),
       },
@@ -95,7 +103,9 @@ const router = createBrowserRouter([
         path: "/allRequest",
         element: (
           <HrRoutes>
-            <AllRequest></AllRequest>
+            <HrHomeRoutes>
+              <AllRequest></AllRequest>
+            </HrHomeRoutes>
           </HrRoutes>
         ),
       },
@@ -103,7 +113,9 @@ const router = createBrowserRouter([
         path: "/MyEmployList",
         element: (
           <HrRoutes>
-            <MyEmployList></MyEmployList>
+            <HrHomeRoutes>
+              <MyEmployList></MyEmployList>
+            </HrHomeRoutes>
           </HrRoutes>
         ),
       },
@@ -115,7 +127,9 @@ const router = createBrowserRouter([
           </HrRoutes>
         ),
         loader: ({ params }) =>
-          fetch(`http://localhost:5000/asset/${params.id}`),
+          fetch(
+            `https://asset-management-system-server-side.vercel.app/asset/${params.id}`
+          ),
       },
 
       // employ routes
@@ -126,7 +140,10 @@ const router = createBrowserRouter([
             <MyAssetsRequest></MyAssetsRequest>
           </EmployRoutes>
         ),
-        loader: () => fetch("http://localhost:5000/assets"),
+        loader: () =>
+          fetch(
+            "https://asset-management-system-server-side.vercel.app/assets"
+          ),
       },
       {
         path: "/myTeam",

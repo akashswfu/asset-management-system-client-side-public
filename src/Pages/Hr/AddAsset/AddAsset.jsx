@@ -39,7 +39,7 @@ const AddAsset = () => {
     console.log(productDetails);
     try {
       const { data } = await axios.post(
-        "http://localhost:5000/assets",
+        "https://asset-management-system-server-side.vercel.app/assets",
         productDetails
       );
       toast.success("Assets Added Successfully");

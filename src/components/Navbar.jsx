@@ -77,10 +77,10 @@ const Navbar = () => {
             <NavLink to="/allRequest">All Request</NavLink>
           </li>
           <li className="">
-            <NavLink to="/myEmployList">My Employs</NavLink>
+            <NavLink to="/myEmployList">My employee</NavLink>
           </li>
           <li className="">
-            <NavLink to="/addEmploy">Add Employ</NavLink>
+            <NavLink to="/addEmploy">Add employee</NavLink>
           </li>
           <li className="">
             <NavLink to="/updateProfile">Profile</NavLink>
