@@ -57,12 +57,12 @@ const PieCharts = () => {
   return (
     <div>
       {allReq.length > 0 && (
-        <h2 className="text-4xl text-center font-bold my-8 text-transparent bg-gradient-to-r from-pink-600 to-yellow-600 bg-clip-text uppercase mt-20">
+        <h2 className="text-2xl md:text-4xl px-5 md:px-0 text-center font-bold my-8 text-transparent bg-gradient-to-r from-pink-600 to-yellow-600 bg-clip-text uppercase mt-20">
           Percent of Returnable Items and Non-Returnable Items
         </h2>
       )}
 
-      <div className="flex justify-center w-full">
+      <div className="flex md:justify-center  w-full">
         <PieChart width={1000} height={400}>
           <Pie
             data={pieChartData}
@@ -70,7 +70,7 @@ const PieCharts = () => {
             cy="50%"
             labelLine={false}
             label={renderCustomizedLabel}
-            outerRadius={100}
+            outerRadius={150}
             fill="#8884d8"
             dataKey="value"
           >
@@ -81,7 +81,7 @@ const PieCharts = () => {
               />
             ))}
           </Pie>
-          {allReq.length > 0 && <Legend></Legend>}
+          {/* {allReq.length > 0 && <Legend className=""></Legend>} */}
         </PieChart>
       </div>
     </div>

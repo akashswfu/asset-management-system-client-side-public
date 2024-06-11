@@ -3,11 +3,11 @@ import React from "react";
 const AboutWebsite = () => {
   return (
     <div>
-      <h2 className="text-center uppercase text-4xl py-20 text-green-500 text-transparent bg-gradient-to-r from-pink-600 to-yellow-600 hover:from-pink-700 hover:to-yellow-700 bg-clip-text">
+      <h2 className="text-center uppercase text-2xl md:text-4xl py-10 md:py-20 text-green-500 text-transparent bg-gradient-to-r from-pink-600 to-yellow-600 hover:from-pink-700 hover:to-yellow-700 bg-clip-text">
         About This Website
       </h2>
-      <div className="bg-gray-100 p-20 flex justify-center items-center">
-        <div className="p-20 text-justify shadow-2xl">
+      <div className="bg-gray-100 md:p-20 flex justify-center items-center">
+        <div className="md:p-20 p-10 text-justify shadow-2xl">
           <p className="text-black">
             I have developed a comprehensive website tailored specifically for
             HR managers and employees, featuring two distinct sections to

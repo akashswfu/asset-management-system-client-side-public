@@ -1,6 +1,7 @@
 import React, { useContext, useState } from "react";
 import { Link } from "react-router-dom";
 import { AuthContext } from "../../../Providers/AuthProvider";
+import { Helmet } from "react-helmet-async";
 
 const Subscription = () => {
   const [selectedPack, setSelectedPack] = useState(0);
@@ -12,10 +13,13 @@ const Subscription = () => {
 
   return (
     <div className="min-h-[calc(100vh-400px)]">
-      <h4 className="text-3xl text-center font-semibold justify-center items-center gap-10">
+      <Helmet>
+        <title>HR || Subscription Plan</title>
+      </Helmet>
+      <h4 className="text-3xl mt-10 md:mt-0 text-center font-semibold justify-center items-center gap-10">
         Choose Your Plan First
       </h4>
-      <div className="grid mt-16 grid-cols-1 md:grid-cols-3 gap-10">
+      <div className="grid mt-16 grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-10 px-5 lg:px-0">
         <div
           onClick={() => {
             setSelectedPack(5);
@@ -62,8 +66,8 @@ const Subscription = () => {
         </div>
       </div>
 
-      <div className="bg-blue-300 flex items-center text-center mt-10 py-5 justify-center gap-10">
-        <h1 className="text-4xl ">
+      <div className="bg-blue-300 flex flex-col md:flex-row  items-center text-center mt-10 py-5 justify-center gap-10">
+        <h1 className="text-2xl md:text-4xl px-5 md:px-0">
           Your Selected Package :{selectedPack === 5 && "$5 5 Employees"}
           {selectedPack === 10 && "$8 10 Employees"}
           {selectedPack === 20 && "$15 20 Employees"}

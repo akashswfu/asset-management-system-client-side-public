@@ -26,27 +26,46 @@ const LimitedStock = () => {
   return (
     <div>
       {myAssets.length > 0 && (
-        <h2 className="text-4xl text-center font-bold my-8 text-transparent bg-gradient-to-r from-pink-600 to-yellow-600 bg-clip-text pb-5 uppercase mt-20">
+        <h2 className="text-2xl md:text-4xl text-center font-bold my-8 text-transparent bg-gradient-to-r from-pink-600 to-yellow-600 bg-clip-text pb-5 uppercase mt-20">
           Limited Stock Items
         </h2>
       )}
       {limitedItems.map((data) => (
         <div
-          className="flex items-center gap-20 justify-center w-4/5 mx-auto mb-6"
+          className="flex items-center gap-20 justify-center md:w-11/12 lg:w-4/5 w-full mx-auto mb-6"
           key={data._id}
         >
-          <div className="flex items-center shadow-2xl rounded-xl justify-around bg-gray-200 py-10 px-20 w-full gap-10">
-            <h1 className="text-2xl font-semibold uppercase  ">
-              {" "}
-              {data.productName}{" "}
-            </h1>
+          <div className="md:flex items-center shadow-2xl md:rounded-xl md:justify-between bg-gray-200 py-10 px-5 md:px-20 w-full gap-10">
+            <div className="flex flex-col md:flex-row items-center gap-5 md:gap-20 w-full justify-center md:justify-between">
+              <h1 className="text-2xl font-semibold uppercase">
+                {data.productName}
+              </h1>
 
-            <h1 className="uppercase font-bold">{data.type}</h1>
-            <h1 className="text-xl text-blue-500  font-semibold">
-              {data.productQuantity}
-            </h1>
+              <div className="flex items-center justify-between w-1/2">
+                <h1 className="uppercase font-bold">{data.type}</h1>
+                <h1 className="text-xl text-blue-500  font-semibold">
+                  {data.productQuantity}
+                </h1>
+              </div>
+            </div>
           </div>
         </div>
+        // <div
+        //   className="flex items-center gap-20 justify-center w-4/5 mx-auto mb-6"
+        //   key={data._id}
+        // >
+        //   <div className="flex items-center shadow-2xl rounded-xl justify-around bg-gray-200 py-10 px-20 w-full gap-10">
+        //     <h1 className="text-2xl font-semibold uppercase  ">
+        //       {" "}
+        //       {data.productName}{" "}
+        //     </h1>
+
+        //     <h1 className="uppercase font-bold">{data.type}</h1>
+        //     <h1 className="text-xl text-blue-500  font-semibold">
+        //       {data.productQuantity}
+        //     </h1>
+        //   </div>
+        // </div>
       ))}
     </div>
     // <div>

@@ -108,15 +108,17 @@ const Login = () => {
               </button>
             </div>
           </form>
-          <p className="text-sm text-center">
-            New to Here? Please SignUp
-            <Link to="/signUp">
-              <button className="btn btn-link">as HR </button>
-            </Link>
-            <Link to="/employSignUp">
-              <button className="btn btn-link">as Employ</button>
-            </Link>
-          </p>
+          <div className="text-sm text-center md:flex mt-5 md:mt-0 justify-center items-center">
+            <p> New to Here? Please SignUp</p>
+            <div>
+              <Link to="/signUp">
+                <button className="btn btn-link uppercase">as HR </button>
+              </Link>
+              <Link to="/employSignUp">
+                <button className="btn btn-link uppercase">as Employ</button>
+              </Link>
+            </div>
+          </div>
           <div className="divider font-semibold px-10 ">or</div>
           <div className="text-center mt-2  pb-5 flex gap-2 justify-center">
             <button

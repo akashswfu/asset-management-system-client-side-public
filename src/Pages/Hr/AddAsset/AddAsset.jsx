@@ -5,6 +5,7 @@ import useAuth from "../../../ReactHooks/useAuth";
 import { useNavigate } from "react-router-dom";
 import ReactDatePicker from "react-datepicker";
 import useUserInfo from "../../../ReactHooks/useUserInfo";
+import { Helmet } from "react-helmet-async";
 
 const AddAsset = () => {
   const { user, currentUser } = useAuth();
@@ -52,6 +53,10 @@ const AddAsset = () => {
   };
   return (
     <div className="md:p-24 p-5 bg-gray-100 ">
+      <Helmet>
+        <title>HR || Add Assets</title>
+      </Helmet>
+
       <h1 className="text-center text-4xl font-bold pb-12">Add a new Assets</h1>
       <form onSubmit={handleAddFood}>
         {/* foodname and foodImage row  */}

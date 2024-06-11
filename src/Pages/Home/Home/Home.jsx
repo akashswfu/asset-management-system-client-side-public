@@ -33,8 +33,14 @@ const Home = () => {
           <Helmet>
             <title>Home</title>
           </Helmet>
-          <Banner></Banner>
-          <Package></Package>
+
+          <div className="mt-20 md:mt-0 px-5 md:px-10 lg:px-0">
+            {" "}
+            <Banner></Banner>
+          </div>
+          <div className="px-5 md:px-10 lg:px-0">
+            <Package></Package>
+          </div>
           <AboutWebsite></AboutWebsite>
         </div>
       )}

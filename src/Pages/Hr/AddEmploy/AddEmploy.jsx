@@ -5,6 +5,7 @@ import { useMutation, useQuery } from "@tanstack/react-query";
 import toast, { Toaster } from "react-hot-toast";
 import { useNavigate } from "react-router-dom";
 import useUserInfo from "../../../ReactHooks/useUserInfo";
+import { Helmet } from "react-helmet-async";
 
 const AddEmploy = () => {
   const { user, hrEmploy } = useAuth();
@@ -50,7 +51,7 @@ const AddEmploy = () => {
 
   const handleUpdate = async (item) => {
     if (userInfo?.pack <= employCount) {
-      return alert("Your need increase your package for add member");
+      return toast.error("Your need increase your package for add member");
     }
     item.myHr = user?.email;
     const { name, email, startDate, role, myHr, photo } = item;
@@ -74,12 +75,20 @@ const AddEmploy = () => {
 
   return (
     <div>
-      <div className="flex justify-center items-center gap-5 mb-16">
-        <h1 className="text-3xl font-semibold text-center uppercase">
-          Employees : <span className="text-green-500">{employCount}</span> ||
-          Package Limit :{" "}
-          <span className="text-green-500">{userInfo.pack}</span> employees ||
-        </h1>
+      <Helmet>
+        <title>HR || Add Employ</title>
+      </Helmet>
+      <div className="flex flex-col lg:flex-row justify-center mt-5 md:mt-0 items-center gap-5 mb-16">
+        <div className="md:text-3xl flex flex-col lg:flex-row text-2xl font-semibold text-center uppercase">
+          <h1>
+            {" "}
+            Employees : <span className="text-green-500">{employCount}</span> ||
+          </h1>
+          <h1>
+            Package Limit :{" "}
+            <span className="text-green-500">{userInfo.pack}</span> employees ||
+          </h1>
+        </div>
         <button
           onClick={handleIncrease}
           className="btn bg-green-500 hover:bg-green-600 text-white text-lg  border-0"

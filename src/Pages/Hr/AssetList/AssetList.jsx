@@ -1,6 +1,6 @@
 import { useQuery } from "@tanstack/react-query";
 import React, { useEffect, useState } from "react";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import { toast } from "react-toastify";
 import Swal from "sweetalert2";
 import useAuth from "../../../ReactHooks/useAuth";
@@ -8,16 +8,18 @@ import axios from "axios";
 import useAxiosSecure from "../../../ReactHooks/useAxiosSecure";
 import useAssetsList from "../../../ReactHooks/useAssetsList";
 import { Toaster } from "react-hot-toast";
+import useUserInfo from "../../../ReactHooks/useUserInfo";
+import { Helmet } from "react-helmet-async";
 
 const AssetList = () => {
-  const { user, setLoading } = useAuth();
+  const { user, setLoading, currentUser } = useAuth();
   const [searchText, setSearchText] = useState("");
   const [search, setSearch] = useState("");
   const [sort, setSort] = useState("");
   const [assetsStock, setAssetsStock] = useState("");
   const [assetsType, setAssetsType] = useState("");
   const axiosSecure = useAxiosSecure();
-
+  const navigate = useNavigate();
   const [currentPage, setCurrentPage] = useState(1);
   const [itemsPerPage, setItemsPerPage] = useState(10);
   const [count, setCount] = useState(0);
@@ -123,9 +125,12 @@ const AssetList = () => {
   };
   return (
     <div className="min-h-[calc(100vh-400px)]">
-      <div className="flex justify-center items-center gap-5 mb-10">
+      <Helmet>
+        <title>HR || Assets List</title>
+      </Helmet>
+      <div className="flex flex-col lg:flex-row justify-center items-center  md:gap-5 mb-5 md:mb-10">
         <form onSubmit={handleSearch}>
-          <div className="flex p-1 overflow-hidden border rounded-lg    focus-within:ring focus-within:ring-opacity-40 focus-within:border-blue-400 focus-within:ring-blue-300">
+          <div className="flex p-1 overflow-hidden border rounded-lg  mt-5 md:mt-0  focus-within:ring focus-within:ring-opacity-40 focus-within:border-blue-400 focus-within:ring-blue-300">
             <input
               onChange={(e) => setSearchText(e.target.value)}
               value={searchText}
@@ -144,7 +149,7 @@ const AssetList = () => {
 
         {/* filter by pending/approved  */}
 
-        <div className="mt-10 md:mt-0">
+        <div className="mt-3 md:mt-0">
           <select
             onChange={(e) => {
               setAssetsType(e.target.value);
@@ -159,25 +164,7 @@ const AssetList = () => {
             <option value="Non-returnable">Non-returnable</option>
           </select>
         </div>
-
-        {/* stocks and out of stocks filter  */}
-        <div className="mt-10 md:mt-0">
-          <select
-            onChange={(e) => {
-              setAssetsStock(e.target.value);
-            }}
-            value={assetsStock}
-            name="deadline"
-            id="deadline"
-            className=" p-4  rounded-md text-transparent bg-gradient-to-r from-pink-600 to-yellow-600 hover:from-pink-700 hover:to-yellow-700  px-6 font-semibold uppercase text-md  text-white border-0 text-md btn"
-          >
-            <option value="">Availability</option>
-            <option value="in">Available</option>
-            <option value="out">Out Of Stocks</option>
-          </select>
-        </div>
-
-        <div className="mt-10 md:mt-0">
+        <div className="mt-3 md:mt-0">
           <select
             onChange={(e) => {
               setSort(e.target.value);
@@ -193,9 +180,26 @@ const AssetList = () => {
           </select>
         </div>
 
+        {/* stocks and out of stocks filter  */}
+        <div className="mt-3 md:mt-0">
+          <select
+            onChange={(e) => {
+              setAssetsStock(e.target.value);
+            }}
+            value={assetsStock}
+            name="deadline"
+            id="deadline"
+            className=" p-4  rounded-md text-transparent bg-gradient-to-r from-pink-600 to-yellow-600 hover:from-pink-700 hover:to-yellow-700  px-6 font-semibold uppercase text-md  text-white border-0 text-md btn"
+          >
+            <option value="">Availability</option>
+            <option value="in">Available</option>
+            <option value="out">Out Of Stocks</option>
+          </select>
+        </div>
+
         <button
           onClick={handleReset}
-          className="btn bg-red-500 hover:bg-red-600 border-0 text-white"
+          className="btn bg-red-500 hover:bg-red-600 border-0 mt-3 md:mt-0 text-white"
         >
           Reset
         </button>

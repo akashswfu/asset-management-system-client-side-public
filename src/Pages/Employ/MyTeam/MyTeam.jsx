@@ -6,6 +6,7 @@ import App from "../../../App";
 
 import { pdf } from "@react-pdf/renderer";
 import { saveAs } from "file-saver";
+import { Helmet } from "react-helmet-async";
 
 const MyTeam = () => {
   const axiosSecure = useAxiosSecure();
@@ -49,24 +50,29 @@ const MyTeam = () => {
 
   return (
     <div className="min-h-[calc(100vh-450px)]">
+      <Helmet>
+        <title>Employ || My Team</title>
+      </Helmet>
       <div>
         {myTeam.map((team) => (
           <div
             className="flex items-center gap-20 w-full justify-evenly  mx-auto mb-10"
             key={team._id}
           >
-            <div className="bg-base-200 shadow-2xl w-[600px] py-5 flex justify-around rounded-md items-center gap-20">
+            <div className="bg-base-200 shadow-2xl w-full md:w-[600px] py-5 flex flex-col md:flex-row justify-around rounded-md items-center gap-20">
               <div>
                 <img
-                  className="w-32 h-32 rounded-md"
+                  className="w-40 h-40 md:w-32 md:h-32 rounded-md"
                   src={team.photo}
                   alt="No Photo"
                 />
               </div>
-              <h1 className="text-2xl font-semibold">{team.name}</h1>
-              <h1 className="font-bold text-green-500 text-xl uppercase">
-                {team.role}
-              </h1>
+              <div className="flex items-center justify-between gap-20">
+                <h1 className="text-2xl font-semibold">{team.name}</h1>
+                <h1 className="font-bold text-green-500 text-xl uppercase">
+                  {team.role}
+                </h1>
+              </div>
             </div>
           </div>
         ))}

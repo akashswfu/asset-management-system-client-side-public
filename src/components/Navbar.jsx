@@ -7,6 +7,7 @@ import { useQuery } from "@tanstack/react-query";
 import toast, { Toaster } from "react-hot-toast";
 import LoadingSpinner from "./LoadingSpinner/LoadingSpinner";
 import useUserInfo from "../ReactHooks/useUserInfo";
+import icons from "/images/icon.png";
 
 const Navbar = () => {
   const { logOut, user, loading, setLoading, currentUser, setCurrentUser } =
@@ -62,7 +63,7 @@ const Navbar = () => {
         </div>
       )}
       {(currentUser.role === "HR" || userInfo.role === "HR") && (
-        <div className="flex gap-3 ">
+        <div className="flex flex-col md:flex-row lg:flex-row md:gap-4 uppercase font-semibold">
           <li className="">
             <NavLink to="/">Home</NavLink>
           </li>
@@ -87,7 +88,7 @@ const Navbar = () => {
         </div>
       )}
       {(currentUser.role === "employ" || userInfo.role === "employ") && (
-        <div className="flex gap-3">
+        <div className="flex flex-col md:flex-row lg:flex-row md:gap-4 uppercase font-semibold">
           <li className="">
             <NavLink to="/">Home</NavLink>
           </li>
@@ -144,20 +145,20 @@ const Navbar = () => {
           </div>
           <ul
             tabIndex={0}
-            className="menu menu-sm dropdown-content mt-6  z-10  p-2 shadow bg-base-100  relative rounded-box w-52 md:w-[700px]"
+            className="menu menu-sm dropdown-content mt-6  z-10  p-2 shadow bg-base-100 flex flex-col relative rounded-box w-40 md:w-[800px]"
           >
             {links}
           </ul>
         </div>
-        <div className="flex items-center gap-3">
+        <div className="hidden md:flex items-center gap-3">
           {/* <span className="hidden text-xl lg:text-3xl font-bold md:flex lg:flex text-transparent bg-gradient-to-r from-sky-500 to-indigo-800 bg-clip-text ">
             {loggedUser.role === "HR" && <p>{loggedUser.companyLogo}</p>}
             {loggedUser.role === "employ" && <p>{myHr.companyLogo}</p>}
             {loggedUser.length === 0 && <p>No User</p>}
           </span> */}
           <img
-            className="w-12 h-12 bg-red-500 rounded-full border-none"
-            src=""
+            className="w-14 h-14 bg-green-500 rounded-full border-none"
+            src={icons}
             alt=""
           />
         </div>

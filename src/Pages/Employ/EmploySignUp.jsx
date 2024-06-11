@@ -11,6 +11,7 @@ import ReactDatePicker from "react-datepicker";
 import useAxiosSecure from "../../ReactHooks/useAxiosSecure";
 import { FcGoogle } from "react-icons/fc";
 import { AuthContext } from "../../Providers/AuthProvider";
+import { Helmet } from "react-helmet-async";
 
 const EmploySignUp = () => {
   const role = "employ";
@@ -108,6 +109,9 @@ const EmploySignUp = () => {
 
   return (
     <div data-aos="fade-left" data-aos-duration="1000">
+      <Helmet>
+        <title>SignUp || Employ</title>
+      </Helmet>
       <div className="hero-content w-full  flex-col">
         <div className="text-center"></div>
         <div className="card shrink-0 w-full max-w-md shadow-2xl bg-base-100">

@@ -6,6 +6,7 @@ import Swal from "sweetalert2";
 import useAxiosSecure from "../../ReactHooks/useAxiosSecure";
 import useUserInfo from "../../ReactHooks/useUserInfo";
 import toast, { Toaster } from "react-hot-toast";
+import { Helmet } from "react-helmet-async";
 
 const UpdateProfile = () => {
   const { updateUserProfile, user, setUser } = useContext(AuthContext);
@@ -54,6 +55,9 @@ const UpdateProfile = () => {
   };
   return (
     <div className="">
+      <Helmet>
+        <title>HR || Profile</title>
+      </Helmet>
       <div className="w-full lg:flex-row flex flex-col justify-center items-center  mt-16  py-10 shadow-2xl  ">
         <div
           data-aos="fade-right"

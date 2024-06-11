@@ -6,6 +6,7 @@ import useUserInfo from "../../../ReactHooks/useUserInfo";
 import { FaRegSquare } from "react-icons/fa";
 import { useNavigate } from "react-router-dom";
 import toast, { Toaster } from "react-hot-toast";
+import { Helmet } from "react-helmet-async";
 
 const RequestAnAssets = () => {
   const status = "Pending";
@@ -104,6 +105,7 @@ const RequestAnAssets = () => {
         toast.success("Assets Request Successfully");
         await axiosSecure.patch(`/asset/${assetId}`, singleAssets);
         refetch();
+        form.reset();
       }
 
       console.log(data);
@@ -134,7 +136,10 @@ const RequestAnAssets = () => {
 
   return (
     <div>
-      <div className="flex justify-center items-center gap-5 mb-10">
+      <Helmet>
+        <title>Employ || Assets</title>
+      </Helmet>
+      <div className="flex flex-col lg:flex-row justify-center items-center  md:gap-5 mb-5 md:mb-10 space-y-3 md:space-y-0 mt-5 md:mt-0">
         <form onSubmit={handleSearch}>
           <div className="flex p-1 overflow-hidden border rounded-lg    focus-within:ring focus-within:ring-opacity-40 focus-within:border-blue-400 focus-within:ring-blue-300">
             <input

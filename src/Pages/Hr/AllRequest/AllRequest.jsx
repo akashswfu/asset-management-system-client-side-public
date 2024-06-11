@@ -6,6 +6,7 @@ import useAxiosSecure from "../../../ReactHooks/useAxiosSecure";
 import toast, { Toaster } from "react-hot-toast";
 import { ref } from "firebase/database";
 import useAssetsReqByEmploy from "../../../ReactHooks/useAssetsReqByEmploy";
+import { Helmet } from "react-helmet-async";
 
 const AllRequest = () => {
   const [currentPage, setCurrentPage] = useState(1);
@@ -69,9 +70,10 @@ const AllRequest = () => {
     refetch();
 
     try {
-      await axiosSecure.patch(`/assetsReq/${item?._id}`, item);
-      refetch();
-      toast.success("Action Updated Successfully");
+      await axiosSecure.patch(`/assetsReq/${item?._id}`, item).then((res) => {
+        refetch();
+        toast.success("Action Updated Successfully");
+      });
     } catch (err) {
       console.log(err);
     }
@@ -88,7 +90,10 @@ const AllRequest = () => {
   };
   return (
     <div>
-      <div className="flex justify-center items-center gap-5 mb-10">
+      <div className="flex flex-col md:flex-row justify-center items-center  md:gap-5 mb-5 md:mb-10 space-y-3 md:space-y-0 mt-5 md:mt-0">
+        <Helmet>
+          <title>HR || All Request</title>
+        </Helmet>
         <form onSubmit={handleSearch}>
           <div className="flex p-1 overflow-hidden border rounded-lg    focus-within:ring focus-within:ring-opacity-40 focus-within:border-blue-400 focus-within:ring-blue-300">
             <input
@@ -140,7 +145,7 @@ const AllRequest = () => {
                 <td>{item.status}</td>
 
                 <td>
-                  {item.status === "Reject" ? (
+                  {item.status === "Reject" || item.status === "Return" ? (
                     <div className="flex justify-center gap-8">
                       <button disabled className="btn btn-success text-white">
                         Approve

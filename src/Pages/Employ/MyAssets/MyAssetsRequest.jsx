@@ -17,6 +17,7 @@ import {
 } from "@react-pdf/renderer";
 import { saveAs } from "file-saver";
 import { Toaster } from "react-hot-toast";
+import { Helmet } from "react-helmet-async";
 
 const MyAssetsRequest = () => {
   const { user, setLoading } = useAuth();
@@ -33,6 +34,7 @@ const MyAssetsRequest = () => {
   const [count, setCount] = useState(0);
 
   const [printItem, setPrintItem] = useState({});
+  console.log(printItem);
 
   const {
     data: myReq = [],
@@ -142,10 +144,12 @@ const MyAssetsRequest = () => {
       await axiosSecure
         .patch(`/assetsReq/${item?._id}`, item)
         .then(async (res) => {
+          refetch();
           if (res.data.modifiedCount > 0) {
             await axiosSecure
               .patch(`/assets/${item.assetId}`, itemAssets[0])
               .then((res) => {
+                refetch();
                 if (res.data.modifiedCount > 0) {
                   refetch();
                   toast.success("Assets Returned!");
@@ -208,7 +212,10 @@ const MyAssetsRequest = () => {
 
   return (
     <div>
-      <div className="flex justify-center items-center gap-5 mb-10">
+      <Helmet>
+        <title>Employ || Assets Request</title>
+      </Helmet>
+      <div className="flex flex-col lg:flex-row justify-center items-center  md:gap-5 mb-5 md:mb-10 space-y-3 md:space-y-0 mt-5 md:mt-0">
         <form onSubmit={handleSearch}>
           <div className="flex p-1 overflow-hidden border rounded-lg    focus-within:ring focus-within:ring-opacity-40 focus-within:border-blue-400 focus-within:ring-blue-300">
             <input
@@ -303,7 +310,7 @@ const MyAssetsRequest = () => {
                   <td className="flex items-center gap-2 justify-center">
                     <p
                       onClick={() => handlePrint(item)}
-                      className="bg-red-500 cursor-pointer rounded-md text-white px-2 py-1"
+                      className="bg-green-600 hover:bg-green-700 rounded-md text-white px-3 py-2 cursor-pointer"
                     >
                       Print
                     </p>

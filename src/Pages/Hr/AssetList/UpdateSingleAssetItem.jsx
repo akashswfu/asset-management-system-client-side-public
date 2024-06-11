@@ -5,6 +5,7 @@ import { useLoaderData, useNavigate, useParams } from "react-router-dom";
 import useAuth from "../../../ReactHooks/useAuth";
 import { useMutation } from "@tanstack/react-query";
 import useAxiosSecure from "../../../ReactHooks/useAxiosSecure";
+import { Helmet } from "react-helmet-async";
 
 const UpdateSingleAssetItem = () => {
   const asset = useLoaderData();
@@ -48,6 +49,9 @@ const UpdateSingleAssetItem = () => {
 
   return (
     <div className="md:p-24 p-5 bg-gray-100 ">
+      <Helmet>
+        <title> {asset.productName}</title>
+      </Helmet>
       <h1 className="text-center pb-12 uppercase font-bold text-3xl">
         Update Asset Item
       </h1>

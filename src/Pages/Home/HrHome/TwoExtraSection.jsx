@@ -3,14 +3,14 @@ import React from "react";
 const TwoExtraSection = () => {
   return (
     <div>
-      <h2 className="text-4xl text-center font-bold my-8 text-transparent bg-gradient-to-r from-pink-600 to-yellow-600 bg-clip-text pb-5 uppercase mt-20">
+      <h2 className="text-2xl md:text-4xl text-center font-bold my-8 text-transparent bg-gradient-to-r from-pink-600 to-yellow-600 bg-clip-text pb-5 uppercase mt-0 md:mt-20">
         Best Selling Products
       </h2>
       <div>
-        <h2 className="text-2xl text-center font-bold my-8 text-transparent bg-gradient-to-r from-green-600 to-green-600 bg-clip-text pb-5 uppercase mt-10">
+        <h2 className="text-xl md:text-2xl text-center font-bold my-8 text-transparent bg-gradient-to-r from-green-600 to-green-600 bg-clip-text pb-5 uppercase mt-10">
           Returnable Products
         </h2>
-        <div className="grid grid-cols-3  justify-items-center">
+        <div className="grid grid-cols-1 px-5 mx:px-0 md:grid-cols-2 lg:grid-cols-3 lg:gap-8 md:gap-4   justify-items-center">
           <div className=" shadow-2xl">
             <img
               className="w-[380px] h-80  p-2 shadow-2xl "
@@ -32,8 +32,6 @@ const TwoExtraSection = () => {
               alt=""
             />
           </div>
-        </div>
-        <div className="grid grid-cols-3  justify-items-center mt-10">
           <div>
             <img
               className="w-[380px] h-80  p-2 shadow-2xl "
@@ -56,12 +54,15 @@ const TwoExtraSection = () => {
             />
           </div>
         </div>
+        {/* <div className="grid grid-cols-3  justify-items-center mt-10">
+          
+        </div> */}
       </div>
       <div>
-        <h2 className="text-2xl text-center font-bold my-8 text-transparent bg-gradient-to-r from-green-600 to-green-600 bg-clip-text pb-5 uppercase mt-16">
+        <h2 className="text-xl md:text-2xl text-center font-bold my-8 text-transparent bg-gradient-to-r from-green-600 to-green-600 bg-clip-text pb-5 uppercase mt-16">
           Non-Returnable Products
         </h2>
-        <div className="grid grid-cols-3  justify-items-center">
+        <div className="grid grid-cols-1 px-5 mx:px-0 md:grid-cols-2 lg:grid-cols-3 lg:gap-8 md:gap-4   justify-items-center">
           <div>
             <img
               className="w-[380px] h-80  p-2 shadow-2xl "
@@ -83,8 +84,6 @@ const TwoExtraSection = () => {
               alt=""
             />
           </div>
-        </div>
-        <div className="grid grid-cols-3  justify-items-center mt-10">
           <div>
             <img
               className="w-[380px] h-80  p-2 shadow-2xl "

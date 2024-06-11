@@ -41,13 +41,13 @@ const Banner = () => {
           className="w-full md:h-[400px] lg:h-[550px] rounded-xl  border-0  "
           alt=""
         />
-        <div className="absolute hidden md:flex flex-col justify-center items-center w-full h-full space-y-5 top-0">
-          <div className="text-6xl font-bold text-transparent bg-gradient-to-r text-center from-rose-600 to-rose-500 bg-clip-text">
+        <div className="absolute  flex flex-col  md:flex-col justify-center items-center w-full h-full space-y-5 top-0">
+          <div className="text-2xl md:text-4xl lg:text-6xl font-bold text-transparent bg-gradient-to-r text-center from-rose-600 to-rose-500 bg-clip-text mt-10 md:mt-0">
             <p> Welcome to </p>
-            <p className="mt-3"> Assets Management System</p>
+            <p className="mt-0 md:mt-3"> Assets Management System</p>
           </div>
           <Link to="/signUp">
-            <button className="btn text-white  bg-gradient-to-r text-center from-pink-600 to-yellow-600 hover:from-pink-700 hover:to-yellow-700  text-xl px-7 mt-10">
+            <button className="btn text-white  bg-gradient-to-r text-center from-pink-600 to-yellow-600 hover:from-pink-700 hover:to-yellow-700  text-xl px-7 md:mt-10 mt-5">
               JOIN AS A HR
             </button>
           </Link>
@@ -62,13 +62,13 @@ const Banner = () => {
           src="https://i.postimg.cc/4ypyhSr5/pexels-alxs-919734.jpg"
           alt=""
         />
-        <div className="absolute  hidden md:flex flex-col justify-center items-center w-full h-full space-y-5 top-0">
-          <div className="text-6xl font-bold text-transparent bg-gradient-to-r text-center from-green-600 to-green-500 bg-clip-text">
+        <div className="absolute flex flex-col  md:flex-col justify-center items-center w-full h-full space-y-5 top-0">
+          <div className="text-2xl md:text-4xl lg:text-6xl font-bold text-transparent bg-gradient-to-r text-center from-green-600 to-green-500 bg-clip-text mt-10 md:mt-0">
             <p> Welcome to </p>
-            <p className="mt-3"> Assets Management System</p>
+            <p className="mt-0 md:mt-3"> Assets Management System</p>
           </div>
           <Link to="/employSignUp">
-            <button className="btn text-white  bg-gradient-to-r text-center from-pink-600 to-yellow-600 hover:from-pink-700 hover:to-yellow-700  text-xl px-7 mt-10">
+            <button className="btn text-white  bg-gradient-to-r text-center from-pink-600 to-yellow-600 hover:from-pink-700 hover:to-yellow-700  text-xl md:px-7 md:mt-10 mt-5">
               {" "}
               JOIN AS A EMPLOY
             </button>

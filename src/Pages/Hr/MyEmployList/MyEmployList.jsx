@@ -3,6 +3,7 @@ import useAuth from "../../../ReactHooks/useAuth";
 import useAxiosSecure from "../../../ReactHooks/useAxiosSecure";
 import { useMutation, useQuery } from "@tanstack/react-query";
 import toast, { Toaster } from "react-hot-toast";
+import { Helmet } from "react-helmet-async";
 
 const MyEmployList = () => {
   const { user, hrEmploy, setHrEmploy } = useAuth();
@@ -59,6 +60,9 @@ const MyEmployList = () => {
   };
   return (
     <div className="overflow-x-auto min-h-[calc(100vh-450px)]">
+      <Helmet>
+        <title>HR || My Employees</title>
+      </Helmet>
       <table className="table table-auto border mt-10">
         {/* head */}
         <thead>
