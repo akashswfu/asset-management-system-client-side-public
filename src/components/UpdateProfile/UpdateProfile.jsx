@@ -9,7 +9,8 @@ import toast, { Toaster } from "react-hot-toast";
 import { Helmet } from "react-helmet-async";
 
 const UpdateProfile = () => {
-  const { updateUserProfile, user, setUser } = useContext(AuthContext);
+  const { updateUserProfile, user, setUser, currentUser } =
+    useContext(AuthContext);
   const axiosSecure = useAxiosSecure();
   const [userInfo] = useUserInfo();
 
@@ -22,9 +23,16 @@ const UpdateProfile = () => {
   const onSubmit = (data) => {
     const { name, photo } = data;
 
+    let photoURL;
+    if (currentUser) {
+      photoURL = currentUser.photo;
+    } else if (userInfo) {
+      photoURL = userInfo.photo;
+    }
+
     updateUserProfile(name, photo)
       .then(async () => {
-        setUser({ displayName: name, photoURL: photo, email: user?.email });
+        setUser({ displayName: name, photoURL, email: user?.email });
         userInfo.name = name;
         try {
           await axiosSecure
@@ -114,7 +122,7 @@ const UpdateProfile = () => {
               </div>
               <div className="form-control">
                 <label className="label">
-                  <span className="label-text">Photo URL</span>
+                  <span className="label-text">Email</span>
                 </label>
                 <input
                   type="text"

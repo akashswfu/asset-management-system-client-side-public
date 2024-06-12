@@ -18,14 +18,6 @@ const Navbar = () => {
   const axiosSecure = useAxiosSecure();
   const [userInfo] = useUserInfo();
 
-  // useEffect(() => {
-  //   const getUser = async () => {
-  //     const { data } = await axiosSecure(`/user/${user?.email}`);
-  //     setLoggedUser(data);
-  //   };
-  //   getUser();
-  // }, [user?.email]);
-
   const { data: myHr = {} } = useQuery({
     queryFn: () => getHr(),
     queryKey: ["myHr", currentUser?.myHr, userInfo?.myHr],
@@ -41,8 +33,6 @@ const Navbar = () => {
       return data;
     }
   };
-
-  console.log(myHr);
 
   const handleLogout = () => {
     logOut()
@@ -163,11 +153,6 @@ const Navbar = () => {
         </div>
 
         <div className="hidden md:flex items-center gap-3">
-          {/* <span className="hidden text-xl lg:text-3xl font-bold md:flex lg:flex text-transparent bg-gradient-to-r from-sky-500 to-indigo-800 bg-clip-text ">
-            {loggedUser.role === "HR" && <p>{loggedUser.companyLogo}</p>}
-            {loggedUser.role === "employ" && <p>{myHr.companyLogo}</p>}
-            {loggedUser.length === 0 && <p>No User</p>}
-          </span> */}
           {currentUser && currentUser?.role === "HR" && !userInfo && (
             <img
               className="w-14 h-14 bg-green-500 rounded-full border-none"
