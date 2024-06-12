@@ -18,26 +18,36 @@ const Navbar = () => {
   const axiosSecure = useAxiosSecure();
   const [userInfo] = useUserInfo();
 
-  useEffect(() => {
-    const getUser = async () => {
-      const { data } = await axiosSecure(`/user/${user?.email}`);
-      setLoggedUser(data);
-    };
-    getUser();
-  }, [user?.email]);
+  // useEffect(() => {
+  //   const getUser = async () => {
+  //     const { data } = await axiosSecure(`/user/${user?.email}`);
+  //     setLoggedUser(data);
+  //   };
+  //   getUser();
+  // }, [user?.email]);
 
-  const { data: myHr = [] } = useQuery({
+  const { data: myHr = {} } = useQuery({
     queryFn: () => getHr(),
-    queryKey: ["myHr", loggedUser?.myHr],
+    queryKey: ["myHr", currentUser?.myHr, userInfo?.myHr],
   });
   const getHr = async () => {
-    const { data } = await axiosSecure.get(`/user/${loggedUser?.myHr}`);
-    return data;
+    if (currentUser && currentUser.role === "employ") {
+      const { data } = await axiosSecure.get(`/user/${currentUser?.myHr}`);
+      setLoggedUser(data);
+      return data;
+    } else if (userInfo && userInfo.role === "employ") {
+      const { data } = await axiosSecure.get(`/user/${userInfo?.myHr}`);
+      setLoggedUser(data);
+      return data;
+    }
   };
+
+  console.log(myHr);
 
   const handleLogout = () => {
     logOut()
       .then(() => {
+        setLoggedUser({});
         toast.success("Logout Successfully!");
         setCurrentUser("");
         navigate("/");
@@ -47,6 +57,7 @@ const Navbar = () => {
         console.log(error.message);
       });
   };
+
   const links = (
     <div className="flex flex-col md:flex-row lg:flex-row md:gap-4 uppercase font-semibold ">
       {!user && (
@@ -173,7 +184,7 @@ const Navbar = () => {
           )}
           {!user && (
             <img
-              className="w-14 h-14 bg-red-500 rounded-full border-none"
+              className="w-14 h-14 bg-green-500 rounded-full border-none"
               src={icons}
               alt=""
             />
@@ -186,6 +197,15 @@ const Navbar = () => {
             <img
               className="w-14 h-14 bg-green-500 rounded-full border-none"
               src={icons}
+              alt=""
+            />
+          )}
+
+          {((loggedUser && userInfo.role === "employ") ||
+            (loggedUser && currentUser.role === "employ")) && (
+            <img
+              className="w-14 h-14 bg-red-500 rounded-full border-none"
+              src={loggedUser.companyLogo}
               alt=""
             />
           )}

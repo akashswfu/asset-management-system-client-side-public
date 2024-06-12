@@ -15,7 +15,7 @@ const MyEmployList = () => {
     refetch,
   } = useQuery({
     queryFn: () => getData(),
-    queryKey: ["myTeam"],
+    queryKey: ["myTeam", user?.email],
   });
 
   const { mutateAsync } = useMutation({
