@@ -214,9 +214,7 @@ const Navbar = () => {
                     src={user?.photoURL}
                   />
                   {showTooltip && (
-                    <div className="absolute top-1/2 me-2 right-full transform -translate-y-1/2  font-bold px-2">
-                      {user?.displayName}
-                    </div>
+                    <div className="font-bold">{user?.displayName}</div>
                   )}
                 </div>
               ) : (
@@ -230,9 +228,7 @@ const Navbar = () => {
                     src="{profile}"
                   />
                   {showTooltip && (
-                    <div className="absolute top-1/2 me-2 right-full transform -translate-y-1/2  font-bold px-2">
-                      {user?.displayName}
-                    </div>
+                    <div className="font-bold ">{user?.displayName}</div>
                   )}
                 </div>
               )}
