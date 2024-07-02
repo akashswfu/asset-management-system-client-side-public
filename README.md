@@ -1,6 +1,3 @@
-HR email : akash99@gmail.com
-
-HR password: Akash925
 
 # Assets Management System : https://asset-management-system-auth.web.app/
 
